@@ -25,15 +25,7 @@ export class NotificationComponentComponent implements OnInit {
   {}
   @Input() notificationVisible = false;
 
-  allNotifications: notifications[] = [
-  //   { title: 'New Incident Reported', message: 'New incident reported by John Doe', priority:'High', timeAgo: '12 min ago', isRead: false },
-  //   { title: 'New Assigned Incident', message: 'New incident reported by John Doe',priority:'Medium', timeAgo: '10 sec ago', isRead: false },
-  //   { title: 'New Incident Reported', message: 'New incident reported by Jane Doe',priority:'Medium', timeAgo: '5 hours ago', isRead: true },
-  //   { title: 'New Incident Reported', message: 'New incident reported by John Doe', priority:'Low', timeAgo: '12 min ago', isRead: false },
-  //   { title: 'New Assigned Incident', message: 'New incident reported by John Doe',priority:'Medium', timeAgo: '10 sec ago', isRead: true },
-  //   { title: 'New Incident Reported', message: 'New incident reported by Jane Doe',priority:'Medium', timeAgo: '5 hours ago', isRead: true },
-  // 
-  ];
+  allNotifications: notifications[] = [];
 
   isClearingAll = false;
 
