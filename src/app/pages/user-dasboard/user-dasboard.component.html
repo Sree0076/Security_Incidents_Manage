@@ -1,0 +1,32 @@
+@if(isLoading)
+{
+   <app-loader-component></app-loader-component>
+}
+@else
+{
+  <div class="dashboard-section">
+    <div class="side-navbar" [ngClass]="{'expanded': isSidebarExpanded}">
+      <app-side-navbar-component  (sidebarToggle)="handleSidebarToggle($event)"></app-side-navbar-component>
+    </div>
+    <div class="card-container">
+      <div *ngFor="let item of incidentData; let i = index" [ngClass]="cardClass[i]" class="card-item">
+        <app-card-component 
+          [title]="item.title" 
+          [totalCount]="item.total_incidents" 
+          [pendingCount]="item.pending_incidents"
+          [closedCount]="item.closed_incidents" 
+          [iconSvg]="svg[i]" 
+          [cardClass]="item.class"
+          [isExpanded]="isSidebarExpanded"
+          (click)="getCategory(item.title)">
+        </app-card-component>
+      </div>
+    </div>
+  </div>
+  <div id="tableRef" class="table"  [ngClass]="{'expanded': isSidebarExpanded}">
+    <app-table-component [isadmin]="false" [filterCategory]="selectedCategory"></app-table-component>
+  </div>
+  <app-incident-create-form-component></app-incident-create-form-component>
+}
+
+

@@ -1,0 +1,27 @@
+<p-progressSpinner
+  strokeWidth="5"
+  fill="none"
+  animationDuration="2s"
+  [style]="{ width: '50px', height: '50px' }" *ngIf="isLoading" aria-label="Loading" class="spinner"></p-progressSpinner>
+
+<div class="login-body" *ngIf="!isLoading">
+    <div class="login-page">
+        <div class="left-box">
+            <div>
+                <img class="preventyon" src="/images/login_photos/preventyon.svg" alt="preventyon">
+            </div>
+            <div class="login">
+                <div>
+                    <img class="experion" src="/images/login_photos/experion.svg" alt="">
+                </div>
+  
+                    <div>
+                        <button class="login-button" type="submit" (click)="loginPopup()"><img class="login-button-icon" src="/images/login_photos/ms_logo2.png" alt="login icon">  Sign In with Microsoft</button>
+                    </div>
+            </div>
+        </div>
+        <div class="right-box">
+        </div>
+    </div>
+  </div>
+  

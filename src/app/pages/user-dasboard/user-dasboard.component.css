@@ -1,0 +1,25 @@
+.dashboard-section {
+    gap: 1rem;
+    margin-left: 90px;
+    padding-top: 6.9%;
+  }
+  .card-container {
+    display: flex;
+    flex-wrap: wrap !important;
+    justify-content: space-around !important;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 5px;
+    transition: all 0.5s ease; 
+  }
+  .card-container.shrink
+  {
+    padding-left: 9%;
+  }
+.dashboard-section.loading
+{
+  display: none;
+}
+  .table.expanded  {
+    margin-left: 230px;
+  }

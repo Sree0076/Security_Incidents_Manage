@@ -1,0 +1,87 @@
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+      <h6 class="offcanvas-title" id="offcanvasRightLabel">Notifications</h6>
+    </div>
+    <div class="offcanvas-body">
+      <div class="noti d-flex justify-content-between">
+        <h6 class="noti-head">Recent</h6>
+        <div>
+          <button class="btn border btn-sm m-2 btn-light" (click)="clearAllUnread()">Clear All</button>
+        </div>
+      </div>
+       @if(unreadNotifications.length > 0){
+        <div *ngFor="let notification of unreadNotifications; let i = index"
+          [ngClass]="{'slide-out': isClearingAll}"
+          [style.animationDelay]="isClearingAll ? (i * 0.2) + 's' : '0s'"
+          (animationend)="onAnimationEnd(notification, i)" class="unread">
+        <div class="notification-content d-flex gap-2">
+          <div class="noti-logo">
+            <img src="icons/newIncd.png" alt="">
+          </div>
+          <div class="notification-content-head">
+            <div class="noti-title d-flex justify-content-between">
+              <p>{{ notification.message.IncidentTitle }}</p>
+              @switch(notification.message.Priority){
+                @case ("High") {
+                  <p class="priority-high priority"><b>{{notification.message.Priority}}</b></p>
+                }
+                @case ("Medium") {
+                  <p class="priority-medium priority"><b>{{notification.message.Priority}}</b></p>
+                }
+                @case ("Low") {
+                  <p class="priority-low priority"><b>{{notification.message.Priority}}</b></p>
+                }
+                @default {
+                  <p>{{notification.Priority}}</p>
+                }
+              }
+            </div>
+            <h6 class="pt-2">{{ notification.message.IncidentNo }}</h6>
+            <div class="d-flex justify-content-between align-items-center pt-2">
+              <p>{{ notification.timeAgo }}</p>
+              <h6 class="mark-read" type="button" aria-label="Close" (click)="markAsRead(notification)">Mark As Read</h6>
+            </div>
+          </div>
+        </div>
+        </div>
+       }
+       @else {
+        <div class="d-flex justify-content-center">
+          <h6 class="no-noti">No Unread Notifications</h6>
+        </div>
+       }
+      <div>
+        <h6 class="noti-head pt-2">All</h6>
+        <div *ngFor="let notification of allNotificationsWithoutUnread" class="notification-content read d-flex gap-2">
+          <div class="noti-logo">
+            <img src="icons/newIncd.png" alt="">
+          </div>
+          <div class="notification-content-head ">
+            <div class="noti-title d-flex justify-content-between">
+                <p>{{ notification.message.IncidentTitle }}</p>
+                @switch(notification.message.Priority){
+                  @case ("High") {
+                    <p class="priority-high priority"><b>{{notification.message.Priority}}</b></p>
+                  }
+                  @case ("Medium") {
+                    <p class="priority-medium priority"><b>{{notification.message.Priority}}</b></p>
+                  }
+                  @case ("Low") {
+                    <p class="priority-low priority"><b>{{notification.message.Priority}}</b></p>
+                  }
+                  @default {
+                    <p>{{notification.Priority}}</p>
+                  }
+                }
+            </div>
+            <h6 class="pt-2">{{ notification.message.IncidentNo }}</h6>
+            <p class="text-end">{{ notification.timeAgo }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  

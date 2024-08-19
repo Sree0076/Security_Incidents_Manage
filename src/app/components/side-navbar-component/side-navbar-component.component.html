@@ -1,0 +1,72 @@
+
+<div class="sidebar">
+    <div class="logo-details">
+      <div class="logo_name">Preventyon</div>
+      <i class='bx bx-menu' id="btn" (click)="toggleSidebar()"></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="#">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+        <span class="tooltip">Dashboard</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-user'></i>
+          <span class="links_name">User Management</span>
+        </a>
+        <span class="tooltip">User Management</span>
+      </li>
+      <li>
+        <a >
+          <i class='bx bx-bell' (click)="openNotification()"></i>
+          <span class="badge">3</span>
+          <span class="links_name">Notifications</span>
+        </a>
+        <span class="tooltip">Notifications</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-cog'></i>
+          <span class="links_name">Setting</span>
+        </a>
+        <span class="tooltip">Setting</span>
+      </li>
+      <li class="profile">
+        <div class="logout_icon">
+          <i class='bx bx-log-out' id="log_out" (click)="log_out()"></i>
+        </div>
+        <div class="profile-details">
+          <img src="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" alt="profileImg">
+          <div class="name_job">
+            @if(employeeData)
+            {
+                <div class="name">{{employeeData.name}}</div>
+                <div class="job">{{employeeData.designation}}</div>
+            }
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  
+  <nav>
+    <div class="sidebar-button">
+      <span class="dashboard">Dashboard</span>
+    </div>
+    <div class="profile-details">
+      <img src="images/profile.jpg" alt="">
+      <span class="admin_name">welcome 
+        @if(employeeData)
+        {
+            {{employeeData.name}}
+        }</span>
+      <i class='bx bx-chevron-down'></i>
+    </div>
+  </nav>
+  <p-sidebar [(visible)]="isnoti" position="right" [modal]="true" [showCloseIcon]="true" [style]="{'width.rem': 25}">
+
+    <app-notification-component></app-notification-component>
+  </p-sidebar>

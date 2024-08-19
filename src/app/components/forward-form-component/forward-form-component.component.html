@@ -1,0 +1,71 @@
+<div class="flex justify-content-center ">
+    <p-dialog
+      [modal]="true"
+      [(visible)]="visibility"
+      [style]="{ width: '40rem', height : '32rem'}"
+      [breakpoints]="breakpoints"
+      [draggable]="false"
+      [maximizable]="true"
+      (onHide)="handleDialogClose()">
+      <ng-template pTemplate="header">
+        <div class="dialog-header">
+        <div class="selected-users">
+          @for(user of selectedUsers; track user.id){
+              <div class="person-details1" >
+                <div class="image-icon">
+                  <img src="icons/user-icon-men.jpg" alt="" />
+                </div>
+                <div class="name-details1">
+
+                  <p>{{user.name}}</p>
+
+
+                </div>
+                <button type="button" (click)="removeUser(user)"><i class="bi bi-x fs-5"></i></button>
+              </div>
+          }
+          </div>
+        <div class="dialog-header-content">
+          <span class="dialog-header-title">To:</span>
+          <input
+            type="text"
+            pInputText
+            placeholder="Enter the name, email"
+            (ngModel)="searchTerm"
+            class="dialog-search-input"
+          />
+        </div>
+      </div>
+
+      </ng-template>
+
+      <div class="forward-names">
+
+        @for(items of user_details | forwardPipe: searchTerm: getSelectedUserIds():isForwardform; track items.id){
+
+            <div class="person-details" type="button" (click)="addUser(items)">
+                <div class="image-icon">
+                    <img src="icons/user-icon-men.jpg" alt="">
+                </div>
+                <div class="name-details">
+
+                    <p>{{items.name}}</p>
+                    <p class="p1">{{items.designation}}</p>
+
+                </div>
+            </div>
+        }
+     </div>
+
+      <ng-template pTemplate="footer">
+        <div class="text-message">
+          <textarea placeholder="Type a message" class="dialog-textarea" (ngModel)="message" (input)="autoResize($event)"></textarea>
+          <div class="d-flex align-items-center">
+            <button type="submit" class="d-flex align-items-center forwardbtn"(click)="forward()">Forward <i class="bi bi-send"></i></button>
+          </div>
+        </div>
+      </ng-template>
+    </p-dialog>
+  </div>
+
+  <!-- <div></div> -->

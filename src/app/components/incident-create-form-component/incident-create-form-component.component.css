@@ -1,0 +1,129 @@
+/* General Form Styles */
+.form-container {
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .styled-form {
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  .section-header {
+    margin-left: 20px;
+    font-size: 1.5em;
+    color: #333;
+  }
+  
+  .p-field {
+    margin-bottom: 1rem;
+  }
+  
+  .p-field label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .text-danger {
+    color: #dc3545;
+  }
+  
+  .validate {
+    font-size: 0.875em;
+  }
+  
+  /* Input Fields */
+  .title-input, .description-textarea {
+    width: 100%;
+  }
+  
+  .title-input {
+    padding: 0.5rem;
+  }
+  
+  .description-textarea {
+    resize: vertical;
+  }
+  
+  .p-calendar {
+    width: 100%;
+  }
+
+  .upload-placeholder {
+    height: 100px;
+    border-radius: 8px;
+  }
+  
+  .upload-icon {
+    font-size: 3rem;
+    color: #007ad9;
+  }
+  
+  .upload-text {
+    margin-top: 10px;
+    color: #333;
+  }
+  .incident-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem; /* Add spacing between the dropdowns */
+  }
+  
+  
+  /* Buttons Section */
+/* Buttons Section */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Adds space between buttons */
+    margin-top: 20px;
+  }
+  
+  .save-button, .submit-button {
+    padding: 0.75rem 1.5rem;
+    width: 11.5rem; /* Ensures buttons have a minimum width */
+  }
+  
+  /* Additional button styling */
+  .p-button-secondary {
+    background: #6c757d;
+    border: none;
+  }
+  
+  .p-button-success {
+    background: #28a745;
+    border: none;
+  }
+  
+  ::ng-deep .p-sidebar-right
+  {
+    width: 35rem;
+  }
+  ::ng-deep .p-sidebar .p-sidebar-header
+  {
+    padding-top: 0.5rem;
+    padding-bottom: 0px;
+  }
+  ::ng-deep .p-sidebar
+  {
+    transition: transform 5.7s;
+  }
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .p-md-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  
+    .p-md-4 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  
+    .description-textarea {
+      resize: none;
+    }
+  }
+  

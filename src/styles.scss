@@ -1,0 +1,99 @@
+@use '@angular/material' as mat;
+
+
+$preventyon-theme: mat.define-theme((color: (theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      density: (scale: 0,
+      )));
+
+:root {
+  @include mat.all-component-themes($preventyon-theme);
+}
+
+html,
+body {
+  height: 100%;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif !important;
+  font-stretch:ultra-expanded;
+}
+
+body {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+:root {
+  --privacy-color: linear-gradient(to right, rgb(215, 122, 122), rgb(201, 67, 67));
+  --security-color: linear-gradient(to right, #d47725, #fd8822);
+  --quality-color: linear-gradient(90deg, rgba(101, 163, 246, 1) 0%, rgba(16, 107, 230, 1) 100%);
+
+  .privacy-card {
+    --card-color: linear-gradient(193.19deg, #00b5f9 17.86%, #026fee 91.45%);;
+
+  }
+
+  .security-card {
+    --card-color:linear-gradient(6.04deg, #761df5 -31.48%, #3e76ed 96.37%);
+
+  }
+
+  .quality-card {
+    --card-color: linear-gradient(345.41deg, #0bead4 -16.16%, #668cfc 106.49%);  
+    
+  }
+
+
+}
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  /* background of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d2d0d0;
+  /* color of the scrollbar thumb */
+  border-radius: 10px;
+  /* rounded corners for the scrollbar thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9c9a9a;
+  /* color of the scrollbar thumb on hover */
+}
+.spinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.table
+{
+    margin-top: 1rem;
+}
+.table
+{
+  margin-left: 90px;
+  padding-bottom: 3rem;
+  transition: all 0.5s ease; 
+}
+.side-navbar
+{
+  display: flex;
+  flex-direction: row;
+}
