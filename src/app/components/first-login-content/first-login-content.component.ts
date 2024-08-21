@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-first-login-content',
@@ -12,4 +13,9 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './first-login-content.component.css',
   encapsulation: ViewEncapsulation.None,
 })
-export class FirstLoginContentComponent {}
+export class FirstLoginContentComponent {
+  constructor(private router: Router) {}
+  goToReportPage() {
+    this.router.navigate(['/form']);
+  }
+}

@@ -144,5 +144,21 @@
     font-style: italic;
 }
 
+.skip-button {
+    background-color: #6c757d;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom:1rem
+}
+
+.skip-button:hover {
+    background-color: #5a6268;
+}
+
+
 
  

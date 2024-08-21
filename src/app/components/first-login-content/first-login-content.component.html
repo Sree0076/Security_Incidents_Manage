@@ -3,6 +3,9 @@
         <p-stepperPanel header="Introduction">
             <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
                 <div class="flex flex-column h-12rem stepper-panel-content">
+                    <div class="flex justify-content-end pt-2 pr-2">
+                        <button class="skip-button" (click)="goToReportPage()">Skip Walkthrough</button>
+                    </div>
                     <div
                         class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium content stepper-panel-text">
                         <h4>Welcome to the Incidents Management App</h4>
@@ -42,6 +45,9 @@
             <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
                 let-index="index">
                 <div class="flex flex-column h-12rem stepper-panel-content">
+                    <div class="flex justify-content-end pt-2 pr-2">
+                        <button class="skip-button" (click)="goToReportPage()">Skip Walkthrough</button>
+                    </div>
                     <div
                         class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium content stepper-panel-text">
                         <h4>Getting Started: App Walkthrough</h4>
