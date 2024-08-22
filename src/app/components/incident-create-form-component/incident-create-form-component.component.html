@@ -10,7 +10,7 @@
 
       <div class="p-grid p-fluid">
         <div class="p-field p-col-12 p-md-6">
-          <label for="incident-title">Incident Title <span class="text-danger">*</span></label>
+          <label for="incident-title">Title <span class="text-danger">*</span></label>
           <input pInputText type="text" id="incident-title" formControlName="incidentTitle" required
             class="title-input p-inputtext-sm p-d-block p-mb-2">
           <div *ngIf="viewform.get('incidentTitle')!.hasError('required') && viewform.get('incidentTitle')?.touched"
@@ -23,6 +23,7 @@
       <!-- Incident Date & Description Section -->
       <div class="p-grid p-fluid">
         <div class="p-field p-col-12 p-md-6" style="width: 15rem;">
+
           <label for="incident-occured-date">Incident Occurred Date <span class="text-danger">*</span></label>
           <p-calendar id="incident-occured-date" formControlName="incidentOccuredDate" dateFormat="dd-mm-yy"
             timeFormat="hh:mm a" [showIcon]="true" [iconDisplay]="'input'" [showTime]="true" [maxDate]="today" required>
@@ -67,6 +68,7 @@
           <p-dropdown id="incidents-type" [options]="incidentTypes" formControlName="incidentType"
             [style]="{'width.rem': 8}" [showClear]="true"></p-dropdown>
         </div>
+
         <div class="p-field p-col-12 p-md-4">
           <label for="category">Category</label>
           <p-dropdown id="category" [options]="categories" formControlName="category" [style]="{'width.rem': 8}"
