@@ -1,3 +1,5 @@
+
+
 export interface IncidentData {
   id: number;
   incidentNo: string;
@@ -5,7 +7,7 @@ export interface IncidentData {
   incidentDescription: string;
   reportedBy: string;
   roleOfReporter: string;
-  incidentOccuredDate: Date;
+  incidentOccuredDate: Date; 
   monthYear: string;
   incidentType: string;
   category: string;
@@ -17,20 +19,19 @@ export interface IncidentData {
   collectionOfEvidence: string;
   correction: string;
   correctiveAction: string;
-  correctionCompletionTargetDate: string;
-  correctionActualCompletionDate: string;
-  correctiveActualCompletionDate: string;
+  correctionCompletionTargetDate: string; 
+  correctionActualCompletionDate: string; 
+  correctiveActualCompletionDate: string; 
   incidentStatus: string;
   correctionDetailsTimeTakenToCloseIncident: number;
   correctiveDetailsTimeTakenToCloseIncident: number;
   isDraft: boolean;
-  isCorrectionFilled: boolean;
-  accepted: number;
-  isSubmittedForReview: boolean;
+  isCorrectionFilled : boolean;
+  accepted : number;
+  isSubmittedForReview :boolean;
   employeeId: number;
-  documentUrls: string;
-  createdAt: string;
-  preventiveAction: string;
+  documentUrls : string;
+  createdAt: string; 
 }
 
 export interface Incidents {
@@ -44,14 +45,14 @@ export interface Incidents {
   qualityPendingIncidents: number;
   qualityClosedIncidents: number;
   incidents: IncidentData[];
-  assignedIncidents: IncidentData[];
+  assignedIncidents : IncidentData[];
   yearlyIncidentCounts: YearlyIncidentCounts;
 }
 
 interface IncidentCounts {
-  'Privacy Incidents'?: number;
-  'Quality Incidents'?: number;
-  'Security Incidents'?: number;
+  "Privacy Incidents"?: number;
+  "Quality Incidents"?: number;
+  "Security Incidents"?: number;
 }
 
 interface YearlyIncidentCounts {
@@ -59,9 +60,9 @@ interface YearlyIncidentCounts {
 }
 
 export interface CardData {
-  title: string;
-  total_incidents: number;
-  pending_incidents: number;
-  closed_incidents: number;
-  class: string;
-}
+    title: string;
+    total_incidents: number;
+    pending_incidents: number;
+    closed_incidents: number;
+    class: string;
+  }

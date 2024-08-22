@@ -14,16 +14,6 @@
     font-size: 1.5em;
     color: #333;
   }
-
-  .pi{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .upload-text{
-    text-align: center;
-  }
   
   .p-field {
     margin-bottom: 1rem;
