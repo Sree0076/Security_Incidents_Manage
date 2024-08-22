@@ -6,6 +6,7 @@
                     <div class="flex justify-content-end pt-2 pr-2">
                         <button class="skip-button" (click)="goToReportPage()">Skip Walkthrough</button>
                     </div>
+                    <app-incident-create-form-component *ngIf="showCreateForm"></app-incident-create-form-component>
                     <div
                         class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium content stepper-panel-text">
                         <h4>Welcome to the Incidents Management App</h4>
@@ -48,6 +49,7 @@
                     <div class="flex justify-content-end pt-2 pr-2">
                         <button class="skip-button" (click)="goToReportPage()">Skip Walkthrough</button>
                     </div>
+                    <app-incident-create-form-component *ngIf="showCreateForm"></app-incident-create-form-component>
                     <div
                         class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium content stepper-panel-text">
                         <h4>Getting Started: App Walkthrough</h4>

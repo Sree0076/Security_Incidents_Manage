@@ -3,19 +3,32 @@ import { CommonModule } from '@angular/common';
 
 import { StepperModule } from 'primeng/stepper';
 import { ButtonModule } from 'primeng/button';
-import { Router } from '@angular/router';
+import { IncidentCreateFormComponentComponent } from '../incident-create-form-component/incident-create-form-component.component';
+import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/variables.shared.service';
 
 @Component({
   selector: 'app-first-login-content',
   standalone: true,
-  imports: [CommonModule, StepperModule, ButtonModule],
+  imports: [
+    CommonModule,
+    StepperModule,
+    ButtonModule,
+    IncidentCreateFormComponentComponent,
+  ],
   templateUrl: './first-login-content.component.html',
   styleUrl: './first-login-content.component.css',
   encapsulation: ViewEncapsulation.None,
 })
 export class FirstLoginContentComponent {
-  constructor(private router: Router) {}
+  constructor(private sidebarService: VariablesSharedService) {}
+  showCreateForm: boolean = false;
+
   goToReportPage() {
-    this.router.navigate(['/form']);
+    this.showCreateForm = true;
+    this.sidebarService.showSidebar();
+  }
+
+  resetShowCreateForm() {
+    this.showCreateForm = false;
   }
 }
