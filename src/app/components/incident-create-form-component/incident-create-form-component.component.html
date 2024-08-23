@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="p-field p-col-12 p-md-12">
-          <label for="incident-description">Incident Description <span class="text-danger">*</span></label>
+          <label for="incident-description">Description <span class="text-danger">*</span></label>
           <textarea pInputTextarea id="incident-description" rows="4" formControlName="incidentDescription" required
             class="p-inputtextarea description-textarea" style="height: 10rem;"></textarea>
           <div
@@ -64,7 +64,7 @@
       <!-- Incident Details Section -->
       <div class="p-grid p-fluid" class="incident-details">
         <div class="p-field p-col-12 p-md-4">
-          <label for="incidents-type">Incident Type</label>
+          <label for="incidents-type">Type</label>
           <p-dropdown id="incidents-type" [options]="incidentTypes" formControlName="incidentType"
             [style]="{'width.rem': 8}" [showClear]="true"></p-dropdown>
         </div>
@@ -75,7 +75,7 @@
             [showClear]="true"></p-dropdown>
         </div>
         <div class="p-field p-col-12 p-md-4">
-          <label for="priority">Incident Priority</label>
+          <label for="priority">Priority</label>
           <p-dropdown id="priority" [options]="priorities" formControlName="priority" [style]="{'width.rem': 8}"
             [showClear]="true"></p-dropdown>
         </div>
