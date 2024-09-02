@@ -1,7 +1,16 @@
 ::ng-deep .p-dialog .p-dialog-content {
     overflow: auto;
   }
-  
+  ::ng-deep .p-dialog .p-dialog-header-icons 
+  {
+
+        display: flex;
+        position: absolute;
+        align-items: end;
+        right: 1rem;
+        top: 1.8rem;
+    
+  }
   ::ng-deep .p-dialog-content::-webkit-scrollbar {
     width: 8px;
   }
@@ -19,10 +28,11 @@
   ::ng-deep .p-dialog-content::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
-  
-  ::ng-deep .p-dialog .p-dialog-header {
-      padding: 20px 24px 0px 24px !important;
-      border-bottom: 2px solid rgb(52, 75, 106)!important;
+
+    ::ng-deep .p-dialog .p-dialog-header
+    {
+        padding: 1rem;
+        padding-bottom: 0rem;
     }
   
     .forward-button{
@@ -52,20 +62,15 @@
   
     .dialog-search-input {
       padding: 0rem 2rem;
-      border: none;
       height: 2rem;
       flex-grow: 1;
-    }
-  
-    .dialog-search-input:focus {
-      outline:none;
     }
   .text-message{
       margin-top: 3px;
       width: 100%;
       display: flex;
       justify-content: start;
-      background-color:  rgba(22, 139, 242, 0.1);
+      background-color: rgb(250, 246, 255);
       padding: 10px;
       border-radius: 10px;
       .dialog-textarea {
@@ -81,43 +86,27 @@
       .dialog-textarea:focus{
         outline: none;
       }
+  
+      button{
+          font-size: 13px;
+          color: white;
+          background-color: rgb(255, 255, 255);
+          border: none;
+          border-radius: 30px;
+          height: 38px;
+          padding: 10px;
+          i{
+              color: rgba(201, 169, 241, 1);
+              rotate: 45deg;
+          }
+      }
     }
   
-    .forward-names{
-      margin-left: 20px;
-      margin-right: 20px;
-        .person-details{
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 10px;
-          margin-bottom: 2px;
-          border-radius: 2px;
-          background-color: rgba(22, 139, 242, 0.1);
-        }
-        .image-icon{
-          display: flex;
-          align-items: center;
-        }
-        img{
-          width: 50px;
-          border-radius: 50%;
-        }
-        .name-details{
-          display: flex;
-          flex-direction: column;
-        }
-        p{
-          margin: 0px;
-        }
-        .p1{
-          font-size: 13px;
-        }
-    }
   
     .selected-users{
       display: flex;
       flex-wrap: wrap;
+      margin-left: 3rem;
       gap: 5px;
       max-height: calc(2 * 40px + 10px);
       overflow-y: auto;
@@ -129,7 +118,7 @@
         padding: 3px;
         font-size: 13px;
         border-radius: 30px;
-        background-color: rgba(22, 139, 242, 0.1);
+        background-color: rgb(250, 246, 255);
         img{
           width: 35px;
           border-radius: 50%;
@@ -175,21 +164,90 @@
         padding: 0rem 0rem 0rem 2rem;
       }
     }
+  .forwardbtn
+  {
+    border-radius: 8px !important;
+  }
 
- ::ng-deep .p-dialog .p-dialog-footer button {
-    margin: 0 0.5rem 0 0;
-    width: 5.5rem;
-    height: 1.8rem;
+ ::ng-deep .p-button.p-button.p-button-outlined
+  {
+    width: 5rem;
+    height: 2rem;
+  }
+  ::ng-deep .p-button .p-button-label
+  {
+    font-size: 0.8rem;
+  }
+  ::ng-deep .p-button.p-button-success.p-button-outlined
+  {
+    padding-left: 10px;
+  }
+  .search-names{
+    margin-left: 2.2rem;
+    margin-right: 20px;
+    max-height: 145px;
+    z-index: 3;
+    overflow-y: auto;
+    position: absolute;
+    margin-top: 0rem;
+    width: 64%;
+    box-shadow: 2px 2px 3px grey;
+    background-color: white;
+    border-radius: 10px;
+      .person-details{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        background-color: rgb(237, 249, 255); 
+      }   
+      .image-icon{
+        display: flex;
+        align-items: center;
+      }
+      img{
+        width: 50px;
+        border-radius: 50%;
+      } 
+      .name-details{
+        display: flex;
+        flex-direction: column;
+      }     
+      p{
+        margin: 0px;
+      }   
+      .p1{
+        font-size: 13px;
+      }  
+      .search-padding{
+        margin-bottom: 2px;
+      }
+  }
+  .outlinebtn
+  {
+    box-shadow: none;
+  }
+.permissions
+{
+    margin-left: 2rem;
+}
+.permissions .d-flex {
     display: flex;
-    justify-content: center;
     align-items: center;
+    margin-bottom: 1rem;
+    margin-left: 3rem;
 }
-::ng-deep .p-dialog .p-dialog-footer .p-button-label
-{
-  font-size: 0.8rem;
+
+.permissions .d-flex .pt-1 {
+    margin-right: 0.5rem; 
 }
-::ng-deep  .p-button .p-button-icon-left
-{
-  
-  font-size: 0.8rem;
+.permissions .d-flex label {
+    font-weight: bold; 
 }
+.permissions .d-flex p.text1 {
+    margin: 0; 
+    font-size: 12px;
+    color: #666;
+}
+
+

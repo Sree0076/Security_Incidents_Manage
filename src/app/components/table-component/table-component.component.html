@@ -1,46 +1,67 @@
 <div class="card">
-    <p-table #dt2 [value]="incidents" [rowHover]="true" scrollable="true" scrollWidth="100%"
-        (onRowSelect)="viewIncidentData($event)" dataKey="id" [rows]="5" [rowsPerPageOptions]="[5,10, 25, 50]"
-        [paginator]="true" [globalFilterFields]="['incidentTitle', 'id', 'category']"
-        [tableStyle]="{ 'min-width': '73rem'}" paginatorPosition="top" selectionMode="single"
-        [(selection)]="selectedIncident">
-        <ng-template pTemplate="caption">
-            <div class="flex">
-                <p-iconField iconPosition="left" class="ml-auto">
-                    <p-inputIcon>
-                        <i class="pi pi-search"></i>
-                    </p-inputIcon>
-                    <input pInputText type="text" [(ngModel)]="searchValue" (input)="filterGlobal($event)"
-                        placeholder="Search keyword" />
-                </p-iconField>
-                @if(!isadmin){<p-button class="addButton" label="Report Incident" icon="pi pi-plus"
-                    (click)="openSidebar()" [outlined]="true" />}
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th>No</th>
-                <th>Title</th>
-                <th>Type</th>
-                <th>Categories</th>
-                <th>Created At</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-            <tr>
-                <th>
-                    <p-columnFilter type="text" field="incidentNo" placeholder="Incident No"
-                        ariaLabel="Filter Incident No" />
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="incidentTitle" placeholder="Title" ariaLabel="Filter Country" />
-                </th>
-                <th>
-                    <p-columnFilter field="incidentType" matchMode="equals" [showMenu]="false">
-                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-dropdown (ngModel)="value" [options]="types" (onChange)="filter($event.value)"
-                                placeholder="Select One" [showClear]="true">
+    <p-table
+        #dt2 
+        [value]="incidents" 
+        [rowHover]="true"
+        (onRowSelect)="viewIncidentData($event)"
+        dataKey="id"
+        [rows]="5"
+        [rowsPerPageOptions]="[5,10, 25, 50]"
+        [paginator]="true"
+        [globalFilterFields]="['incidentTitle', 'incidentNo', 'category']"
+        paginatorPosition="top"
+        selectionMode="single" [(selection)]="selectedIncident"
+    >
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <p-iconField iconPosition="left" class="ml-auto">
+                <p-inputIcon>
+                    <i class="pi pi-search"></i>
+                </p-inputIcon>
+                <input 
+                    pInputText 
+                    type="text" 
+                    [(ngModel)]="searchValue" (input)="filterGlobal($event)"
+                    placeholder="Search keyword" />
+            </p-iconField>
+            @if(!isadmin){<p-button class="addButton" label="Report Incident" icon="pi pi-plus" (click)="openSidebar()" [outlined]="true"/>}
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>No</th>
+            <th >Title</th>
+            <th >Type</th>
+            <th >Categories</th>
+            <th >Created At</th>
+            <th style="width: 10%">Priority</th>
+            <th >Status</th>
+            <th >Actions</th>
+        </tr>
+        <tr>
+            <th>
+                <p-columnFilter 
+                    type="text"
+                    field="incidentNo" 
+                    placeholder="Incident No" 
+                    ariaLabel="Filter Incident No" />
+            </th>
+            <th>
+                <p-columnFilter 
+                    type="text"
+                    field="incidentTitle"
+                    placeholder="Title" 
+                    ariaLabel="Filter Country" />
+            </th>
+            <th>
+                <p-columnFilter field="incidentType" matchMode="equals" [showMenu]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown 
+                            (ngModel)="value" 
+                            [options]="types"
+                            (onChange)="filter($event.value)" 
+                            placeholder="Select One"
+                            [showClear]="true">
                                 <ng-template let-option pTemplate="item">
                                     <p-tag [value]="option.label" [severity]="getSeverity(option.label)" />
                                 </ng-template>
@@ -83,35 +104,32 @@
                                 <ng-template let-option pTemplate="item">
                                     <p-tag [value]="option.label" [severity]="getSeverity(option.label)" />
                                 </ng-template>
-                            </p-dropdown>
-                        </ng-template>
-                    </p-columnFilter>
-                </th>
-                <th>
-
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-incident>
-            @if(!incident.isDraft || !isadmin)
-            {
-            <tr>
-                <td [pSelectableRow]="incident">@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentNo }}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentTitle| tableTruncate:10 }}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentType ? incident.incidentType.replace('
-                    Incidents', '').trim() : ''}}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{ {{ incident.category | tableTruncate:10}} }</td>
-                <td> @if(isLoading) {<p-skeleton />}@else{{{ incident.createdAt | date:'dd-MM-yy, hh:mm a' }}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.priority }}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{
-                    @if(getAssigned && incident.isCorrectionFilled && incident.incidentStatus!== "closed")
-                    {
-                    <button type="button" class="btn btn-outline-primary  reviewbtn  "
-                        [disabled]="incident.isSubmittedForReview" (click)="onSubmitReview(incident)">Submit for
-                        Review</button>
-                    }
-                    @else
-                    {
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-incident>
+        @if(!incident.isDraft || !isadmin)
+        {
+        <tr  >
+            <td [pSelectableRow]="incident">@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentNo  }}}</td>
+            <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentTitle| tableTruncate:10 }}}</td>
+            <td>@if(isLoading) {<p-skeleton />}@else{{{   incident.incidentType ? incident.incidentType.replace(' Incidents', '').trim() : ''}}}</td>
+            <td>@if(isLoading) {<p-skeleton />}@else{ {{ incident.category | tableTruncate:10}} }</td>
+            <td> @if(isLoading) {<p-skeleton />}@else{{{ incident.createdAt | date:'dd-MM-yy, hh:mm a' }}}</td>
+            <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.priority }}}</td>
+            <td>@if(isLoading) {<p-skeleton />}@else{
+                @if(getAssigned && incident.isCorrectionFilled && incident.incidentStatus!== "closed")
+                {
+                  <button type="button" class="btn btn-outline-primary  reviewbtn  " [disabled]="incident.isSubmittedForReview" (click)="onSubmitReview(incident)">Submit for Review</button>
+                }
+                @else
+                {
                     @if(incident.isSubmittedForReview && isadmin && incident.incidentStatus!== "closed")
                     {
                     <p-button icon="pi pi-check" class="approvalbtn" [rounded]="true" (click)="onApproval(incident)" />
@@ -127,22 +145,22 @@
                     }
                     }
 
-
-                    }
-                </td>
-                <td>@if(isLoading) {<p-skeleton />}@else{
-                    <p-button icon="pi pi-plus" (click)="onIconClick(incident)" [outlined]="true" />
-                    }
-                </td>
-            </tr>
             }
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="5">No Incidents found.</td>
-            </tr>
-        </ng-template>
+          </td>
+            <td>@if(isLoading) {<p-skeleton />}@else{
+                <i class="pi pi-send"  style="color: rgb(19, 73, 209); font-size:1.3rem ;"(click)="onIconClick(incident)"></i>
+                <i class="pi pi-file-edit"  style="color: rgb(10, 100, 138); font-size:1.3rem ; margin-left: 8px;"(click)="editIncidentData(incident,incident.id)"></i>
+            }
+        </td>
+        </tr>
+     }
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="5">No Incidents found.</td>
+        </tr>
+    </ng-template>
     </p-table>
 </div>
-<app-forward-form-component [visibility]="displayForwardingModal"
-    (dialogClosed)="onDialogClosed()"></app-forward-form-component>
+<app-forward-form-component [visibility]="displayForwardingModal" (dialogClosed)="onDialogClosed()"></app-forward-form-component>
+

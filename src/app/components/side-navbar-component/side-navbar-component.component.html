@@ -12,13 +12,16 @@
         </a>
         <span class="tooltip">Dashboard</span>
       </li>
-      <li>
-        <a href="#">
-          <i class='bx bx-user'></i>
-          <span class="links_name">User Management</span>
-        </a>
-        <span class="tooltip">User Management</span>
-      </li>
+      @if(employeeData?.role?.permission?.userManagement)
+      {
+        <li>
+          <a (click)="usermanage()">
+            <i class='bx bx-user'></i>
+            <span class="links_name">User Management</span>
+          </a>
+          <span class="tooltip">User Management</span>
+        </li>
+      }
       <li>
         <a >
           <i class='bx bx-bell' (click)="openNotification()"></i>
@@ -66,7 +69,10 @@
       <i class='bx bx-chevron-down'></i>
     </div>
   </nav>
-  <p-sidebar [(visible)]="isnoti" position="right" [modal]="true" [showCloseIcon]="true" [style]="{'width.rem': 25}">
+  @if(isNotificationView)
+  {
+    <p-sidebar [(visible)]="isNotificationView" position="right" [modal]="true" [showCloseIcon]="true" [style]="{'width.rem': 25}">
+      <app-notification-component></app-notification-component>
+    </p-sidebar>
+  }
 
-    <app-notification-component></app-notification-component>
-  </p-sidebar>

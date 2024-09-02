@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, Input, SimpleChanges, ViewChild, OnInit, OnChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  SimpleChanges,
+  ViewChild,
+  OnInit,
+  OnChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -77,11 +84,11 @@ export class TableComponentComponent implements OnInit, OnChanges {
   @Input() isadmin = false;
   @Input() getDraft = false;
   @Input() getAssigned = false;
-  @Input() filterCategory = "";
+  @Input() filterCategory = '';
 
   @ViewChild('dt2') dt2: Table | undefined;
   incidents: IncidentData[] = [];
-  isLoading=true;
+  isLoading = true;
   priorities: any[] = [
     { label: 'High', value: 'High' },
     { label: 'Medium', value: 'Medium' },
@@ -98,7 +105,6 @@ export class TableComponentComponent implements OnInit, OnChanges {
     { label: 'Privacy', value: 'Privacy Incidents' },
     { label: 'Security', value: 'Security Incidents' },
     { label: 'Quality', value: 'Quality Incidnets' },
-
   ];
   categories = [
     { label: 'Denial of Service', value: 'denialOfService' },
@@ -139,9 +145,8 @@ export class TableComponentComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private employeeDataService: EmployeeSharedService,
-    private sidebarService : VariablesSharedService,
+    private sidebarService: VariablesSharedService
   ) {}
-
 
   ngOnInit() {
     this.isLoading = true;
@@ -184,7 +189,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
       this.isLoading = false;
     }, delay);
   }
-  
+
   fetchAllIncidents() {
     this.incidentDataService.incidentData.subscribe((data) => {
       if (data) {
@@ -301,9 +306,9 @@ export class TableComponentComponent implements OnInit, OnChanges {
       this.incidentDataService.setSelectedIncidentId(incidentId);
       if (!this.getAssigned && !this.isadmin) {
         console.log(this.isadmin);
-        this.router.navigate(['/edit-incident']);
+        this.router.navigate(['/editform']);
       } else {
-        this.router.navigate(['/resolve-incident']);
+        this.router.navigate(['/editform']);
       }
     } else {
       this.showError(' Sorry, The Incident is already Closed !');
@@ -332,7 +337,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
     const incident = event.data;
     console.log(incident);
     this.incidentDataService.setSelectedIncidentId(incident.id);
-    this.router.navigate(['/view-incident']);
+    this.router.navigate(['/viewform']);
   }
 
   sortByPriority() {
@@ -542,9 +547,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
             this.showSuccess('Corrective measures aproved sucessfully');
           });
       },
-      reject: () => {
-
-      },
+      reject: () => {},
     });
   }
   onReject(incident: IncidentData) {
@@ -557,15 +560,13 @@ export class TableComponentComponent implements OnInit, OnChanges {
           isSubmittedForReview: false,
         };
         this.tablefetchService
-        .submitForUser(incident.id,submitData)
-        .subscribe((response) => {
-          console.log(response);
-          this.showError('Incident returned');
-        });
+          .submitForUser(incident.id, submitData)
+          .subscribe((response) => {
+            console.log(response);
+            this.showError('Incident returned');
+          });
       },
-      reject: () => {
-
-      },
+      reject: () => {},
     });
   }
 
@@ -591,7 +592,6 @@ export class TableComponentComponent implements OnInit, OnChanges {
         detail: `${message}`,
       });
       setTimeout(() => {
-
         this.incidentDataService.fetchIncidentData(this.getAssigned);
       }, 2000);
     }, 50);

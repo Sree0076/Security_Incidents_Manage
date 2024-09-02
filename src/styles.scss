@@ -56,7 +56,7 @@ body {
 
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0.3rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -65,7 +65,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d2d0d0;
+  background: #828181;
   /* color of the scrollbar thumb */
   border-radius: 10px;
   /* rounded corners for the scrollbar thumb */
@@ -96,4 +96,8 @@ body {
 .side-navbar {
   display: flex;
   flex-direction: row;
+}
+.pi 
+{
+  cursor: pointer;
 }

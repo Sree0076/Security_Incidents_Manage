@@ -1,0 +1,8 @@
+<div class="side-navbar" [ngClass]="{'expanded': isSidebarExpanded}">
+    <app-side-navbar-component  (sidebarToggle)="handleSidebarToggle($event)"></app-side-navbar-component>
+</div>
+<div class="view" [ngClass]="{'expanded': isSidebarExpanded}">
+    <app-view-incident-form></app-view-incident-form>
+</div>
+
+

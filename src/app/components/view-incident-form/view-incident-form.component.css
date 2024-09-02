@@ -1,7 +1,6 @@
 .view-incident {
   width: 100%;
   background-color: #fff;
-  padding: 20px;
   border-radius: 8px;
 }
 
@@ -54,8 +53,8 @@ h2{
 
 .profile-info {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 10px;
 }
 
 .info-item {
@@ -124,13 +123,13 @@ h2{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 70rem;
-  box-shadow: 0 2px 4px rgba(0.2, 0.2, 0.2, 0.5);
 
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-
+  width: 62.5rem;
   margin-top:2rem;
 }
+strong
+{
+  color: #6c757d;
+  font-size: 13px;
+}
+

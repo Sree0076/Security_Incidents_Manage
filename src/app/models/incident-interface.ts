@@ -28,9 +28,10 @@ export interface IncidentData {
   accepted: number;
   isSubmittedForReview: boolean;
   employeeId: number;
-  documentUrls: string;
-  createdAt: string;
+  documentUrls : string;
+  remarks:string;
   preventiveAction: string;
+  createdAt: string; 
 }
 
 export interface Incidents {

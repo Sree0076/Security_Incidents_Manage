@@ -1,9 +1,11 @@
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IncidentServiceService } from 'src/app/services/incident/incident.service.service';
 import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { IncidentData } from 'src/app/models/incident-interface';
 
 @Component({
   selector: 'app-view-incident-form',
@@ -18,7 +20,7 @@ export class ViewIncidentFormComponent {
     private router: Router,
     private incidentService: IncidentSharedService
   ) {}
-  data: any = {};
+  data!: IncidentData ;
   id: number = 0;
   documentUrls: { name: string; url: string }[] = [];
 
