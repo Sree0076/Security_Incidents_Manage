@@ -1,4 +1,3 @@
-
 <div class="card">
     <p-table
         #dt2 
@@ -64,66 +63,46 @@
                             placeholder="Select One"
                             [showClear]="true">
                                 <ng-template let-option pTemplate="item">
-                                    <p-tag 
-                                        [value]="option.label" 
-                                        [severity]="getSeverity(option.label)" />
+                                    <p-tag [value]="option.label" [severity]="getSeverity(option.label)" />
                                 </ng-template>
-                        </p-dropdown>
-                    </ng-template>
-                </p-columnFilter>
-            </th>
-            <th>
-                <p-columnFilter field="Categories" matchMode="equals" [showMenu]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown 
-                            (ngModel)="value" 
-                            [options]="categories"
-                            (onChange)="filterCategories($event.value)" 
-                            placeholder="Select One" 
-                            [showClear]="true">
+                            </p-dropdown>
+                        </ng-template>
+                    </p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter field="Categories" matchMode="equals" [showMenu]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown (ngModel)="value" [options]="categories"
+                                (onChange)="filterCategories($event.value)" placeholder="Select One" [showClear]="true">
                                 <ng-template let-option pTemplate="item">
-                                    <p-tag 
-                                        [value]="option.label" 
-                                        [severity]="getSeverity(option.label)" />
+                                    <p-tag [value]="option.label" [severity]="getSeverity(option.label)" />
                                 </ng-template>
-                        </p-dropdown>
-                    </ng-template>
-                </p-columnFilter>
-            </th>
-            <th>
-                <p-columnFilter type="boolean" field="verified" />
-            </th>
-            <th>
-                <p-columnFilter field="incident.priority" matchMode="equals" [showMenu]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown 
-                            (ngModel)="value" 
-                            [options]="priorities"
-                            (onChange)="filterPriority($event.value)" 
-                            placeholder="Priority" 
-                            [showClear]="true">
+                            </p-dropdown>
+                        </ng-template>
+                    </p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="boolean" field="verified" />
+                </th>
+                <th>
+                    <p-columnFilter field="incident.priority" matchMode="equals" [showMenu]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown (ngModel)="value" [options]="priorities"
+                                (onChange)="filterPriority($event.value)" placeholder="Priority" [showClear]="true">
                                 <ng-template let-option pTemplate="item">
-                                    <p-tag 
-                                        [value]="option.value" 
-                                        [severity]="getSeverity(option.label)" />
+                                    <p-tag [value]="option.value" [severity]="getSeverity(option.label)" />
                                 </ng-template>
-                        </p-dropdown>
-                    </ng-template>
-                </p-columnFilter>
-            </th>
-            <th>
-                <p-columnFilter field="incident.incidentStatus" matchMode="equals" [showMenu]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-dropdown 
-                            (ngModel)="value" 
-                            [options]="statuses"
-                            (onChange)="filterStatus($event.value)" 
-                            placeholder="Select One" 
-                            [showClear]="true">
+                            </p-dropdown>
+                        </ng-template>
+                    </p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter field="incident.incidentStatus" matchMode="equals" [showMenu]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-dropdown (ngModel)="value" [options]="statuses" (onChange)="filterStatus($event.value)"
+                                placeholder="Select One" [showClear]="true">
                                 <ng-template let-option pTemplate="item">
-                                    <p-tag 
-                                        [value]="option.label" 
-                                        [severity]="getSeverity(option.label)" />
+                                    <p-tag [value]="option.label" [severity]="getSeverity(option.label)" />
                                 </ng-template>
                         </p-dropdown>
                     </ng-template>
@@ -153,20 +132,21 @@
                 {
                     @if(incident.isSubmittedForReview && isadmin && incident.incidentStatus!== "closed")
                     {
-                        <p-button icon="pi pi-check" class="approvalbtn" [rounded]="true" (click)="onApproval(incident)"/>
-                        <p-button icon="pi pi-times" [rounded]="true" severity="danger"(click)="onReject(incident)"  />
+                    <p-button icon="pi pi-check" class="approvalbtn" [rounded]="true" (click)="onApproval(incident)" />
+                    <p-button icon="pi pi-times" [rounded]="true" severity="danger" (click)="onReject(incident)" />
                     }
                     @else if (getAssigned && !incident.accepted) {
-                        <p-button icon="pi pi-check" [rounded]="true" (click)="onIncidentAccept(incident)" />
+                    <p-button icon="pi pi-check" [rounded]="true" (click)="onIncidentAccept(incident)" />
                     }
                     @else
                     {
-                      <p-tag [value]="getStatusLabel(incident.incidentStatus)" [severity]="getSeverity(incident.incidentStatus)" />
+                    <p-tag [value]="getStatusLabel(incident.incidentStatus)"
+                        [severity]="getSeverity(incident.incidentStatus)" />
                     }
-                }
+                    }
 
-
-            }</td>
+            }
+          </td>
             <td>@if(isLoading) {<p-skeleton />}@else{
                 <i class="pi pi-send"  style="color: rgb(19, 73, 209); font-size:1.3rem ;"(click)="onIconClick(incident)"></i>
                 <i class="pi pi-file-edit"  style="color: rgb(10, 100, 138); font-size:1.3rem ; margin-left: 8px;"(click)="editIncidentData(incident,incident.id)"></i>
@@ -183,3 +163,4 @@
     </p-table>
 </div>
 <app-forward-form-component [visibility]="displayForwardingModal" (dialogClosed)="onDialogClosed()"></app-forward-form-component>
+

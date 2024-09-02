@@ -117,6 +117,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 62.5rem;
   margin-top:2rem;
 }
@@ -125,3 +126,4 @@ strong
   color: #6c757d;
   font-size: 13px;
 }
+

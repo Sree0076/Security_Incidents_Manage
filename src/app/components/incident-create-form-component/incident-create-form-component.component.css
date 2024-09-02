@@ -14,6 +14,16 @@
     font-size: 1.5em;
     color: #333;
   }
+
+  .pi{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .upload-text{
+    text-align: center;
+  }
   
   .p-field {
     margin-bottom: 1rem;
@@ -81,9 +91,13 @@
     margin-top: 20px;
   }
   
-  .save-button, .submit-button {
+  .save-button{
     padding: 0.75rem 1.5rem;
     width: 11.5rem; /* Ensures buttons have a minimum width */
+  }
+
+  .submit-button{
+    width: 8rem;
   }
   
   /* Additional button styling */
@@ -99,7 +113,7 @@
   
   ::ng-deep .p-sidebar-right
   {
-    width: 35rem;
+    width: 45rem;
   }
   ::ng-deep .p-sidebar .p-sidebar-header
   {
@@ -126,4 +140,17 @@
       resize: none;
     }
   }
+
+  .upload-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  ::ng-deep .p-calendar .p-datepicker {
+    min-width: 0rem !important;
+    top:0rem !important;
+}
+
   

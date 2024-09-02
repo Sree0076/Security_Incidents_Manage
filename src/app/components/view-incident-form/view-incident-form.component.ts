@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-inferrable-types */
-import { Component, OnInit } from '@angular/core';
+
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IncidentServiceService } from 'src/app/services/incident/incident.service.service';
 import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
@@ -15,7 +14,7 @@ import { IncidentData } from 'src/app/models/incident-interface';
   templateUrl: './view-incident-form.component.html',
   styleUrl: './view-incident-form.component.css',
 })
-export class ViewIncidentFormComponent implements OnInit {
+export class ViewIncidentFormComponent {
   constructor(
     private apiService: IncidentServiceService,
     private router: Router,

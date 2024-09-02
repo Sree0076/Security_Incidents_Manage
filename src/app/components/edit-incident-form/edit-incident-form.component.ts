@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/ban-types */
-/* eslint-disable @typescript-eslint/no-inferrable-types */
-import { Component, OnInit } from '@angular/core';
+
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IncidentServiceService } from 'src/app/services/incident/incident.service.service';
 import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
 import { environment } from 'src/environments/environment';
 import { IncidentData } from 'src/app/models/incident-interface';
+import { MessageService } from 'primeng/api';
 import { NgFor, NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -42,7 +40,8 @@ import { ToastModule } from 'primeng/toast';
   templateUrl: './edit-incident-form.component.html',
   styleUrl: './edit-incident-form.component.css',
 })
-export class EditIncidentFormComponent implements OnInit {
+
+export class EditIncidentFormComponent {
   timeString!: string;
   dateString!: string;
   data: any = {};
