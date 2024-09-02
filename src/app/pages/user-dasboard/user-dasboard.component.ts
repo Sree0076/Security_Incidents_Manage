@@ -10,6 +10,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { IncidentCreateFormComponentComponent } from 'src/app/components/incident-create-form-component/incident-create-form-component.component';
 import { TableComponentComponent } from 'src/app/components/table-component/table-component.component';
 import { LoaderComponentComponent } from '../../components/loader-component/loader-component.component';
+import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/variables.shared.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class UserDasboardComponent implements OnInit {
   ];
   cardClass: string[] = ['privacy-card', 'security-card', 'quality-card'];
   isLoading = true;
+  isCreateIncidentView=false;
   incidentData!: CardData[];
   isSidebarExpanded = false; 
    selectedCategory = "";
@@ -40,7 +42,7 @@ export class UserDasboardComponent implements OnInit {
       card.classList.toggle('shrink');
     }
   }
-  constructor(private incidentDataService: IncidentSharedService, private employeeService: AuthServiceService) {}
+  constructor(private incidentDataService: IncidentSharedService, private employeeService: AuthServiceService,private craeteIncidentFormview : VariablesSharedService) {}
 
   ngOnInit() {
     this.isLoading=true;
@@ -84,6 +86,11 @@ export class UserDasboardComponent implements OnInit {
     ).subscribe(() => {
       this.isLoading = false; 
     });
+
+    this.craeteIncidentFormview.sidebarVisible$.subscribe((data)=>
+  {
+    this.isCreateIncidentView = data
+  });
   }
   getCategory(event: string) {
     document.getElementById("tableRef")?.scrollIntoView({

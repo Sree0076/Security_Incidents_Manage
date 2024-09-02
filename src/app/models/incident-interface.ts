@@ -31,6 +31,8 @@ export interface IncidentData {
   isSubmittedForReview :boolean;
   employeeId: number;
   documentUrls : string;
+  remarks:string;
+  preventiveAction: string;
   createdAt: string; 
 }
 

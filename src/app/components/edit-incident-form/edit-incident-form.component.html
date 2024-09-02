@@ -1,0 +1,142 @@
+<div>
+
+    <p-toast />
+    <div class="container vh-100 p-4">
+
+        <form class="form shadow p-5 rounded" [formGroup]="editform" (ngSubmit)="onSubmit()">
+            <div class="header-section">
+                <div class="vendor-name">
+                    <h2 class="title">Incident {{data.incidentTitle}}, {{data.incidentNo}}
+                        <span [ngClass]="getStatus(data.incidentStatus)"
+                            class="status-badge">{{data.incidentStatus}}</span>
+                    </h2>
+                    <span class="created-info">Reported by {{data.reportedBy}},{{data.roleOfReporter}}
+                        {{data.incidentOccuredDate| date:'dd-MM-yyyy, hh:mm a'}} </span>
+                </div>
+            </div>
+            <!-- <button class="editbutton" (click)="redirectToView()">View</button> -->
+
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Incident Description</mat-label>
+                        <textarea matInput formControlName="incidentDescription" rows="4"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- Incident Type, Category, and Priority Fields -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Incident Type</mat-label>
+                        <input matInput formControlName="incidentType">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Category</mat-label>
+                        <input matInput formControlName="category">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Priority</mat-label>
+                        <input matInput formControlName="priority">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Correction Completion Target Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="correctionCompletionTargetDate"
+                            dateFormat="dd-mm-yy" placeholder="Choose a date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div *ngIf="documentUrls.length > 0" class="mt-3">
+                        <h4>Uploaded Files:</h4>
+                        <div class="d-flex flex-wrap">
+                            <div *ngFor="let file of documentUrls" class="m-2">
+                                <img [src]="file.url" [alt]="file.name"
+                                    style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #a27ad7;" />
+                                <div class="text-center mt-2">
+
+                                    <a [href]="file.url" target="_blank"
+                                        style="text-decoration: none; color:rgba(16, 107, 230, 1);"><i
+                                            class="bi bi-eye"></i></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Investigation Details Field -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Investigation Details</mat-label>
+                        <textarea matInput formControlName="investigationDetails" rows="4"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- Associated Impacts, Collection of Evidence, Correction, and Corrective Action Fields -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Associated Impacts</mat-label>
+                        <textarea matInput formControlName="associatedImpacts" rows="4"></textarea>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Collection of Evidence</mat-label>
+                        <textarea matInput formControlName="collectionOfEvidence" rows="4"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Correction</mat-label>
+                        <textarea matInput formControlName="correction" rows="4"></textarea>
+                    </mat-form-field>
+                </div>
+
+
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Corrective Action</mat-label>
+                        <textarea matInput formControlName="correctiveAction" rows="4"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Preventive Action</mat-label>
+                        <textarea matInput formControlName="preventiveAction" rows="4"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+
+
+            <button class="editbutton" type="submit">Submit</button>
+        </form>
+    </div>
+</div>

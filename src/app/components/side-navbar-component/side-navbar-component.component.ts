@@ -7,6 +7,7 @@ import { AuthServiceService } from 'src/app/services/Authentication/auth.service
 import { NotificationComponentComponent } from '../notification-component/notification-component.component';
 import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/variables.shared.service';
 import { SidebarModule } from 'primeng/sidebar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-navbar-component',
@@ -16,12 +17,13 @@ import { SidebarModule } from 'primeng/sidebar';
   styleUrl: './side-navbar-component.component.css',
 })
 export class SideNavbarComponentComponent implements OnInit {
-  constructor(private employeeService : EmployeeSharedService, private authService : AuthServiceService, private notificationService : VariablesSharedService,)   {}
+  constructor(private employeeService : EmployeeSharedService, private authService : AuthServiceService, private notificationService : VariablesSharedService,private router : Router)   {}
 
   @Output() sidebarToggle = new EventEmitter<boolean>();
   isExpanded = false;
   employeeData: Employee | null = null;
-isnoti=false;
+  isNotificationView=false;
+  
   ngOnInit() {
    this.getEmployeeData();
   }
@@ -68,6 +70,9 @@ isnoti=false;
     this.authService.logout();
    }
    openNotification() {
-   this.isnoti=true;
+   this.isNotificationView=true;
   }
+  usermanage() {
+    this.router.navigate(['/usermanage']);
+    }
 }

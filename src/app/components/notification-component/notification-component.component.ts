@@ -29,7 +29,6 @@ export class NotificationComponentComponent implements OnInit {
 
   isClearingAll = false;
 
-
   get unreadNotifications() {
     return this.allNotifications.filter(notification => !notification.isRead);
   }

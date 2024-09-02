@@ -4,16 +4,14 @@
         #dt2 
         [value]="incidents" 
         [rowHover]="true"
-        scrollable="true" 
-        scrollWidth="100%"
         (onRowSelect)="viewIncidentData($event)"
         dataKey="id"
         [rows]="5"
         [rowsPerPageOptions]="[5,10, 25, 50]"
         [paginator]="true"
-        [globalFilterFields]="['incidentTitle', 'id', 'category']"
-        [tableStyle]="{ 'min-width': '73rem' }"
+        [globalFilterFields]="['incidentTitle', 'incidentNo', 'category']"
         paginatorPosition="top"
+        selectionMode="single" [(selection)]="selectedIncident"
     >
     <ng-template pTemplate="caption">
         <div class="flex">
@@ -37,7 +35,7 @@
             <th >Type</th>
             <th >Categories</th>
             <th >Created At</th>
-            <th >Priority</th>
+            <th style="width: 10%">Priority</th>
             <th >Status</th>
             <th >Actions</th>
         </tr>
@@ -139,8 +137,8 @@
     <ng-template pTemplate="body" let-incident>
         @if(!incident.isDraft || !isadmin)
         {
-        <tr>
-            <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentNo  }}}</td>
+        <tr  >
+            <td [pSelectableRow]="incident">@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentNo  }}}</td>
             <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentTitle| tableTruncate:10 }}}</td>
             <td>@if(isLoading) {<p-skeleton />}@else{{{   incident.incidentType ? incident.incidentType.replace(' Incidents', '').trim() : ''}}}</td>
             <td>@if(isLoading) {<p-skeleton />}@else{ {{ incident.category | tableTruncate:10}} }</td>
@@ -170,8 +168,10 @@
 
             }</td>
             <td>@if(isLoading) {<p-skeleton />}@else{
-                <p-button   icon="pi pi-plus" (click)="onIconClick(incident)" [outlined]="true"/>
-            }</td>
+                <i class="pi pi-send"  style="color: rgb(19, 73, 209); font-size:1.3rem ;"(click)="onIconClick(incident)"></i>
+                <i class="pi pi-file-edit"  style="color: rgb(10, 100, 138); font-size:1.3rem ; margin-left: 8px;"(click)="editIncidentData(incident,incident.id)"></i>
+            }
+        </td>
         </tr>
      }
     </ng-template>

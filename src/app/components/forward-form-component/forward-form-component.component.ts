@@ -6,11 +6,12 @@ import { Router } from '@angular/router';
 import { ForwardServiceService } from 'src/app/services/forwardForm/forward.service.service';
 import { ForwardPipePipe } from 'src/app/pipes/forward/forward-pipe.pipe';
 import { DialogModule } from 'primeng/dialog';
-
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-forward-form-component',
   standalone: true,
-  imports: [CommonModule,ForwardPipePipe,DialogModule],
+  imports: [CommonModule,ForwardPipePipe,DialogModule,FormsModule,ButtonModule],
   templateUrl: './forward-form-component.component.html',
   styleUrl: './forward-form-component.component.css',
 })
@@ -30,9 +31,7 @@ export class ForwardFormComponentComponent implements OnInit {
 
   @Output() dialogClosed = new EventEmitter<void>();
   @Input() visibility=false;
-
   forwardIncidentId =0;
-
   user_details:any[]=[];
   searchTerm='';
   selectedUsers: any[] = [];

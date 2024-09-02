@@ -98,3 +98,14 @@ th{
 {
     font-size: 0.7rem;
 }
+
+::ng-deep .p-datatable > .p-datatable-wrapper::-webkit-scrollbar {
+    height: 0.3rem; 
+}
+::ng-deep .p-datatable > .p-datatable-wrapper::-webkit-scrollbar-thumb {
+    background-color: #c7c6c6;
+}
+::ng-deep .p-datatable > .p-datatable-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: #a3a1a1;
+    cursor: pointer;
+}
