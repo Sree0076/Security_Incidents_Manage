@@ -12,7 +12,7 @@
   .section-header {
     margin-left: 20px;
     font-size: 1.5em;
-    color: #333;
+    color: #29A0B1;
   }
 
   .pi{
@@ -152,5 +152,21 @@
     min-width: 0rem !important;
     top:0rem !important;
 }
+
+::ng-deep .p-fluid .p-fileupload .p-button {
+  background-color: #29A0B1;
+  border-color: #29A0B1;
+}
+
+::ng-deep .p-fluid .p-inputtext:hover {
+ border-color: #29A0B1;
+}
+
+::ng-deep .p-calendar .p-datepicker-trigger:hover {
+  background-color: #29A0B1; 
+}
+
+
+
 
   
