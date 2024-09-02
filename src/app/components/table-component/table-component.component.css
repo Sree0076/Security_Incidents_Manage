@@ -98,3 +98,15 @@ th{
 {
     font-size: 0.7rem;
 }
+
+::ng-deep .p-button.p-button-outlined {
+    background-color: transparent;
+    color: #29A0B1;
+    border: 1px solid;
+}
+ .p-button :hover {
+    background-color: transparent;
+    background-color: #29A0B1;
+    color: white;
+    border: 1px solid;
+}

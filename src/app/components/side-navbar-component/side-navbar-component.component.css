@@ -30,7 +30,7 @@
   transition: all 0.5s ease;
 }
 .sidebar .logo-details .logo_name{
-  color: #0c58c2;
+  color: #29A0B1;
   font-size: 20px;
   font-weight: 600;
   opacity: 0;
@@ -56,7 +56,7 @@
   text-align: right;
 }
 .sidebar i{
-  color: #0c58c2;
+  color: #29A0B1;
   height: 60px;
   min-width: 50px;
   font-size: 30px;
@@ -118,7 +118,7 @@
     transform: scale(1.1);
 } 
 .sidebar li a .links_name{
-  color: #0c58c2;
+  color: #29A0B1;
   font-size: 15px;
   font-weight: 400;
   white-space: nowrap;
@@ -171,7 +171,7 @@
 .sidebar li.profile .job{
   font-size: 15px;
   font-weight: 400;
-  color: #090909;
+  color: #29A0B1;
   white-space: nowrap;
 }
 .sidebar li.profile .job{
@@ -221,7 +221,8 @@ nav {
     top: 0;
     left: 78px; 
     width: calc(100% - 78px);
-    background-color: #ffffff; 
+    background-color: #29A0B1; 
+    color: white;
     height: 60px;
     display: flex;
     z-index: 98;
