@@ -48,7 +48,9 @@
   }
   
   .btn {
-    font-size: 14px;
+    font-size: 20px;
+    border: none;
+    background-color: white;
   }
   
   .btn-primary {
@@ -208,7 +210,7 @@
   }
   .bi-pencil-square
   {
-  color: rgb(5, 103, 222);
+  color: #29A0B1;
   }
   
   .cancelconfirm,
@@ -257,4 +259,11 @@
     margin-left: 90px;
     padding-top: 5.9%;
     transition: all 0.5s ease;
+  }
+
+  ::ng-deep .p-button {
+    background-color: #29A0B1;
+    border-color:#29A0B1 ;
+    font-size: 14px;
+    font-weight: bold;
   }
