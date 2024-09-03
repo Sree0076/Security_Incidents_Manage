@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Incidents } from '../../../models/incident-interface';
 import { IncidentServiceService } from '../../incident/incident.service.service';
 import { EmployeeSharedService } from '../employee/employee.shared.service';
@@ -14,6 +14,10 @@ export class IncidentSharedService {
     private employeeDataService: EmployeeSharedService,
     private router: Router
   ) {}
+
+  private navigateToDashboard = new Subject<void>();
+
+  navigateToDashboard$ = this.navigateToDashboard.asObservable();
   private incidentDataSubject: BehaviorSubject<Incidents | null> =
     new BehaviorSubject<Incidents | null>(null);
   public incidentData: Observable<Incidents | null> =
@@ -38,5 +42,8 @@ export class IncidentSharedService {
 
   setSelectedIncidentId(incidentId: number): void {
     this.selectedIncidentIdSource.next(incidentId);
+  }
+  triggerDashboard() {
+    this.navigateToDashboard.next();
   }
 }

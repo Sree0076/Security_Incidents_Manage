@@ -98,3 +98,102 @@
   .status-closed {
     color: white;
   }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 16px;
+    box-sizing: border-box;
+    margin-left: 12rem;
+}
+
+.form {
+    max-width: 500rem;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-section {
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 0.875rem;
+}
+
+.created-info {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-field {
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.uploaded-files {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.file-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid #a27ad7;
+}
+
+.file-actions {
+    margin-top: 8px;
+}
+
+.file-link {
+    text-decoration: none;
+    color: rgba(16, 107, 230, 1);
+}
+
+.submit-button {
+    background-color:#29A0B1 ;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}

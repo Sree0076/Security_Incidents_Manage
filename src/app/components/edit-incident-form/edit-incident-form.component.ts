@@ -1,6 +1,5 @@
-
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IncidentServiceService } from 'src/app/services/incident/incident.service.service';
 import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
@@ -39,8 +38,8 @@ import { ToastModule } from 'primeng/toast';
   ],
   templateUrl: './edit-incident-form.component.html',
   styleUrl: './edit-incident-form.component.css',
+  providers: [DatePipe, MessageService],
 })
-
 export class EditIncidentFormComponent {
   timeString!: string;
   dateString!: string;

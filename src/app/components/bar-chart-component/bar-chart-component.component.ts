@@ -15,7 +15,6 @@ import { Chart, registerables } from 'chart.js';
   styleUrls: ['./bar-chart-component.component.css'],
 })
 export class BarChartComponentComponent implements OnInit {
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,7 +22,7 @@ export class BarChartComponentComponent implements OnInit {
 
   constructor(
     private chartDataService: ChartServiceService,
-    @Inject(PLATFORM_ID) private platformId: object,
+    @Inject(PLATFORM_ID) private platformId: object
   ) {
     // Register the plugin and other chart.js modules
     Chart.register(...registerables, ChartDataLabels);
@@ -42,7 +41,7 @@ export class BarChartComponentComponent implements OnInit {
       }
     });
   }
-  
+
   private transformChartData(chartData: any) {
     return {
       labels: chartData.labels,
@@ -57,7 +56,9 @@ export class BarChartComponentComponent implements OnInit {
   private setupChartOptions() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const textColorSecondary = documentStyle.getPropertyValue(
+      '--text-color-secondary'
+    );
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
     this.options = {
@@ -111,22 +112,22 @@ export class BarChartComponentComponent implements OnInit {
         },
         datalabels: {
           anchor: 'end',
-          align: 'end', 
-          color: textColorSecondary, 
+          align: 'end',
+          color: textColorSecondary,
           font: {
             weight: 'bold',
             size: 16,
           },
           formatter: (value: number) => {
-            return value === 0 ? null : value; 
-          }
-        }
+            return value === 0 ? null : value;
+          },
+        },
       },
       scales: {
         x: {
           title: {
             display: true,
-            text: 'X Axis ( years )', 
+            text: ' Years ',
             color: textColorSecondary,
             font: {
               size: 14,
@@ -147,7 +148,7 @@ export class BarChartComponentComponent implements OnInit {
         y: {
           title: {
             display: true,
-            text: 'Y Axis ( count )',
+            text: ' No: of Incidents ',
             color: textColorSecondary,
             font: {
               size: 14,
@@ -172,7 +173,12 @@ export class BarChartComponentComponent implements OnInit {
     if (!chartArea) {
       return null;
     }
-    const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+    const gradient = ctx.createLinearGradient(
+      0,
+      chartArea.bottom,
+      0,
+      chartArea.top
+    );
 
     switch (index) {
       case 0:

@@ -306,7 +306,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
       this.incidentDataService.setSelectedIncidentId(incidentId);
       if (!this.getAssigned && !this.isadmin) {
         console.log(this.isadmin);
-        this.router.navigate(['/editform']);
+        this.router.navigate(['/edit-form']);
       } else {
         this.router.navigate(['/editform']);
       }

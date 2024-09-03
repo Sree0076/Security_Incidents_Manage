@@ -1,6 +1,7 @@
 .view-incident {
   width: 100%;
   background-color: #fff;
+  padding: 20px;
   border-radius: 8px;
 }
 
@@ -12,10 +13,6 @@
 
 .created-info {
   display: block;
-}
-
-h2{
-  color: #29A0B1;
 }
 
 
@@ -53,8 +50,8 @@ h2{
 
 .profile-info {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
 }
 
 .info-item {
@@ -107,29 +104,31 @@ h2{
 }
 
 .back-button {
-  position: absolute; 
-    left:50%;
-    transform: translate(-50%,-50%);
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    background-color: #29A0B1;
-    color: white;
-    border-radius: 0.2rem;
+  
+  background-color:#29A0B1 ;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 70rem;
+  box-shadow: 0 2px 4px rgba(0.2, 0.2, 0.2, 0.5);
 
-  width: 62.5rem;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: 10rem;
+
   margin-top:2rem;
 }
-strong
-{
-  color: #6c757d;
-  font-size: 13px;
-}
-

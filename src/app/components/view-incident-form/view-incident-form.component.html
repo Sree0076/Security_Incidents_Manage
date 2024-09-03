@@ -11,13 +11,14 @@
         </div>
 
         <div class="detailed-info-section">
-            <h4 class="text-primary">Detailed Info</h4>
+            <h3 class="text-primary">Detailed Info</h3>
             <div class="profile-info">
                 <div class="info-item description">
                     <strong>Description</strong>
                     <p>{{data.incidentDescription}}</p>
                 </div>
                 <div *ngIf="documentUrls.length > 0" class="info-item uploaded-files">
+                    <strong>Uploaded Files</strong>
                     <strong style="padding-bottom: 1rem; display: block;">Uploaded Files</strong>
                     <div style="display: flex; flex-wrap: wrap;">
                         <div *ngFor="let file of documentUrls" style="margin-right: 1rem;">

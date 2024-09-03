@@ -109,6 +109,7 @@ th{
 ::ng-deep .p-datatable > .p-datatable-wrapper::-webkit-scrollbar-thumb:hover {
     background-color: #a3a1a1;
     cursor: pointer;
+}
 
 ::ng-deep .p-button.p-button-outlined {
     background-color: transparent;
