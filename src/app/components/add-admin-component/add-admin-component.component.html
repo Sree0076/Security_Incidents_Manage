@@ -1,80 +1,77 @@
-<div class="flex justify-content-center ">
-    <p-dialog
-      [modal]="true"
-      [(visible)]="visibility"
-      [style]="{ width: '28rem', height : '29rem'}"
-      [breakpoints]="breakpoints"
-      [draggable]="false"
-      [maximizable]="true" 
-      >
-      <ng-template pTemplate="header">
-        <div class="dialog-header">
-            <div class="sidebar-header">
-                <h3 class="section-header">Add Admin</h3>
+<div class="custom-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="custom-modal-dialog centered-modal large-modal">
+    <div class="custom-modal-content">
+      <div class="custom-modal-header">
+        <h1 class="custom-modal-title" id="exampleModalLabel">Add Admin</h1>
+        <button type="button" class="close-btn" (click)="resetForm()" aria-label="Close"></button>
+      </div>
+      <div class="custom-modal-body">
+
+        <p class="search-label">Search User</p>
+        <p class="subtext">Search for users to assign admin permissions</p>
+        <input type="text" placeholder="Search..." [(ngModel)]="searchTerm">
+        <div class="search-names">
+          @for(items of user_details | filter: searchTerm; track items.id){
+          <div class="person-details search-padding" type="button" (click)="addUser(items)">
+            <div class="image-icon">
+              <img src="icons/user-icon-men.jpg" alt="">
             </div>
-        <div class="selected-users">
-          @for(user of selectedUsers; track user.id){
-              <div class="person-details1" >
-                <div class="image-icon">
-                  <img src="icons/user-icon-men.jpg" alt="" />
-                </div>
-                <div class="name-details1">
-                  <p>{{user.name}}</p>
-                </div>
-                <button type="button" (click)="removeUser(user)"><i class="bi bi-x fs-5"></i></button>
-              </div>
-          }
+            <div class="name-details">
+              <p>{{items.name}}</p>
+              <p class="designation">{{items.designation}}</p>
+            </div>
           </div>
-        <div class="dialog-header-content">
-          <input
-            type="text"
-            pInputText
-            placeholder="Enter the name, email"
-            [(ngModel)]="searchTerm"
-            class="dialog-search-input"
-          />
+          }
+        </div>
+
+        @for(user of selectedUsers; track user.id){
+        <div class="search-names">
+          <div class="person-details flex-space-between">
+            <div class="flex">
+              <div class="image-icon">
+                <img src="icons/user-icon-men.jpg" alt="">
+              </div>
+              <div class="name-details padding-left">
+                <p>{{user.name}}</p>
+                <p class="designation">{{user.designation}}</p>
+              </div>
+            </div>
+            <div>
+              <i class="remove-icon" (click)="removeUser(user)" type="button"></i>
+            </div>
+          </div>
+        </div><br><br>
+        }
+
+
+        <div class="permissions">
+          <br>
+          <hr>
+          <h5 class="permissions-title">Permissions</h5>
+          <div class="flex">
+            <div class="checkbox-container">
+              <input type="checkbox" [(ngModel)]="checkboxes['incidentManagement']">
+            </div>
+            <div>
+              <label>Incident Management</label>
+              <p class="subtext">Can edit and forward the incidents</p>
+            </div>
+          </div>
+          <div class="flex">
+            <div class="checkbox-container">
+              <input type="checkbox" [(ngModel)]="checkboxes['adminManagement']">
+            </div>
+            <div>
+              <label>Admin Management</label>
+              <p class="subtext">Can add users as admins</p>
+            </div>
+          </div>
         </div>
       </div>
-      </ng-template>
-      <div class="search-names">
-        @for(items of user_details | forwardPipe:searchTerm:getSelectedUserIds():isForwardform; track items.id){
-            <div class="person-details search-padding" type="button" (click)="addUser(items)">
-                <div class="image-icon">
-                    <img src="icons/user-icon-men.jpg" alt="">
-                </div>
-                <div class="name-details">
-                    <p>{{items.name}}</p>
-                    <p class="p1">{{items.designation}}</p>
-                </div>
-            </div>
-        }
-     </div>
-     <div class="permissions">
-        <br>
-   
-        <h5 class="search">Choose Permissions</h5>
-        <div class="d-flex">
-            <div class="pt-1">
-                <input type="checkbox" [(ngModel)]="checkboxes['incidentManagement']">
-            </div>
-            <div>
-                <label>Incident Management</label>
-                <p class="text1">Can edit and forward the incidents</p>
-            </div>
-        </div>
-        <div class="d-flex">
-            <div class="pt-1">
-                <input type="checkbox" [(ngModel)]="checkboxes['adminManagement']">
-            </div>
-            <div>
-                <label>Admin Management</label>
-                <p class="text1">Can add users as admins</p>
-            </div>
-        </div>
-     </div>
-      <ng-template pTemplate="footer">
-        <p-button [outlined]="true" label="Submit" severity="primary"  class="outlinebtn" (click)="add()"/>
-      
-      </ng-template>
-    </p-dialog>
+      <div class="custom-modal-footer">
+        <button type="button" class="btn btn-close" (click)="resetForm()">Close</button>
+        <button type="button" class="btn add-btn" (click)="add()">Add</button>
+      </div>
+    </div>
   </div>
+</div>

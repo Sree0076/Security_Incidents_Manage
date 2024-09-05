@@ -1,253 +1,265 @@
-::ng-deep .p-dialog .p-dialog-content {
-    overflow: auto;
-  }
-  ::ng-deep .p-dialog .p-dialog-header-icons 
-  {
 
-        display: flex;
-        position: absolute;
-        align-items: end;
-        right: 1rem;
-        top: 1.8rem;
-    
-  }
-  ::ng-deep .p-dialog-content::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  ::ng-deep .p-dialog-content::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-  }
-  
-  ::ng-deep .p-dialog-content::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-  }
-  
-  ::ng-deep .p-dialog-content::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
 
-    ::ng-deep .p-dialog .p-dialog-header
-    {
-        padding: 1rem;
-        padding-bottom: 0rem;
+/* Center and style the modal */
+.custom-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dim background */
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+/* Modal dialog box */
+.custom-modal-dialog {
+  max-width: 50%;
+  width: 100%;
+  margin: auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal content area */
+.custom-modal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styling */
+.custom-modal-header {
+  padding: 15px 25px;
+  background-color: #29A0B1;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.custom-modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #ffffff;
+  transition: color 0.3s;
+}
+
+.close-btn:hover {
+  color: #e74c3c;
+}
+
+/* Body of the modal */
+.custom-modal-body {
+  padding: 20px 25px;
+  font-size: 16px;
+  color: #333;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.search-label {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.subtext {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin-bottom: 15px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.search-names{
+  max-height: 145px;
+  z-index: 3; 
+  overflow-y: auto;
+  position: absolute;
+  width: 40%;
+  box-shadow: 2px 2px 3px grey;
+  background-color: white;
+  border-radius: 10px;
+    .person-details{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background-color: rgb(237, 249, 255); 
+    }   
+    .image-icon{
+      display: flex;
+      align-items: center;
     }
-  
-    .forward-button{
-      margin-top: 10px;
-      margin-right: 10px;
-      text-align: right;
-    }
-  
-    .dialog-header {
+    img{
+      width: 50px;
+      border-radius: 50%;
+    } 
+    .name-details{
       display: flex;
       flex-direction: column;
-      width: 100%;
-  }
-  .dialog-header-content {
-      display: flex;
-      justify-content: start;
-      align-items: center;
-      padding-top: 25px;
-      padding-bottom: 10px;
-      width: 100%;
+    }     
+    p{
+      margin: 0px;
+    }   
+    .p1{
+      font-size: 13px;
+    }  
+    .search-padding{
+      margin-bottom: 2px;
     }
-  
-    .dialog-header-title {
-      font-size: 1.2em;
-      font-weight: bold;
-    }
-  
-    .dialog-search-input {
-      padding: 0rem 2rem;
-      height: 2rem;
-      flex-grow: 1;
-    }
-  .text-message{
-      margin-top: 3px;
-      width: 100%;
-      display: flex;
-      justify-content: start;
-      background-color: rgb(250, 246, 255);
-      padding: 10px;
-      border-radius: 10px;
-      .dialog-textarea {
-        border: none;
-        box-shadow: none;
-        background-color: transparent;
-        resize: none;
-        width: 100%;
-        max-height: calc(1.5em * 3);
-        overflow-y: auto;
-        height: 1.8em;
-      }
-      .dialog-textarea:focus{
-        outline: none;
-      }
-  
-      button{
-          font-size: 13px;
-          color: white;
-          background-color: rgb(255, 255, 255);
-          border: none;
-          border-radius: 30px;
-          height: 38px;
-          padding: 10px;
-          i{
-              color: rgba(201, 169, 241, 1);
-              rotate: 45deg;
-          }
-      }
-    }
-  
-  
-    .selected-users{
-      display: flex;
-      flex-wrap: wrap;
-      margin-left: 3rem;
-      gap: 5px;
-      max-height: calc(2 * 40px + 10px);
-      overflow-y: auto;
-      .person-details1{
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        gap: 5px;
-        padding: 3px;
-        font-size: 13px;
-        border-radius: 30px;
-        background-color: rgb(250, 246, 255);
-        img{
-          width: 35px;
-          border-radius: 50%;
-        }
-        p{
-          margin: 0;
-        }
-        button{
-          border: none;
-          background-color: transparent;
-        }
-      }
-    }
-  
-    ::-webkit-scrollbar {
-      position: absolute;
-      right:5px;
-      width: 5px;
-    }
-  
-    ::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 10px;
-    }
-  
-    ::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 10px;
-    }
-  
-    ::-webkit-scrollbar-thumb:hover {
-      background: #555;
-    }
-  
-  
-    @media screen and (max-width: 440px){
-      ::ng-deep .p-dialog-header {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: end;
-      }
-      .dialog-search-input {
-        padding: 0rem 0rem 0rem 2rem;
-      }
-    }
-  .forwardbtn
-  {
-    border-radius: 8px !important;
-  }
-
- ::ng-deep .p-button.p-button.p-button-outlined
-  {
-    width: 5rem;
-    height: 2rem;
-  }
-  ::ng-deep .p-button .p-button-label
-  {
-    font-size: 0.8rem;
-  }
-  ::ng-deep .p-button.p-button-success.p-button-outlined
-  {
-    padding-left: 10px;
-  }
-  .search-names{
-    margin-left: 2.2rem;
-    margin-right: 20px;
-    max-height: 145px;
-    z-index: 3;
-    overflow-y: auto;
-    position: absolute;
-    margin-top: 0rem;
-    width: 64%;
-    box-shadow: 2px 2px 3px grey;
-    background-color: white;
-    border-radius: 10px;
-      .person-details{
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px;
-        background-color: rgb(237, 249, 255); 
-      }   
-      .image-icon{
-        display: flex;
-        align-items: center;
-      }
-      img{
-        width: 50px;
-        border-radius: 50%;
-      } 
-      .name-details{
-        display: flex;
-        flex-direction: column;
-      }     
-      p{
-        margin: 0px;
-      }   
-      .p1{
-        font-size: 13px;
-      }  
-      .search-padding{
-        margin-bottom: 2px;
-      }
-  }
-  .outlinebtn
-  {
-    box-shadow: none;
-  }
-.permissions
-{
-    margin-left: 2rem;
-}
-.permissions .d-flex {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    margin-left: 3rem;
 }
 
-.permissions .d-flex .pt-1 {
-    margin-right: 0.5rem; 
+.person-details {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: #ecf7ff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
-.permissions .d-flex label {
-    font-weight: bold; 
+
+.person-details:hover {
+  background-color: #d6eaff;
 }
-.permissions .d-flex p.text1 {
-    margin: 0; 
-    font-size: 12px;
-    color: #666;
+
+.image-icon img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
+
+.name-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.designation {
+  font-size: 13px;
+  color: #7f8c8d;
+}
+
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.padding-left {
+  padding-left: 15px;
+}
+
+.remove-icon {
+  font-size: 20px;
+  color: #e74c3c;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.remove-icon:hover {
+  transform: scale(1.2);
+}
+
+.permissions-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 20px 0 10px;
+}
+
+.checkbox-container {
+  padding-top: 4px;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  accent-color: #29A0B1;
+}
+
+/* Footer styling */
+.custom-modal-footer {
+  padding: 15px 25px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.btn-close {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.btn-close:hover {
+  background-color: #d1d1d1;
+}
+
+.add-btn {
+  background-color: #29A0B1;
+  color: #fff;
+}
+
+.add-btn:hover {
+  background-color: green;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 
 
