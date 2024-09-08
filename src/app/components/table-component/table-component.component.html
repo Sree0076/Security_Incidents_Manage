@@ -96,7 +96,7 @@
             {
             <tr>
                 <td [pSelectableRow]="incident">@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentNo }}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentTitle| tableTruncate:10 }}}</td>
+                <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentTitle| titlecase| tableTruncate:10 }}}</td>
                 <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentType ?
                     incident.incidentType.replace('Incidents', '').trim() : ''}}}</td>
                 <td>@if(isLoading) {<p-skeleton />}@else{ {{ incident.category | tableTruncate:10}} }</td>
