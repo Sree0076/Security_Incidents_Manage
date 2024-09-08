@@ -17,5 +17,5 @@ export const appRoutes: Route[] = [
     { path: 'noti', component: NotificationComponentComponent },
     { path: 'usermanage', component: UserManageComponent },
     { path: 'viewform', component: ViewIncidentDataComponent },
-    { path: 'editform', component: EditIncidentDataComponent },
+    { path: 'edit', component: EditIncidentDataComponent },
 ];

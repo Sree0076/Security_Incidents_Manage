@@ -293,8 +293,8 @@ export class TableComponentComponent implements OnInit, OnChanges {
     console.log(incident.id);
     if (incident.incidentStatus !== 'closed') {
       this.incidentDataService.setSelectedIncidentId(incidentId);
-      if (this.getAssigned && this.isadmin) {
-        this.router.navigate(['/edit-form']);
+      if (this.getAssigned || this.isadmin) {
+        this.router.navigate(['/edit']);
       } else {
         this.sidebarService.showSidebar();
       }

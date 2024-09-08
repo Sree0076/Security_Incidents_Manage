@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { ToastModule } from 'primeng/toast';
+import { ButtonLoadingDirective } from 'src/app/shared/ui/button-loading.directive';
 
 @Component({
   selector: 'app-edit-incident-form',
@@ -35,6 +36,7 @@ import { ToastModule } from 'primeng/toast';
     ToastModule,
     NgIf,
     CommonModule,
+    ButtonLoadingDirective,
   ],
   templateUrl: './edit-incident-form.component.html',
   styleUrl: './edit-incident-form.component.css',
@@ -51,6 +53,7 @@ export class EditIncidentFormComponent {
   editAction = false;
   documentUrls: { name: string; url: string }[] = [];
   @Input() isSidebarExpanded = false
+  isButtonLoading =false;
 
   incidentTypes = [
     { label: 'Security Incident', value: 'SecurityIncident' },
@@ -159,6 +162,7 @@ export class EditIncidentFormComponent {
   }
 
   onSubmit() {
+    this.isButtonLoading = true;
     if (this.editform.valid) {
       console.log(this.editform.value);
 
@@ -166,6 +170,7 @@ export class EditIncidentFormComponent {
         .updateIncident(this.editIncidentId, this.editform.value)
         .subscribe((response) => {
           console.log(response);
+          this.isButtonLoading = false;
         });
     }
   }
