@@ -150,9 +150,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.isLoading = true;
-    if (this.getDraft) {
-      this.fetchDraftIncidents();
-    } else if (this.getAssigned) {
+    if (this.getAssigned) {
       this.fetchAssignedIncidents();
     } else {
       this.fetchAllIncidents();
@@ -184,6 +182,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
       this.applyCategoryFilter();
     }
   }
+
   private stopLoadingWithDelay(delay = 2000) {
     setTimeout(() => {
       this.isLoading = false;
@@ -201,23 +200,13 @@ export class TableComponentComponent implements OnInit, OnChanges {
     });
   }
 
-  fetchDraftIncidents() {
-    this.incidentDataService.incidentData.subscribe((data) => {
-      if (data) {
-        this.incidents = data.incidents;
-        this.sortByPriority();
-        this.incidents = this.incidents.filter((incident) => incident.isDraft);
-        console.log('Draft Incidents:', this.incidents);
-      }
-    });
-  }
-
   fetchAssignedIncidents() {
     this.incidentDataService.incidentData.subscribe((data) => {
       if (data) {
         this.incidents = data.assignedIncidents;
         this.sortByPriority();
         console.log(data);
+        this.stopLoadingWithDelay();
       }
     });
   }
@@ -304,11 +293,10 @@ export class TableComponentComponent implements OnInit, OnChanges {
     console.log(incident.id);
     if (incident.incidentStatus !== 'closed') {
       this.incidentDataService.setSelectedIncidentId(incidentId);
-      if (!this.getAssigned && !this.isadmin) {
-        console.log(this.isadmin);
+      if (this.getAssigned && this.isadmin) {
         this.router.navigate(['/edit-form']);
       } else {
-        this.router.navigate(['/editform']);
+        this.sidebarService.showSidebar();
       }
     } else {
       this.showError(' Sorry, The Incident is already Closed !');
@@ -610,6 +598,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
     });
   }
   openSidebar() {
+    this.incidentDataService.setSelectedIncidentId(0);
     this.sidebarService.showSidebar();
   }
 }

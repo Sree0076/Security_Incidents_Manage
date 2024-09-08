@@ -21,7 +21,7 @@ export class ViewIncidentFormComponent {
     private incidentService: IncidentSharedService
   ) {}
   data!: IncidentData ;
-  id: number = 0;
+  id = 0;
   documentUrls: { name: string; url: string }[] = [];
 
   getStatus(status: string): string {

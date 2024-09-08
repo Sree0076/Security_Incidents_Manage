@@ -1,4 +1,4 @@
-<p-sidebar [(visible)]="sidebarVisible" position="right" [modal]="true" [showCloseIcon]="true">
+<p-sidebar [(visible)]="sidebarVisible" position="right" [modal]="true" [showCloseIcon]="true" (onHide)="viewform.reset()">
   <ng-template pTemplate="header">
     <div class="sidebar-header">
       <h3 class="section-header">Report an Incident</h3>
@@ -83,11 +83,16 @@
 
       <!-- Buttons Section -->
       <div class="button-group p-d-flex p-ai-center p-jc-center">
-        <button pButton type="button" label="Save as Draft" icon="pi pi-save"
-          class="p-button-secondary mx-2 save-button" (click)="saveAsDraft()"></button>
-        <button pButton type="submit" label="Submit" icon="pi pi-check-circle"
-          class="p-button-success mx-2 submit-button"></button>
-      </div>
+        <button type="button" class="p-button p-component p-button-secondary mx-2 save-button" (click)="saveAsDraft()" [appButtonLoading]="isButtonLoading" [disabled]="isButtonLoading">
+          <span class="p-button-icon pi pi-save"></span>
+          <span class="p-button-label">Save as Draft</span>
+        </button>
+        
+        <button type="submit" class="p-button p-component p-button-success mx-2 submit-button" [appButtonLoading]="isButtonLoading" [disabled]="isButtonLoading">
+          <span class="p-button-icon pi pi-check-circle"></span>
+          <span class="p-button-label"  >Submit</span>
+        </button>
+        </div>
     </form>
     <p-toast></p-toast>
   </div>

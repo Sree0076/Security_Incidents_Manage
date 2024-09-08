@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgClass, NgFor } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
 import { CardComponentComponent } from '../../components/card-component/card-component.component';
 import { CardData } from 'src/app/models/incident-interface';
 import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
@@ -16,7 +17,7 @@ import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/
 @Component({
   selector: 'app-user-dasboard',
   standalone: true,
-  imports: [CommonModule,TableComponentComponent,LoaderComponentComponent,CardComponentComponent,IncidentCreateFormComponentComponent,NgClass,NgFor,SideNavbarComponentComponent,ProgressSpinnerModule],
+  imports: [CommonModule,MatTabsModule,TableComponentComponent,LoaderComponentComponent,CardComponentComponent,IncidentCreateFormComponentComponent,NgClass,NgFor,SideNavbarComponentComponent,ProgressSpinnerModule],
   templateUrl: './user-dasboard.component.html',
   styleUrl: './user-dasboard.component.css',
 })

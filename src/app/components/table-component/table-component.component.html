@@ -97,17 +97,15 @@
             <tr>
                 <td [pSelectableRow]="incident">@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentNo }}}</td>
                 <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentTitle| tableTruncate:10 }}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentType ? incident.incidentType.replace('
-                    Incidents', '').trim() : ''}}}</td>
+                <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentType ?
+                    incident.incidentType.replace('Incidents', '').trim() : ''}}}</td>
                 <td>@if(isLoading) {<p-skeleton />}@else{ {{ incident.category | tableTruncate:10}} }</td>
                 <td> @if(isLoading) {<p-skeleton />}@else{{{ incident.createdAt | date:'dd-MM-yy, hh:mm a' }}}</td>
                 <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.priority }}}</td>
                 <td>@if(isLoading) {<p-skeleton />}@else{
                     @if(getAssigned && incident.isCorrectionFilled && incident.incidentStatus!== "closed")
                     {
-                    <button type="button" class="btn btn-outline-primary  reviewbtn  "
-                        [disabled]="incident.isSubmittedForReview" (click)="onSubmitReview(incident)">Submit for
-                        Review</button>
+                    <button type="button" class="btn btn-outline-primary  reviewbtn  "[disabled]="incident.isSubmittedForReview" (click)="onSubmitReview(incident)">Submit for Review</button>
                     }
                     @else
                     {
@@ -129,11 +127,29 @@
                     }
                 </td>
                 <td>@if(isLoading) {<p-skeleton />}@else{
-                    <i class="pi pi-send" style="color: #29A0B1; font-size:1.3rem ;"
-                        (click)="onIconClick(incident)"></i>
-                    <i class="pi pi-file-edit" style="color: #29A0B1; font-size:1.3rem ; margin-left: 8px;"
-                        (click)="editIncidentData(incident,incident.id)"></i>
-                    }
+                <div class="flex justify-content-center" *ngIf="isadmin">
+                    <i class='bx bx-dots-vertical-rounded' (click)="op.toggle($event)" ></i>
+                    <p-overlayPanel #op>
+                      <div class="custom-overlay">
+                        <ul class="list-none p-0 m-0 flex flex-column gap-3 custom-list">
+        
+                          <li class="flex align-items-center gap-2 custom-item" *ngIf="incident.isDraft || isadmin || getAssigned">
+                            <i class="pi pi-file-edit" style="color: #29A0B1; font-size:1.3rem ; margin-left: 8px;" (click)="editIncidentData(incident,incident.id)" [ngClass]="{'faded-edit-icon': incident.incidentStatus === 'closed'}" ></i>
+                          </li>
+                          <li class="flex align-items-center gap-2 custom-item" [hidden]="!isadmin">
+                            <i class="bx bxs-file-pdf" [hidden]="!isadmin" (click)="exportPDF(incident)" ></i>
+                          </li>
+                        </ul>
+                      </div>
+                    </p-overlayPanel>
+                    <i class="pi pi-send" style="color: #29A0B1; font-size:1.3rem ;" (click)="onIconClick(incident)"></i>
+                </div>
+                <div class="flex justify-content-center" *ngIf="!isadmin">
+                    <i class="bx bxs-edit" (click)="editIncidentData(incident,incident.id)"
+                      *ngIf="incident.isDraft || getAssigned"></i>
+                    <i class="bx bx-trash" *ngIf="incident.isDraft" style="color: rgb(224, 51, 51);" (click)="deleteDraftIncidentById(incident.id)"></i>
+                  </div>
+                }
                 </td>
             </tr>
             }
@@ -145,5 +161,4 @@
         </ng-template>
     </p-table>
 </div>
-<app-forward-form-component [visibility]="displayForwardingModal"
-    (dialogClosed)="onDialogClosed()"></app-forward-form-component>
+<app-forward-form-component [visibility]="displayForwardingModal"(dialogClosed)="onDialogClosed()"></app-forward-form-component>

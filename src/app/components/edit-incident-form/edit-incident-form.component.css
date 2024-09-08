@@ -101,20 +101,25 @@
 
   .container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     padding: 16px;
     box-sizing: border-box;
-    margin-left: 12rem;
 }
 
 .form {
-    max-width: 500rem;
-    margin: auto;
-    padding: 20px;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 71rem;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.form.expanded {
+  width: 105% !important;
 }
 
 .header-section {

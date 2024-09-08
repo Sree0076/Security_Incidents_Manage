@@ -2,7 +2,7 @@
     <app-side-navbar-component  (sidebarToggle)="handleSidebarToggle($event)"></app-side-navbar-component>
 </div>
 <div class="view" [ngClass]="{'expanded': isSidebarExpanded}">
-    <app-edit-incident-form></app-edit-incident-form>
+    <app-edit-incident-form  [isSidebarExpanded]="isSidebarExpanded"></app-edit-incident-form>
 </div>
 
 

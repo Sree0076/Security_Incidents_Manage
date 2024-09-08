@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IncidentServiceService } from 'src/app/services/incident/incident.service.service';
@@ -44,12 +44,13 @@ export class EditIncidentFormComponent {
   timeString!: string;
   dateString!: string;
   data: any = {};
-  id: number = 0;
+  id = 0;
   editform!: FormGroup;
-  editIncidentId: number = 0;
+  editIncidentId = 0;
   incident!: IncidentData;
-  editAction: Boolean = false;
+  editAction = false;
   documentUrls: { name: string; url: string }[] = [];
+  @Input() isSidebarExpanded = false
 
   incidentTypes = [
     { label: 'Security Incident', value: 'SecurityIncident' },

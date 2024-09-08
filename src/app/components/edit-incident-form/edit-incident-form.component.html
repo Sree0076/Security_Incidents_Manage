@@ -1,7 +1,7 @@
 <div class="body">
     <p-toast></p-toast>
-    <div class="container">
-        <form class="form shadow p-5 rounded" [formGroup]="editform" (ngSubmit)="onSubmit()">
+    <div class="container" >
+        <form class="form shadow p-5 rounded" [ngClass]="{'expanded': isSidebarExpanded}" [formGroup]="editform" (ngSubmit)="onSubmit()">
             <div class="header-section">
                 <div class="vendor-name">
                     <h2 class="title">Incident {{data.incidentTitle}}, {{data.incidentNo}}
