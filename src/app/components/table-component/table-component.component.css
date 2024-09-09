@@ -117,8 +117,33 @@ th{
     border: 1px solid;
 }
  .p-button :hover {
+    cursor: pointer;
     background-color: transparent;
     background-color: #29A0B1;
     color: white;
     border: 1px solid;
+}
+.bx
+{
+    cursor: pointer;
+    font-size: 1.5rem !important;
+}
+.bxs-file-pdf
+{
+    margin-left: 6px;
+    margin-top: 1rem;
+    color: #29A0B1;
+    margin-right: 4px;
+}
+::ng-deep .p-overlaypanel .p-overlaypanel-content 
+{
+    padding: 3px;
+}
+ul
+{
+    padding-left: 30px !important;
+}
+.bx-trash
+{
+    color: red;
 }

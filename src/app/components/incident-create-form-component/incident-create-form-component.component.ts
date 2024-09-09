@@ -17,10 +17,13 @@ import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { IncidentData } from 'src/app/models/incident-interface';
 import { IncidentServiceService } from 'src/app/services/incident/incident.service.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeSharedService } from '../../services/shared/employee/employee.shared.service';
 import { SidebarModule } from 'primeng/sidebar';
 import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/variables.shared.service';
+import { environment } from 'src/environments/environment';
+import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
+import { ButtonLoadingDirective } from 'src/app/shared/ui/button-loading.directive';
 
 @Component({
   selector: 'app-incident-create-form-component',
@@ -41,6 +44,7 @@ import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/
     FormsModule,
     MatNativeDateModule,
     ConfirmDialogModule,
+    ButtonLoadingDirective,
   ],
   providers: [
     MessageService,
@@ -55,7 +59,7 @@ export class IncidentCreateFormComponentComponent implements OnInit {
 
   incident!: IncidentData;
   @Input() sidebarVisible = false;
-
+  uploadedFiles: { name: string; url: string }[] = [];
   incidentTypes = [
     { label: 'Security Incident', value: 'Security Incidents' },
     { label: 'Privacy Incident', value: 'Privacy Incidents' },
@@ -92,14 +96,18 @@ export class IncidentCreateFormComponentComponent implements OnInit {
   maxDate: Date = new Date();
   employeeId = 0;
   today!: Date;
-
+  isEdit =false;
+  selectedIncidentId! : number;
+  isButtonLoading = false;
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private apiService: IncidentServiceService,
     private messageService: MessageService,
     private employeeDataService: EmployeeSharedService,
     private confirmationService: ConfirmationService,
     private sidebarService : VariablesSharedService,
+    private incidentService: IncidentSharedService
   ) {}
 
   openDialog() {
@@ -114,6 +122,7 @@ export class IncidentCreateFormComponentComponent implements OnInit {
   }
 
   showSuccess(message: string) {
+    this.isButtonLoading =false;
     setTimeout(() => {
       this.messageService.add({
         severity: 'success',
@@ -127,6 +136,7 @@ export class IncidentCreateFormComponentComponent implements OnInit {
   }
 
   showError(message: string) {
+    this.isButtonLoading =false;
     setTimeout(() => {
       this.messageService.add({
         severity: 'error',
@@ -137,6 +147,7 @@ export class IncidentCreateFormComponentComponent implements OnInit {
   }
 
   saveAsDraft() {
+    this.isButtonLoading = true;
     if (
       !this.viewform.value.incidentTitle ||
       !this.viewform.value.incidentOccuredDate ||
@@ -151,9 +162,20 @@ export class IncidentCreateFormComponentComponent implements OnInit {
   viewform!: FormGroup;
 
   ngOnInit() {
+
+    this.incidentService.selectedIncidentId$.subscribe((incidentId) => {
+      if(incidentId)
+      {
+        this.selectedIncidentId = incidentId;
+        this.isEdit=true;
+        this.fetchIncident();
+      }
+    });
+    
     this.sidebarService.sidebarVisible$.subscribe(visible => {
       this.sidebarVisible = visible;
-    });
+    }); 
+    
     this.today = new Date();
 
     this.viewform = new FormGroup({
@@ -178,12 +200,52 @@ export class IncidentCreateFormComponentComponent implements OnInit {
       }
     });
   }
+
+  fetchIncident() {
+    this.apiService
+      .getSingleIncident(this.selectedIncidentId)
+      .subscribe((response) => {
+        console.log('Incident Fetched successfully', response);
+
+        if (response.incidentOccuredDate) {
+          const incidentDate = new Date(response.incidentOccuredDate);
+          response.incidentOccuredDate = incidentDate;
+        }
+
+        this.viewform.patchValue({
+          incidentTitle: response.incidentTitle,
+          category: response.category,
+          incidentType: response.incidentType,
+          incidentAttachment: response.documentUrls,
+          incidentOccuredDate: response.incidentOccuredDate,
+          // incidentOccuredTime: response.incidentOccuredTime,
+          incidentDescription: response.incidentDescription,
+          reportedBy: response.reportedBy,
+          priority: response.priority,
+          isDraft: response.isDraft,
+          oldDocumentUrls: response.documentUrls,
+        });
+
+        console.log('document fetched:', response.documentUrls);
+
+        if (Array.isArray(response.documentUrls)) {
+          this.uploadedFiles = response.documentUrls.map((url) => ({
+            name: url.split('/').pop()!, 
+            url: `${environment.serverConfig.baseUrl}${url}`,
+          }));
+        }
+
+        console.log('Old files', this.uploadedFiles);
+      });
+  }
+
   onFileUpload(event: any) {
     console.log('fileupload', <File>event.files);
     this.selectedFiles = <File[]>event.files;
   }
 
   onSubmit() {
+    this.isButtonLoading =true;
     if (
       !this.viewform.value.incidentTitle ||
       !this.viewform.value.incidentOccuredDate ||
@@ -193,7 +255,7 @@ export class IncidentCreateFormComponentComponent implements OnInit {
       return;
     }
 
-    this.openDialog();
+     this.prepareFormData(false);
   }
 
   prepareFormData(isDraft: boolean) {
@@ -217,16 +279,22 @@ export class IncidentCreateFormComponentComponent implements OnInit {
       }
     }
 
-    if (isDraft) {
-      this.apiService.addIncident(formData).subscribe(() => {
-        this.showSuccess('Incident saved as draft successfully');
-      });
+    if (this.isEdit) {
+      this.apiService
+        .updateUserIncident(this.selectedIncidentId, formData)
+        .subscribe(() => {
+          this.showSuccess('Incident updated successfully');
+        });
     } else {
       this.apiService.addIncident(formData).subscribe(() => {
-        this.showSuccess('Incident Reported successfully');
+        if(isDraft)
+        {
+          this.showSuccess('Incident Saved As Draft');
+        }
+        else{
+          this.showSuccess('Incident reported successfully');
+        }
       });
     }
   }
-  
-
 }

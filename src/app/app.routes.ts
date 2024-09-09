@@ -11,14 +11,13 @@ import { EditFormComponent } from './components/edit-form/edit-form.component';
 import { FirstLoginContentComponent } from './components/first-login-content/first-login-content.component';
 
 export const appRoutes: Route[] = [
-  { path: '', component: LoginPageComponent },
-  { path: 'admin', component: AdminDasboardComponent },
-  { path: 'user', component: UserDasboardComponent },
-  { path: 'form', component: IncidentCreateFormComponentComponent },
-  { path: 'noti', component: NotificationComponentComponent },
-  { path: 'usermanage', component: UserManageComponent },
-  { path: 'viewform', component: ViewIncidentDataComponent },
-  { path: 'editform', component: EditIncidentDataComponent },
-  { path: 'user-edit', component: EditFormComponent },
-  { path: 'initial-page', component: FirstLoginContentComponent },
+
+    { path: '', component: LoginPageComponent },
+    { path: 'admin', component: AdminDasboardComponent },
+    { path: 'user', component: UserDasboardComponent },
+    { path: 'form', component: IncidentCreateFormComponentComponent },
+    { path: 'noti', component: NotificationComponentComponent },
+    { path: 'usermanage', component: UserManageComponent },
+    { path: 'viewform', component: ViewIncidentDataComponent },
+    { path: 'edit', component: EditIncidentDataComponent },
 ];

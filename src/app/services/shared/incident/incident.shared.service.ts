@@ -19,9 +19,9 @@ export class IncidentSharedService {
 
   navigateToDashboard$ = this.navigateToDashboard.asObservable();
   private incidentDataSubject: BehaviorSubject<Incidents | null> =
-    new BehaviorSubject<Incidents | null>(null);
+  new BehaviorSubject<Incidents | null>(null);
   public incidentData: Observable<Incidents | null> =
-    this.incidentDataSubject.asObservable();
+  this.incidentDataSubject.asObservable();
   private selectedIncidentIdSource = new BehaviorSubject<number>(0);
   selectedIncidentId$ = this.selectedIncidentIdSource.asObservable();
 

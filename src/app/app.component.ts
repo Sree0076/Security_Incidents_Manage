@@ -2,6 +2,7 @@ import { NgClass, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CardComponentComponent } from "./components/card-component/card-component.component";
+import { ButtonLoadingDirective } from './shared/ui/button-loading.directive';
 
 
 
@@ -12,6 +13,7 @@ import { CardComponentComponent } from "./components/card-component/card-compone
     NgClass,
     NgFor,
     CardComponentComponent,
+    ButtonLoadingDirective
   ],
   selector: 'app-root',
   templateUrl: './app.component.html',

@@ -24,12 +24,17 @@
     </div>
   </div>
   <div id="tableRef" class="table"  [ngClass]="{'expanded': isSidebarExpanded}">
-    <app-table-component [isadmin]="false" [filterCategory]="selectedCategory"></app-table-component>
+    <div class="card">
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+        <mat-tab label="All Incidents"><app-table-component [isadmin]="false" [filterCategory]="selectedCategory"></app-table-component></mat-tab>
+        <mat-tab label="Assigned Incident"><app-table-component [getAssigned]="true" [filterCategory]="selectedCategory"></app-table-component> </mat-tab>
+      </mat-tab-group>
+    </div>
   </div>
   @if(isCreateIncidentView )
-{
+  {
     <app-incident-create-form-component></app-incident-create-form-component>
-}
+  }
 }
 
 
