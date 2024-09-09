@@ -7,6 +7,8 @@ import { NotificationComponentComponent } from './components/notification-compon
 import { UserManageComponent } from './pages/user-manage/user-manage.component';
 import { ViewIncidentDataComponent } from './pages/view-incident-data/view-incident-data.component';
 import { EditIncidentDataComponent } from './pages/edit-incident-data/edit-incident-data.component';
+import { EditFormComponent } from './components/edit-form/edit-form.component';
+import { FirstLoginContentComponent } from './components/first-login-content/first-login-content.component';
 
 export const appRoutes: Route[] = [
 
