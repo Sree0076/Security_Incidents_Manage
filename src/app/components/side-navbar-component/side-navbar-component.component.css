@@ -140,6 +140,7 @@
   line-height: 50px;
   font-size: 27px;
   border-radius: 12px;
+  cursor:pointer
 }
 .sidebar li.profile{
   position: fixed;

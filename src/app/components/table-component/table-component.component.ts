@@ -308,7 +308,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
         console.log(this.isadmin);
         this.router.navigate(['/edit-form']);
       } else {
-        this.router.navigate(['/editform']);
+        this.router.navigate(['/user-edit']);
       }
     } else {
       this.showError(' Sorry, The Incident is already Closed !');

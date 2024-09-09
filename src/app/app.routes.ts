@@ -7,15 +7,18 @@ import { NotificationComponentComponent } from './components/notification-compon
 import { UserManageComponent } from './pages/user-manage/user-manage.component';
 import { ViewIncidentDataComponent } from './pages/view-incident-data/view-incident-data.component';
 import { EditIncidentDataComponent } from './pages/edit-incident-data/edit-incident-data.component';
+import { EditFormComponent } from './components/edit-form/edit-form.component';
+import { FirstLoginContentComponent } from './components/first-login-content/first-login-content.component';
 
 export const appRoutes: Route[] = [
-
-    { path: '', component: LoginPageComponent },
-    { path: 'admin', component: AdminDasboardComponent },
-    { path: 'user', component: UserDasboardComponent },
-    { path: 'form', component: IncidentCreateFormComponentComponent },
-    { path: 'noti', component: NotificationComponentComponent },
-    { path: 'usermanage', component: UserManageComponent },
-    { path: 'viewform', component: ViewIncidentDataComponent },
-    { path: 'editform', component: EditIncidentDataComponent },
+  { path: '', component: LoginPageComponent },
+  { path: 'admin', component: AdminDasboardComponent },
+  { path: 'user', component: UserDasboardComponent },
+  { path: 'form', component: IncidentCreateFormComponentComponent },
+  { path: 'noti', component: NotificationComponentComponent },
+  { path: 'usermanage', component: UserManageComponent },
+  { path: 'viewform', component: ViewIncidentDataComponent },
+  { path: 'editform', component: EditIncidentDataComponent },
+  { path: 'user-edit', component: EditFormComponent },
+  { path: 'initial-page', component: FirstLoginContentComponent },
 ];

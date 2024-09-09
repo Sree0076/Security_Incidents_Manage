@@ -60,12 +60,12 @@
   </div>
   <div class="profile-details">
     <img src="images/profile.jpg" alt="">
-    <span class="admin_name">welcome
+    <span class="admin_name">Welcome
       @if(employeeData)
       {
-      {{employeeData.name}}
+      {{ employeeData.name.split(" ")[0].trim().charAt(0).toUpperCase()+employeeData.name.split("
+      ")[0].trim().slice(1).toLowerCase()}}
       }</span>
-    <i class='bx bx-chevron-down'></i>
   </div>
 </nav>
 @if(isNotificationView)

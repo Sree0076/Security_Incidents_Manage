@@ -182,16 +182,16 @@ export class BarChartComponentComponent implements OnInit {
 
     switch (index) {
       case 0:
-        gradient.addColorStop(0, '#00b5f9');
-        gradient.addColorStop(1, '#026fee');
+        gradient.addColorStop(0, '#FF6F61');
+        gradient.addColorStop(1, '#FF6F61');
         break;
       case 1:
-        gradient.addColorStop(0, ' #3e76ed');
-        gradient.addColorStop(1, ' #761df5');
+        gradient.addColorStop(0, ' #188eb3');
+        gradient.addColorStop(1, ' #188eb3');
         break;
       case 2:
-        gradient.addColorStop(0, '#0bead4');
-        gradient.addColorStop(1, '#668cfc');
+        gradient.addColorStop(0, '#4DB6AC');
+        gradient.addColorStop(1, '#4DB6AC');
         break;
     }
 
