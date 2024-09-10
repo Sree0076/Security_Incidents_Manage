@@ -105,3 +105,15 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.p-dialog-footer
+{
+  display: inline-flex;
+    padding-right: 0px;
+    align-items: end;
+    justify-content: flex-end;
+}
+.p-toast-top-right {
+  top: 10%;
+  right: 20px;
+}

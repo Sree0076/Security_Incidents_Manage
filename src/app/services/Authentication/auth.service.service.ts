@@ -22,7 +22,7 @@ import { EmployeeSharedService } from '../shared/employee/employee.shared.servic
 })
 export class AuthServiceService implements OnDestroy {
   private readonly _destroying$ = new Subject<void>();
-  private role ="";
+  role ="";
 
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
@@ -145,20 +145,20 @@ export class AuthServiceService implements OnDestroy {
   }
 
   // Role Management
-  private getRoles(): Promise<void> {
-    return lastValueFrom(
-      this.employeeService.employeeData.pipe(
-        tap(data => {
-          if (data) {
-            console.log(data);
-            this.role = data.role.name;
-            
-          }
-        }),
-        take(1)  
-      )
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    ).then(() => {});
+   async getRoles(): Promise<void> {
+    await lastValueFrom(
+       this.employeeService.employeeData.pipe(
+         tap(data => {
+           if (data) {
+             console.log(data);
+             this.role = data.role.name;
+
+           }
+         }),
+         take(1)
+       )
+       // eslint-disable-next-line @typescript-eslint/no-empty-function
+     );
 
   }
 

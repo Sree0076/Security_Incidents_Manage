@@ -82,7 +82,6 @@ export class TableComponentComponent implements OnInit, OnChanges {
   _selectedColumns: any[] = [];
 
   @Input() isadmin = false;
-  @Input() getDraft = false;
   @Input() getAssigned = false;
   @Input() filterCategory = '';
 
@@ -294,7 +293,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
     if (incident.incidentStatus !== 'closed') {
       this.incidentDataService.setSelectedIncidentId(incidentId);
       if (this.getAssigned || this.isadmin) {
-        this.router.navigate(['/edit']);
+        this.router.navigate(['/edit-inicdent']);
       } else {
         this.sidebarService.showSidebar();
       }
@@ -311,8 +310,6 @@ export class TableComponentComponent implements OnInit, OnChanges {
         this.tablefetchService
           .deleteDraftIncidentById(incidentId)
           .subscribe((response) => {
-            console.log(response);
-
             this.showSuccess('Draft Incident Deleted Successfully');
           });
       },
@@ -325,7 +322,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
     const incident = event.data;
     console.log(incident);
     this.incidentDataService.setSelectedIncidentId(incident.id);
-    this.router.navigate(['/viewform']);
+    this.router.navigate(['/view-incident']);
   }
 
   sortByPriority() {

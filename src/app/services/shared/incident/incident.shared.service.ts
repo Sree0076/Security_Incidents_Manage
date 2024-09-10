@@ -26,16 +26,15 @@ export class IncidentSharedService {
   selectedIncidentId$ = this.selectedIncidentIdSource.asObservable();
 
   fetchIncidentData(isUser: boolean): void {
-    console.log('data');
     this.employeeDataService.employeeData.subscribe((data) => {
       if (data) {
-        this.incidentApiService
-          .getDataBasedOnStatus(data.id, isUser)
-          .subscribe((data: Incidents) => {
+        this.incidentApiService.getDataBasedOnStatus(data.id, isUser).subscribe((data: Incidents) => {
             this.incidentDataSubject.next(data);
+            if(!data)
+            {
+                this.router.navigate(['/initial-page']);
+            }
           });
-      } else {
-        this.router.navigate(['/initial-page']);
       }
     });
   }

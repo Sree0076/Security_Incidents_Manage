@@ -64,7 +64,7 @@ export class ViewIncidentFormComponent {
     });
   }
   redirectToEditPage(): void {
-    this.router.navigate(['/edit-form', this.data.incidentNo]);
+    this.router.navigate(['/edit-incident', this.data.incidentNo]);
   }
 
   redirectToDashboard(): void {
