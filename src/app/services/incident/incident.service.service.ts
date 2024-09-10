@@ -56,13 +56,13 @@ export class IncidentServiceService {
 
   // Submit an incident for user review
   public submitForUser(incidentId: number, incident: any): Observable<IncidentData> {
-    return this.http.put<IncidentData>(`${this.baseApiUrl}/updateIncidentByReview/${incidentId}`, incident)
+    return this.http.put<IncidentData>(`http://localhost:7209/api/updateIncidentByReview/${incidentId}`, incident)
       .pipe(catchError(this.handleError));
   }
 
   // Approve an incident
   public incidentApproval(incidentId: number): Observable<IncidentData> {
-    return this.http.get<IncidentData>(`${this.baseApiUrl}/incidentApproval/${incidentId}`)
+    return this.http.get<IncidentData>(`http://localhost:7209/api/incidentApproval/${incidentId}`)
       .pipe(catchError(this.handleError));
   }
 

@@ -85,8 +85,6 @@ export class UserDasboardComponent implements OnInit {
                 class: 'quality-card',
               },
             ];
-          } else {
-            this.router.navigate(['/initial-page']);
           }
           return timer(2500);
         })
