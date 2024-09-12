@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { Injectable, NgModule } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Admin, UpdateAdmin } from 'src/app/models/user-manage-interface';
 

@@ -27,6 +27,7 @@ import {
 import { environment } from '../environments/environment';
 import { ChartServiceService } from './services/chart/chart.service.service';
 import { TableTruncatePipe } from './pipes/table/table-truncate.pipe';
+import { AuthInterceptor } from './services/shared/interceptor/api-authorisation.interceptor';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -102,5 +103,10 @@ export const appConfig: ApplicationConfig = {
     MsalService,
     MsalGuard,
     MsalBroadcastService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
 };
