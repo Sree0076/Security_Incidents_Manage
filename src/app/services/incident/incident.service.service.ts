@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, NgModule } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { IncidentData, Incidents } from '../../models/incident-interface';
 
