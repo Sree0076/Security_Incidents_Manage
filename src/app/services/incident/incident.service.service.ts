@@ -68,7 +68,7 @@ export class IncidentServiceService {
 
   // Accept an incident
   public incidentAccept(incidentId: number, employeeId: number): Observable<IncidentData> {
-    return this.http.put<IncidentData>(`${this.baseApiUrl}/acceptIncidents/${incidentId}`, employeeId)
+    return this.http.put<IncidentData>(`http://localhost:7209/api/acceptIncidents/${incidentId}`, employeeId)
       .pipe(catchError(this.handleError));
   }
 

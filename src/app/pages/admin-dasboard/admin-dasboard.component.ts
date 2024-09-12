@@ -6,7 +6,7 @@ import { CardData } from '../../models/incident-interface';
 import { BarChartComponentComponent } from "../../components/bar-chart-component/bar-chart-component.component";
 import { AuthServiceService } from '../../services/Authentication/auth.service.service';
 import { timer } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SideNavbarComponentComponent } from "../../components/side-navbar-component/side-navbar-component.component";
 import { TableComponentComponent } from 'src/app/components/table-component/table-component.component';
@@ -56,14 +56,15 @@ export class AdminDasboardComponent implements OnInit {
   constructor(private incidentDataService: IncidentSharedService, private employeeService: AuthServiceService) {}
 
   ngOnInit() {
-    this.isLoading=true;
-    if(this.isLoading)
-    {
+    this.incidentDataService.incidentData.pipe(
+      take(1)
+    ).subscribe(data => {
       const dashboard = document.querySelector('.dashboard-section');
-      if (dashboard) {
-        dashboard.classList.toggle('loading');
+      if (data===null) {
+        this.isLoading = true;
+        dashboard?.classList.toggle('loading');
       }
-    }
+    });
     this.incidentDataService.fetchIncidentData(false); 
     this.incidentDataService.incidentData.pipe(
       switchMap(data => {

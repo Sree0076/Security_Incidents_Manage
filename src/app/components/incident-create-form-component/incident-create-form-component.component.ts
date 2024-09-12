@@ -130,6 +130,9 @@ export class IncidentCreateFormComponentComponent implements OnInit {
         detail: `${message}`,
       });
       setTimeout(() => {
+        console.log('user')
+        this.sidebarService.hideSidebar();
+        this.incidentService.fetchIncidentData(false);
         this.router.navigate(['/user']);
       }, 2000);
     }, 100);

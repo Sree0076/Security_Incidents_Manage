@@ -47,7 +47,7 @@ export class ForwardFormComponentComponent implements OnInit {
 
   ngOnInit():void{
 
-    this.forwardFormService.getAllUsers().subscribe(data =>
+    this.forwardFormService.getAllUsers(false).subscribe(data =>
     {
       this.user_details = data;
       console.log(data);
@@ -82,7 +82,7 @@ export class ForwardFormComponentComponent implements OnInit {
     forward(): void{
       console.log(this.selectedUsers);
       console.log(this.message);
-      this.forwardFormService.forwardIncident(this.forwardIncidentId,this.getSelectedUserIds()).subscribe((response) => {
+      this.forwardFormService.forwardIncident(this.forwardIncidentId,this.getSelectedUserIds(),"remarks").subscribe((response) => {
         console.log('Incident forwarded successfully', response);
         this.router.navigate(['/admin']);
       });

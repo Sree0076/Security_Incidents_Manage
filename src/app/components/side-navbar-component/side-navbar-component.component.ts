@@ -8,6 +8,7 @@ import { NotificationComponentComponent } from '../notification-component/notifi
 import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/variables.shared.service';
 import { SidebarModule } from 'primeng/sidebar';
 import { Router } from '@angular/router';
+import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
 
 @Component({
   selector: 'app-side-navbar-component',
@@ -17,13 +18,13 @@ import { Router } from '@angular/router';
   styleUrl: './side-navbar-component.component.css',
 })
 export class SideNavbarComponentComponent implements OnInit {
-  constructor(private employeeService : EmployeeSharedService, private authService : AuthServiceService, private notificationService : VariablesSharedService,private router : Router)   {}
+  constructor(private employeeService : EmployeeSharedService, private authService : AuthServiceService, private notificationService : VariablesSharedService,private router : Router, private incidentService : IncidentSharedService)   {}
 
   @Output() sidebarToggle = new EventEmitter<boolean>();
   isExpanded = false;
   employeeData: Employee | null = null;
   isNotificationView=false;
-  
+  isAdmin=false;
   ngOnInit() {
    this.getEmployeeData();
   }
@@ -75,4 +76,31 @@ export class SideNavbarComponentComponent implements OnInit {
   usermanage() {
     this.router.navigate(['/usermanage']);
     }
+
+  navigateToDashboard()
+  {
+    if(this.employeeData?.role.name==='user')
+    {
+      this.router.navigate(['/user']);  
+    }
+    else{
+      this.router.navigate(['/admin']); 
+    }
+  }
+
+  async switchUser()
+  {
+    if(this.employeeData?.role.name!=='user')
+    {
+      if(this.router.url.includes('admin'))
+      {
+        await this.incidentService.fetchIncidentData(true)
+        this.router.navigate(['/user']); 
+      }
+      else{
+        await this.incidentService.fetchIncidentData(false)
+        this.router.navigate(['/admin']); 
+      }
+    }
+  }
 }

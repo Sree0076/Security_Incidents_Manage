@@ -70,7 +70,7 @@ export class AddAdminComponentComponent implements OnInit {
       this.visibility = visible;
     });
 
-    this.forwardFormService.getAllUsers().subscribe((data) => {
+    this.forwardFormService.getAllUsers(true).subscribe((data) => {
       this.user_details = data;
       console.log(data);
     });

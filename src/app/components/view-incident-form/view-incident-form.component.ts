@@ -68,6 +68,6 @@ export class ViewIncidentFormComponent {
   }
 
   redirectToDashboard(): void {
-    window.history.back();
+    this.router.navigate(['/user'])
   }
 }
