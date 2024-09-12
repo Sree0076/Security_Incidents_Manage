@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ForwardServiceService } from 'src/app/services/forwardForm/forward.service.service';
 import { EmployeeServiceService } from 'src/app/services/employee/employee.service.service';
@@ -48,11 +48,11 @@ export class AddAdminComponentComponent implements OnInit {
     '460px': '99vw',
     '380px': '99vw',
   };
-  @Input() visibility = false;
+  visibility : boolean = false;
   forwardIncidentId = 0;
   user_details: any[] = [];
-  searchTerm = '';
-  selectedUsers: any[] = [];
+  searchTerm: string = '';
+  selectedUser : any;
   selectedUsersId: number[] = [];
   message = '';
   checkboxes: { [key: string]: boolean } = {
@@ -75,22 +75,19 @@ export class AddAdminComponentComponent implements OnInit {
       console.log(data);
     });
   }
-  addUser(user: any) {
-    if (!this.selectedUsers.find((u) => u.id === user.id)) {
-      this.selectedUsers.push(user);
-    }
+
+  addUser(user:userDetails){
+    this.selectedUser=user;
   }
-  // Remove user from the selected list
-  removeUser(user: any) {
-    this.selectedUsers = this.selectedUsers.filter((u) => u.id !== user.id);
+
+  removeUser(){
+    this.selectedUser=undefined;
   }
-  getSelectedUserIds(): number[] {
-    return this.selectedUsers.map((user) => user.id);
-  }
+
   add() {
-    if (this.selectedUsers) {
+    if (this.selectedUser) {
       const data = {
-        employeeId: this.selectedUsers[0].id,
+        employeeId: this.selectedUser.id,
         assignedBy: 2,
         isIncidentMangenet: this.checkboxes['incidentManagement'],
         isUserMangenet: this.checkboxes['adminManagement'],
@@ -99,15 +96,27 @@ export class AddAdminComponentComponent implements OnInit {
       console.log(data);
       
       this.usermanagement.createUser(data).subscribe((response) => {
-        console.log('Incident added successfully', response);
-        this.resetForm();
+        console.log('Admin added successfully', response);
+        this.closeModal();
       });
     }
   }
-  resetForm(): void {
-    this.selectedUsers = [];
-    this.searchTerm = '';
-    this.message = '';
+
+  isAddButtonDisabled(): boolean {
+    return !(this.selectedUser && (this.checkboxes['incidentManagement'] || this.checkboxes['adminManagement']));
   }
-  
+
+  resetForm() {
+    this.searchTerm = '';
+    this.selectedUser = undefined;
+    this.checkboxes = {
+      incidentManagement: false,
+      adminManagement: false
+    };
+  }
+
+  closeModal(){
+    this.resetForm();
+    this.visibility = false;
+  }
 }
