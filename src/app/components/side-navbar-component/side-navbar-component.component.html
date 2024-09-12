@@ -5,13 +5,13 @@
   </div>
   <ul class="nav-list">
     <li>
-      <a href="#">
+      <a (click)="navigateToDashboard()">
         <i class='bx bx-grid-alt'></i>
         <span class="links_name">Dashboard</span>
       </a>
       <span class="tooltip">Dashboard</span>
     </li>
-    @if(employeeData?.role?.permission?.userManagement)
+    @if(employeeData?.role?.permission?.userManagement && !isAdmin )
     {
     <li>
       <a (click)="usermanage()">
@@ -35,6 +35,13 @@
         <span class="links_name">Setting</span>
       </a>
       <span class="tooltip">Setting</span>
+    </li>
+    <li>
+      <a (click)="switchUser()">
+        <i class='bx bxs-user-account'></i>
+        <span class="links_name">Switch</span>
+      </a>
+      <span class="tooltip">Switch</span>
     </li>
     <li class="profile">
       <div class="logout_icon">

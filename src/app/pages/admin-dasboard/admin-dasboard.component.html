@@ -23,7 +23,10 @@
       </div>
     </div>
     <div class="chart-container">
-      <app-bar-chart-component></app-bar-chart-component>
+      @if(incidentData)
+      {
+        <app-bar-chart-component></app-bar-chart-component>
+      }
     </div>
   </div>
   <div id="tableRef" class="table"  [ngClass]="{'expanded': isSidebarExpanded}">

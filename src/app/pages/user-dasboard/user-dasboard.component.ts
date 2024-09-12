@@ -5,7 +5,7 @@ import { CardComponentComponent } from '../../components/card-component/card-com
 import { CardData } from 'src/app/models/incident-interface';
 import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
 import { AuthServiceService } from 'src/app/services/Authentication/auth.service.service';
-import { switchMap, timer } from 'rxjs';
+import { switchMap, take, timer } from 'rxjs';
 import { SideNavbarComponentComponent } from '../../components/side-navbar-component/side-navbar-component.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { IncidentCreateFormComponentComponent } from 'src/app/components/incident-create-form-component/incident-create-form-component.component';
@@ -29,7 +29,7 @@ export class UserDasboardComponent implements OnInit {
     '<svg width="23" height="26" viewBox="0 0 54 55" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path d="M2.65796 27.4892C2.65796 13.7862 13.4913 2.67773 26.8548 2.67773C40.2184 2.67773 51.0516 13.7862 51.0516 27.4892C51.0516 41.1924 40.2184 52.3008 26.8548 52.3008C13.4913 52.3008 2.65796 41.1924 2.65796 27.4892Z" stroke="white" stroke-width="5"/>\n<path d="M37.6091 19.2173L24.1664 35.7583L16.1008 28.2396" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>\n</svg>',
   ];
   cardClass: string[] = ['privacy-card', 'security-card', 'quality-card'];
-  isLoading = true;
+  isLoading = false;
   isCreateIncidentView = false;
   incidentData!: CardData[];
   isSidebarExpanded = false;
@@ -44,19 +44,19 @@ export class UserDasboardComponent implements OnInit {
   }
   constructor(
     private incidentDataService: IncidentSharedService,
-    private employeeService: AuthServiceService,
     private craeteIncidentFormview: VariablesSharedService,
-    private router: Router
   ) {}
 
   ngOnInit() {
-    this.isLoading = true;
-    if (this.isLoading) {
+    this.incidentDataService.incidentData.pipe(
+      take(1)
+    ).subscribe(data => {
       const dashboard = document.querySelector('.dashboard-section');
-      if (dashboard) {
-        dashboard.classList.toggle('loading');
+      if (data===null) {
+        this.isLoading = true;
+        dashboard?.classList.toggle('loading');
       }
-    }
+    });
     this.incidentDataService.fetchIncidentData(false);
     this.incidentDataService.incidentData
       .pipe(

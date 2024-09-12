@@ -148,6 +148,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
+    this.sidebarService.hideSidebar();
     this.isLoading = true;
     if (this.getAssigned) {
       this.fetchAssignedIncidents();
@@ -293,7 +294,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
     if (incident.incidentStatus !== 'closed') {
       this.incidentDataService.setSelectedIncidentId(incidentId);
       if (this.getAssigned || this.isadmin) {
-        this.router.navigate(['/edit-inicdent']);
+        this.router.navigate(['/edit-incident']);
       } else {
         this.sidebarService.showSidebar();
       }
@@ -326,27 +327,30 @@ export class TableComponentComponent implements OnInit, OnChanges {
   }
 
   sortByPriority() {
-    const priorityOrder: PriorityOrder = { High: 1, Medium: 2, Low: 3 };
+    if(this.incidents)
+    {
+      const priorityOrder: PriorityOrder = { High: 1, Medium: 2, Low: 3 };
 
-    const activeIncidents = this.incidents.filter(
-      (incident) => incident.incidentStatus !== 'closed'
-    );
-    const closedIncidents = this.incidents.filter(
-      (incident) => incident.incidentStatus === 'closed'
-    );
-
-    activeIncidents.sort((a, b) => {
-      if (a.isSubmittedForReview && !b.isSubmittedForReview) {
-        return -1;
-      } else if (!a.isSubmittedForReview && b.isSubmittedForReview) {
-        return 1;
-      }
-      return (
-        priorityOrder[a.priority as keyof PriorityOrder] -
-        priorityOrder[b.priority as keyof PriorityOrder]
+      const activeIncidents = this.incidents.filter(
+        (incident) => incident.incidentStatus !== 'closed'
       );
-    });
-    this.incidents = [...activeIncidents, ...closedIncidents];
+      const closedIncidents = this.incidents.filter(
+        (incident) => incident.incidentStatus === 'closed'
+      );
+  
+      activeIncidents.sort((a, b) => {
+        if (a.isSubmittedForReview && !b.isSubmittedForReview) {
+          return -1;
+        } else if (!a.isSubmittedForReview && b.isSubmittedForReview) {
+          return 1;
+        }
+        return (
+          priorityOrder[a.priority as keyof PriorityOrder] -
+          priorityOrder[b.priority as keyof PriorityOrder]
+        );
+      });
+      this.incidents = [...activeIncidents, ...closedIncidents];
+    }
   }
 
   getSeverity(status: string) {
@@ -556,7 +560,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
   }
 
   showSuccess(message: string) {
-    console.log(message);
+    console.log(this.getAssigned);
     setTimeout(() => {
       this.messageService.add({
         severity: 'success',

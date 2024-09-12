@@ -30,7 +30,8 @@ export class IncidentSharedService {
       if (data) {
         this.incidentApiService.getDataBasedOnStatus(data.id, isUser).subscribe((data: Incidents) => {
             this.incidentDataSubject.next(data);
-            if(!data)
+            console.log(data);
+            if(data.incidents.length===0)
             {
                 this.router.navigate(['/initial-page']);
             }

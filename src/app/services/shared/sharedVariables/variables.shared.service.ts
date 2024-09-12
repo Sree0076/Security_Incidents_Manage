@@ -17,6 +17,11 @@ export class VariablesSharedService {
   showSidebar(): void {
     this.sidebarVisibleSubject.next(true);
   }
+
+  hideSidebar(): void {
+    this.sidebarVisibleSubject.next(false);
+  }
+
   showNotification(): void {
     this.notificationVisibleSubject.next(true);
   }

@@ -38,6 +38,7 @@ export class ForwardFormComponentComponent implements OnInit {
   user_details: any[] = [];
   searchTerm = '';
   selectedUsers: any[] = [];
+
   selectedUsersId: number[] = [];
   message = '';
 
@@ -76,17 +77,10 @@ export class ForwardFormComponentComponent implements OnInit {
   getSelectedUserIds(): number[] {
     return this.selectedUsers.map((user) => user.id);
   }
-
-  forward(): void {
-    console.log(this.selectedUsers);
-    console.log(this.message);
-    this.forwardFormService
-      .forwardIncident(
-        this.forwardIncidentId,
-        this.getSelectedUserIds(),
-        this.message
-      )
-      .subscribe((response) => {
+    forward(): void{
+      console.log(this.selectedUsers);
+      console.log(this.message);
+      this.forwardFormService.forwardIncident(this.forwardIncidentId,this.getSelectedUserIds(),this.message).subscribe((response) => {
         console.log('Incident forwarded successfully', response);
         this.router.navigate(['/admin']);
       });

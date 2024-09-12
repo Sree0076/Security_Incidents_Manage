@@ -6,6 +6,7 @@ import { ChartServiceService } from '../../services/chart/chart.service.service'
 import { isPlatformBrowser } from '@angular/common';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart, registerables } from 'chart.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bar-chart-component',
@@ -22,6 +23,7 @@ export class BarChartComponentComponent implements OnInit {
 
   constructor(
     private chartDataService: ChartServiceService,
+    private router : Router,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
     // Register the plugin and other chart.js modules
@@ -29,7 +31,10 @@ export class BarChartComponentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadChartData();
+    if(this.router.url.includes('admin'))
+    {
+      this.loadChartData();
+    }
   }
 
   // Load chart data from the service

@@ -21,14 +21,9 @@ import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/
 })
 export class FirstLoginContentComponent {
   constructor(private sidebarService: VariablesSharedService) {}
-  showCreateForm: boolean = false;
 
   goToReportPage() {
-    this.showCreateForm = true;
     this.sidebarService.showSidebar();
   }
 
-  resetShowCreateForm() {
-    this.showCreateForm = false;
-  }
 }
