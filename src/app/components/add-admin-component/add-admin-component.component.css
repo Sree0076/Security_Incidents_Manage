@@ -1,6 +1,3 @@
-
-
-/* Center and style the modal */
 .custom-modal {
   display: flex;
   align-items: center;
@@ -10,14 +7,12 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Dim background */
+  background: rgba(0, 0, 0, 0.5); 
   opacity: 1;
   visibility: visible;
   transition: opacity 0.3s ease-in-out;
   z-index: 1000;
 }
-
-/* Modal dialog box */
 .custom-modal-dialog {
   max-width: 50%;
   width: 100%;
@@ -27,14 +22,10 @@
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
-
-/* Modal content area */
 .custom-modal-content {
   display: flex;
   flex-direction: column;
 }
-
-/* Header styling */
 .custom-modal-header {
   padding: 15px 25px;
   background-color: #29A0B1;
@@ -44,11 +35,16 @@
   justify-content: space-between;
   border-bottom: 1px solid #e0e0e0;
 }
-
 .custom-modal-title {
   margin: 0;
   font-size: 1.25rem;
   font-weight: bold;
+}
+.subtext1 {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin-top: 8px;
+  margin-bottom: 10px;
 }
 
 .close-btn {
@@ -64,7 +60,6 @@
   color: #e74c3c;
 }
 
-/* Body of the modal */
 .custom-modal-body {
   padding: 20px 25px;
   font-size: 16px;
@@ -77,12 +72,18 @@
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 8px;
+  margin-top: 8px;
 }
 
 .subtext {
   font-size: 14px;
   color: #7f8c8d;
-  margin-bottom: 15px;
+  margin-top: 8px;
+  margin-bottom: 0px;
+}
+
+.incidentcheck{
+  margin-bottom: 18px;
 }
 
 input[type="text"] {
@@ -91,7 +92,7 @@ input[type="text"] {
   border: 1px solid #ddd;
   width: 100%;
   border-radius: 8px;
-  margin-bottom: 15px;
+  margin-bottom: 3px;
 }
 
 .search-names{
@@ -103,36 +104,39 @@ input[type="text"] {
   box-shadow: 2px 2px 3px grey;
   background-color: white;
   border-radius: 10px;
-    .person-details{
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
-      background-color: rgb(237, 249, 255); 
-    }   
-    .image-icon{
-      display: flex;
-      align-items: center;
-    }
-    img{
-      width: 50px;
-      border-radius: 50%;
-    } 
-    .name-details{
-      display: flex;
-      flex-direction: column;
-    }     
-    p{
-      margin: 0px;
-    }   
-    .p1{
-      font-size: 13px;
-    }  
-    .search-padding{
-      margin-bottom: 2px;
-    }
+  }
+  .search-names .person-details{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: rgb(237, 249, 255); 
+}   
+.search-names .image-icon{
+  display: flex;
+  align-items: center;
+}
+.search-names img{
+  width: 50px;
+  border-radius: 50%;
+} 
+.search-names .name-details{
+  display: flex;
+  flex-direction: column;
+}     
+.search-names p{
+  margin: 0px;
+}   
+.search-names .p1{
+  font-size: 13px;
+}  
+.search-names .search-padding{
+  margin-bottom: 2px;
 }
 
+.line{
+  margin-bottom: 65px;
+}
 .person-details {
   display: flex;
   align-items: center;
@@ -196,10 +200,6 @@ input[type="text"] {
   margin: 20px 0 10px;
 }
 
-.checkbox-container {
-  padding-top: 4px;
-}
-
 input[type="checkbox"] {
   width: 18px;
   height: 18px;
@@ -207,7 +207,6 @@ input[type="checkbox"] {
   accent-color: #29A0B1;
 }
 
-/* Footer styling */
 .custom-modal-footer {
   padding: 15px 25px;
   display: flex;
