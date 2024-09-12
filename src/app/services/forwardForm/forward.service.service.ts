@@ -9,9 +9,9 @@ import { Observable } from 'rxjs';
 export class ForwardServiceService {
   constructor(private http: HttpClient) {}
 
-  getAllUsers(): Observable<any> {
+  getAllUsers(isForAddAdmins: boolean): Observable<any> {
     return this.http.get<any>(
-      'http://localhost:7209/api/Employee/GetEmployees'
+      `http://localhost:7209/api/Employee/GetEmployees/${isForAddAdmins}`
     );
   }
 

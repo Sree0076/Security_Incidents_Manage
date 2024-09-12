@@ -48,11 +48,11 @@ export class AddAdminComponentComponent implements OnInit {
     '460px': '99vw',
     '380px': '99vw',
   };
-  visibility : boolean = false;
+  visibility: boolean = false;
   forwardIncidentId = 0;
   user_details: any[] = [];
   searchTerm: string = '';
-  selectedUser : any;
+  selectedUser: any;
   selectedUsersId: number[] = [];
   message = '';
   checkboxes: { [key: string]: boolean } = {
@@ -70,18 +70,18 @@ export class AddAdminComponentComponent implements OnInit {
       this.visibility = visible;
     });
 
-    this.forwardFormService.getAllUsers().subscribe((data) => {
+    this.forwardFormService.getAllUsers(true).subscribe((data) => {
       this.user_details = data;
       console.log(data);
     });
   }
 
-  addUser(user:userDetails){
-    this.selectedUser=user;
+  addUser(user: userDetails) {
+    this.selectedUser = user;
   }
 
-  removeUser(){
-    this.selectedUser=undefined;
+  removeUser() {
+    this.selectedUser = undefined;
   }
 
   add() {
@@ -94,7 +94,7 @@ export class AddAdminComponentComponent implements OnInit {
         status: true,
       };
       console.log(data);
-      
+
       this.usermanagement.createUser(data).subscribe((response) => {
         console.log('Admin added successfully', response);
         this.closeModal();
@@ -103,7 +103,11 @@ export class AddAdminComponentComponent implements OnInit {
   }
 
   isAddButtonDisabled(): boolean {
-    return !(this.selectedUser && (this.checkboxes['incidentManagement'] || this.checkboxes['adminManagement']));
+    return !(
+      this.selectedUser &&
+      (this.checkboxes['incidentManagement'] ||
+        this.checkboxes['adminManagement'])
+    );
   }
 
   resetForm() {
@@ -111,11 +115,11 @@ export class AddAdminComponentComponent implements OnInit {
     this.selectedUser = undefined;
     this.checkboxes = {
       incidentManagement: false,
-      adminManagement: false
+      adminManagement: false,
     };
   }
 
-  closeModal(){
+  closeModal() {
     this.resetForm();
     this.visibility = false;
   }

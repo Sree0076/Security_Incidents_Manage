@@ -49,7 +49,7 @@ export class ForwardFormComponentComponent implements OnInit {
   isForwardform = true;
 
   ngOnInit(): void {
-    this.forwardFormService.getAllUsers().subscribe((data) => {
+    this.forwardFormService.getAllUsers(false).subscribe((data) => {
       this.user_details = data;
       console.log(data);
     });
