@@ -11,7 +11,7 @@
       </a>
       <span class="tooltip">Dashboard</span>
     </li>
-    @if(employeeData?.role?.permission?.userManagement && !isAdmin )
+    @if(employeeData?.role?.permission?.userManagement && isAdmin )
     {
     <li>
       <a (click)="usermanage()">
@@ -53,7 +53,7 @@
           @if(employeeData)
           {
           <div class="name">{{employeeData.name}}</div>
-          <div class="job">{{employeeData.designation}}</div>
+          <div class="job">{{employeeData.designation|tableTruncate:12}}</div>
           }
         </div>
       </div>
@@ -66,7 +66,6 @@
     <span class="dashboard">experion</span>
   </div>
   <div class="profile-details">
-    <img src="images/profile.jpg" alt="">
     <span class="admin_name">Welcome
       @if(employeeData)
       {

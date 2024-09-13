@@ -48,10 +48,10 @@ export class AddAdminComponentComponent implements OnInit {
     '460px': '99vw',
     '380px': '99vw',
   };
-  visibility: boolean = false;
+  visibility = false;
   forwardIncidentId = 0;
   user_details: any[] = [];
-  searchTerm: string = '';
+  searchTerm = '';
   selectedUser: any;
   selectedUsersId: number[] = [];
   message = '';

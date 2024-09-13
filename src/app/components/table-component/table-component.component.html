@@ -146,8 +146,7 @@
                     <i class="pi pi-send" style="color: #29A0B1; font-size:1.3rem ;" (click)="onIconClick(incident)"></i>
                 </div>
                 <div class="flex justify-content-center" *ngIf="!isadmin">
-                    <i class="bx bxs-edit" (click)="editIncidentData(incident,incident.id)"
-                      *ngIf="incident.isDraft || getAssigned"></i>
+                    <i class="bx bxs-edit" (click)="editIncidentData(incident,incident.id)"*ngIf="incident.isDraft || getAssigned && incident.accepted"></i>
                     <i class="bx bx-trash" *ngIf="incident.isDraft" style="color: rgb(224, 51, 51);" (click)="deleteDraftIncidentById(incident.id)"></i>
                   </div>
                 }
