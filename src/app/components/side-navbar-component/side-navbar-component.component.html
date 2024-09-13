@@ -36,13 +36,16 @@
       </a>
       <span class="tooltip">Setting</span>
     </li>
-    <li>
-      <a (click)="switchUser()">
-        <i class='bx bxs-user-account'></i>
-        <span class="links_name">Switch</span>
-      </a>
-      <span class="tooltip">Switch</span>
-    </li>
+    @if(employeeData?.role?.name!=='user')
+    {
+      <li>
+        <a (click)="switchUser()">
+          <i class='bx bxs-user-account'></i>
+          <span class="links_name">Switch</span>
+        </a>
+        <span class="tooltip">Switch</span>
+      </li>
+    }
     <li class="profile">
       <div class="logout_icon">
         <i class='bx bx-log-out' id="log_out" (click)="log_out()"></i>

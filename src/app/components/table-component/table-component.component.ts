@@ -39,6 +39,7 @@ import { EmployeeSharedService } from 'src/app/services/shared/employee/employee
 import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/variables.shared.service';
 import { TableTruncatePipe } from 'src/app/pipes/table/table-truncate.pipe';
 import { ForwardFormComponentComponent } from '../forward-form-component/forward-form-component.component';
+import { ButtonLoadingDirective } from 'src/app/shared/ui/button-loading.directive';
 
 interface PriorityOrder {
   High: number;
@@ -73,6 +74,7 @@ interface PriorityOrder {
     ConfirmDialogModule,
     ToastModule,
     TableTruncatePipe,
+    ButtonLoadingDirective,
   ],
   templateUrl: './table-component.component.html',
   styleUrl: './table-component.component.css',
@@ -132,7 +134,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
   selectedIncident!: IncidentData;
   first = 0;
   rows = 10;
-
+  isButtonLoading = false;
   priorityValue: any;
   incidentTypeValue: any;
   selectedIncidents: IncidentData[] = [];
@@ -145,7 +147,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
     private messageService: MessageService,
     private employeeDataService: EmployeeSharedService,
     private sidebarService: VariablesSharedService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.sidebarService.hideSidebar();
@@ -314,7 +316,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
             this.showSuccess('Draft Incident Deleted Successfully');
           });
       },
-      reject: () => {},
+      reject: () => { },
     });
   }
 
@@ -327,9 +329,9 @@ export class TableComponentComponent implements OnInit, OnChanges {
   }
 
   sortByPriority() {
-    if(this.incidents)
-    {
-      const priorityOrder: PriorityOrder = { High: 1, Medium: 2, Low: 3 };
+    if (this.incidents) {
+      const priorityOrder = { High: 1, Medium: 2, Low: 3 };
+      const statusOrder: Record<string, number> = { pending: 1, progress: 2 };
 
       const activeIncidents = this.incidents.filter(
         (incident) => incident.incidentStatus !== 'closed'
@@ -337,18 +339,21 @@ export class TableComponentComponent implements OnInit, OnChanges {
       const closedIncidents = this.incidents.filter(
         (incident) => incident.incidentStatus === 'closed'
       );
-  
+
       activeIncidents.sort((a, b) => {
+        // Prioritize incidents that are submitted for review
+        console.log(a.incidentNo, a.incidentStatus);
+        console.log(b.incidentNo, b.isSubmittedForReview);
         if (a.isSubmittedForReview && !b.isSubmittedForReview) {
           return -1;
         } else if (!a.isSubmittedForReview && b.isSubmittedForReview) {
           return 1;
         }
-        return (
-          priorityOrder[a.priority as keyof PriorityOrder] -
-          priorityOrder[b.priority as keyof PriorityOrder]
-        );
+
+        // If neither or both are submitted for review, sort by incident status
+        return statusOrder[a.incidentStatus] - statusOrder[b.incidentStatus];
       });
+
       this.incidents = [...activeIncidents, ...closedIncidents];
     }
   }
@@ -396,6 +401,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
     }
     return '';
   }
+
   onIconClick(incident: any): void {
     if (incident.incidentStatus !== 'closed') {
       this.openForwardingModal(incident.id);
@@ -536,7 +542,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
             this.showSuccess('Corrective measures aproved sucessfully');
           });
       },
-      reject: () => {},
+      reject: () => { },
     });
   }
   onReject(incident: IncidentData) {
@@ -555,7 +561,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
             this.showError('Incident returned');
           });
       },
-      reject: () => {},
+      reject: () => { },
     });
   }
 
@@ -574,12 +580,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
   }
 
   showError(message: string) {
-    setTimeout(() => {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: `${message}`,
-      });
+    setTimeout(() => {this.messageService.add({severity: 'error', summary: 'Error', detail: `${message}`, });
       setTimeout(() => {
         this.incidentDataService.fetchIncidentData(this.getAssigned);
       }, 2000);
@@ -587,12 +588,13 @@ export class TableComponentComponent implements OnInit, OnChanges {
   }
 
   onIncidentAccept(incident: IncidentData) {
+    this.isButtonLoading = true;
     this.employeeDataService.employeeData.subscribe((data) => {
       if (data) {
         this.tablefetchService
           .incidentAccept(incident.id, data.id)
           .subscribe((response) => {
-            console.log(response);
+            this.isButtonLoading = false;
             this.showSuccess('Incident Aceepted for Resolving');
           });
       }

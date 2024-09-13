@@ -116,7 +116,7 @@
                     <p-button icon="pi pi-times" [rounded]="true" severity="danger" (click)="onReject(incident)" />
                     }
                     @else if (getAssigned && !incident.accepted) {
-                    <p-button icon="pi pi-check" [rounded]="true" (click)="onIncidentAccept(incident)" />
+                    <p-button icon="pi pi-check" [rounded]="true" (click)="onIncidentAccept(incident)" [appButtonLoading]="isButtonLoading" [disabled]="isButtonLoading"/>
                     }
                     @else
                     {

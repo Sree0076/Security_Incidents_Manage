@@ -18,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { ToastModule } from 'primeng/toast';
 import { ButtonLoadingDirective } from 'src/app/shared/ui/button-loading.directive';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-incident-form',
@@ -89,7 +90,9 @@ export class EditIncidentFormComponent {
   constructor(
     private fb: FormBuilder,
     private apiService: IncidentServiceService,
-    private incidentService: IncidentSharedService
+    private incidentService: IncidentSharedService,
+    private messageService : MessageService,
+    private router : Router,
   ) {}
 
   ngOnInit() {
@@ -164,14 +167,25 @@ export class EditIncidentFormComponent {
   onSubmit() {
     this.isButtonLoading = true;
     if (this.editform.valid) {
-      console.log(this.editform.value);
-
       this.apiService
         .updateIncident(this.editIncidentId, this.editform.value)
         .subscribe((response) => {
-          console.log(response);
+         this.showSuccess('Incident Updated Successfully');
           this.isButtonLoading = false;
         });
     }
+  }
+
+  showSuccess(message: string) {
+    setTimeout(() => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: `${message}`,
+      });
+      setTimeout(() => {
+       this.router.navigate(['/'])
+      }, 2000);
+    }, 100);
   }
 }
