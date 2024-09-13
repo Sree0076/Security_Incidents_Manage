@@ -9,11 +9,12 @@ import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/
 import { SidebarModule } from 'primeng/sidebar';
 import { Router } from '@angular/router';
 import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
+import { TableTruncatePipe } from "../../pipes/table/table-truncate.pipe";
 
 @Component({
   selector: 'app-side-navbar-component',
   standalone: true,
-  imports: [CommonModule,BadgeModule,NotificationComponentComponent,SidebarModule],
+  imports: [CommonModule, BadgeModule, NotificationComponentComponent, SidebarModule, TableTruncatePipe],
   templateUrl: './side-navbar-component.component.html',
   styleUrl: './side-navbar-component.component.css',
 })
@@ -26,6 +27,7 @@ export class SideNavbarComponentComponent implements OnInit {
   isNotificationView=false;
   isAdmin=false;
   ngOnInit() {
+    this.isAdmin = this.router.url.includes('admin')
    this.getEmployeeData();
   }
   
