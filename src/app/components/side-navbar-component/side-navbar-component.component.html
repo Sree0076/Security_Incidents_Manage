@@ -4,6 +4,8 @@
     <i class='bx bx-menu' id="btn" (click)="toggleSidebar()"></i>
   </div>
   <ul class="nav-list">
+    @if(isViewDashboard )
+    {
     <li>
       <a (click)="navigateToDashboard()">
         <i class='bx bx-grid-alt'></i>
@@ -11,6 +13,7 @@
       </a>
       <span class="tooltip">Dashboard</span>
     </li>
+    }
     @if(employeeData?.role?.permission?.userManagement && isAdmin )
     {
     <li>
@@ -24,7 +27,10 @@
     <li>
       <a>
         <i class='bx bx-bell' (click)="openNotification()"></i>
-        <span class="badge">3</span>
+        @if(notificationCount>0)
+        {
+          <span class="badge">{{notificationCount}}</span>
+        }
         <span class="links_name">Notifications</span>
       </a>
       <span class="tooltip">Notifications</span>

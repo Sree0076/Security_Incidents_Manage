@@ -4,7 +4,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { IncidentServiceService } from 'src/app/services/incident/incident.service.service';
+import { EmployeeSharedService } from 'src/app/services/shared/employee/employee.shared.service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
 export interface notifications{
+  id:number,
   title: any,
   message: any,
   Priority: any,
@@ -14,16 +18,17 @@ export interface notifications{
 @Component({
   selector: 'app-notification-component',
   standalone: true,
-  imports: [CommonModule,ButtonModule],
+  imports: [CommonModule,ButtonModule,ProgressSpinnerModule],
   templateUrl: './notification-component.component.html',
   styleUrl: './notification-component.component.css',
 })
 
 export class NotificationComponentComponent implements OnInit {
 
-  constructor(private notificationService:IncidentServiceService)
+  constructor(private notificationService:IncidentServiceService, private employeeService : EmployeeSharedService, private incidentService : IncidentSharedService )
   {}
   @Input() notificationVisible = false;
+  employeeId !: number;
 
   allNotifications: notifications[] = [];
 
@@ -38,7 +43,11 @@ export class NotificationComponentComponent implements OnInit {
   }
 
   clearAllUnread() {
-    this.isClearingAll = true;
+    this.notificationService.clearNotification(this.employeeId).subscribe((response)=>{
+      console.log(response);
+      this.incidentService.getNotificationCount(this.employeeId);
+      this.fetchNotifications();
+      });
   }
 
   onAnimationEnd(notification: notifications, index: number) {
@@ -51,22 +60,30 @@ export class NotificationComponentComponent implements OnInit {
   }
 
   markAsRead(notification: notifications) {
-    notification.isRead = true;
+    this.notificationService.readNotification(this.employeeId,notification.id).subscribe((response)=>{
+    console.log(notification.id);
+    this.incidentService.getNotificationCount(this.employeeId);
+    this.fetchNotifications();
+    });
   }
+
   private bootstrapCssUrl = '';
   ngOnInit(): void {
+   this.employeeService.employeeData.subscribe((data)=>{
+    if(data)
+    {
+      this.employeeId = data.id
+    }
+   });
     this.addBootstrapCss();
 
     this.fetchNotifications();
  
   }
   fetchNotifications(): void {
-    this.notificationService.getNotifications(1).subscribe((notifications: any[]) => {
+    this.notificationService.getNotifications(this.employeeId).subscribe((notifications: any[]) => {
       this.allNotifications = notifications.map(notification => {
-        // Parse the message field into an object
         notification.message = JSON.parse(notification.message);
-  
-        // Return the modified notification object
         return notification;
       });
       console.log(this.allNotifications);

@@ -2,18 +2,67 @@
   <ng-template pTemplate="header">
     <h6 class="sidebar-title">Notifications</h6>
   </ng-template>
-  <div class="sidebar-body">
-    <div class="noti-header">
-      <h3>Recent</h3>
-      <button pButton class="clear-btn" label="Clear All" (click)="clearAllUnread()" severity="secondary" [outlined]="true" size="small"></button>
-    </div>
-
-    <ng-container *ngIf="unreadNotifications.length > 0; else noUnread">
-      <div *ngFor="let notification of unreadNotifications; let i = index" 
-      [ngClass]="{'slide-out-right': isClearingAll && !notification.isRead }" 
-      [style.animationDelay]="isClearingAll ? (i * 0.2) + 's' : '0s'" 
-      (animationend)="onAnimationEnd(notification, i)" class="unread">
-        <div class="notification-content">
+  @if(!allNotifications)
+  {
+    <div class="card flex justify-content-center">
+      <p-progressSpinner ariaLabel="loading" />
+  </div>
+  }
+  @else {
+    <div class="sidebar-body" >
+      <div class="noti-header">
+        <h3>Recent</h3>
+        <button pButton class="clear-btn" label="Clear All" (click)="clearAllUnread()" severity="secondary" [outlined]="true" size="small"></button>
+      </div>
+  
+      <ng-container *ngIf="unreadNotifications.length > 0; else noUnread">
+        <div *ngFor="let notification of unreadNotifications; let i = index" 
+        [ngClass]="{'slide-out-right': isClearingAll && !notification.isRead }" 
+        [style.animationDelay]="isClearingAll ? (i * 0.2) + 's' : '0s'" 
+        (animationend)="onAnimationEnd(notification, i)" class="unread">
+          <div class="notification-content">
+            <div class="noti-logo">
+              <img src="icons/newIncd.png" alt="">
+            </div>
+            <div>
+              <div class="noti-title">
+                <p >{{notification.message.IncidentNo }}</p>
+                <p class="priority"><b>{{notification.message.IncidentType }}</b></p>
+                @switch(notification.message.Priority ){
+                  @case ("High") {
+                    <p class="priority-high priority"><b>{{notification.message.Priority }}</b></p>
+                 
+                  }
+                  @case ("Medium") {
+                    <p class="priority-medium priority"><b>{{notification.message.Priority }}</b></p>
+                  }
+                  @case ("Low") {
+                    <p class="priority-low priority"><b>{{notification.message.Priority }}</b></p>
+                  }
+                  @default {
+                    <p>{{notification.message.Priority }}</p>
+                  }
+                }
+              </div>
+              <h6 class="noti-message">{{ notification.message.IncidentTitle }}</h6>
+              <div class="noti-footer">
+                <p class="timeAgo">{{ notification.timeAgo }}</p>
+                <h6 class="mark-read" (click)="markAsRead(notification)">Mark As Read</h6>
+              </div>
+            </div>   
+          </div>
+        </div>
+      </ng-container>
+  
+      <ng-template #noUnread>
+        <div class="no-unread">
+          <h4>No Unread Notifications</h4>
+        </div>
+      </ng-template>
+  
+      <div>
+        <h3 class="noti-head">All</h3>
+        <div *ngFor="let notification of allNotificationsWithoutUnread" class="notification-content read">
           <div class="noti-logo">
             <img src="icons/newIncd.png" alt="">
           </div>
@@ -24,7 +73,6 @@
               @switch(notification.message.Priority ){
                 @case ("High") {
                   <p class="priority-high priority"><b>{{notification.message.Priority }}</b></p>
-               
                 }
                 @case ("Medium") {
                   <p class="priority-medium priority"><b>{{notification.message.Priority }}</b></p>
@@ -38,49 +86,9 @@
               }
             </div>
             <h6 class="noti-message">{{ notification.message.IncidentTitle }}</h6>
-            <div class="noti-footer">
-              <p class="timeAgo">{{ notification.timeAgo }}</p>
-              <h6 class="mark-read" (click)="markAsRead(notification)">Mark As Read</h6>
-            </div>
-          </div>   
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-template #noUnread>
-      <div class="no-unread">
-        <h4>No Unread Notifications</h4>
-      </div>
-    </ng-template>
-
-    <div>
-      <h3 class="noti-head">All</h3>
-      <div *ngFor="let notification of allNotificationsWithoutUnread" class="notification-content read">
-        <div class="noti-logo">
-          <img src="icons/newIncd.png" alt="">
-        </div>
-        <div>
-          <div class="noti-title">
-            <p >{{notification.message.IncidentNo }}</p>
-            <p class="priority"><b>{{notification.message.IncidentType }}</b></p>
-            @switch(notification.message.Priority ){
-              @case ("High") {
-                <p class="priority-high priority"><b>{{notification.message.Priority }}</b></p>
-              }
-              @case ("Medium") {
-                <p class="priority-medium priority"><b>{{notification.message.Priority }}</b></p>
-              }
-              @case ("Low") {
-                <p class="priority-low priority"><b>{{notification.message.Priority }}</b></p>
-              }
-              @default {
-                <p>{{notification.message.Priority }}</p>
-              }
-            }
+            <p class="timeAgo">{{ notification.timeAgo }}</p>
           </div>
-          <h6 class="noti-message">{{ notification.message.IncidentTitle }}</h6>
-          <p class="timeAgo">{{ notification.timeAgo }}</p>
         </div>
       </div>
     </div>
-  </div>
+  }

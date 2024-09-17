@@ -4,12 +4,13 @@ import { EmployeeSharedService } from '../../services/shared/employee/employee.s
 import { Employee } from '../../models/employee-interface';
 import { BadgeModule } from 'primeng/badge';
 import { AuthServiceService } from 'src/app/services/Authentication/auth.service.service';
-import { NotificationComponentComponent } from '../notification-component/notification-component.component';
+import { NotificationComponentComponent, notifications } from '../notification-component/notification-component.component';
 import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/variables.shared.service';
 import { SidebarModule } from 'primeng/sidebar';
 import { Router } from '@angular/router';
 import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
 import { TableTruncatePipe } from "../../pipes/table/table-truncate.pipe";
+import { IncidentServiceService } from 'src/app/services/incident/incident.service.service';
 
 @Component({
   selector: 'app-side-navbar-component',
@@ -19,18 +20,36 @@ import { TableTruncatePipe } from "../../pipes/table/table-truncate.pipe";
   styleUrl: './side-navbar-component.component.css',
 })
 export class SideNavbarComponentComponent implements OnInit {
-  constructor(private employeeService : EmployeeSharedService, private authService : AuthServiceService, private notificationService : VariablesSharedService,private router : Router, private incidentService : IncidentSharedService)   {}
+  constructor(private employeeService : EmployeeSharedService, private authService : AuthServiceService,  private router : Router, private incidentService : IncidentSharedService )   {}
 
   @Output() sidebarToggle = new EventEmitter<boolean>();
   isExpanded = false;
   employeeData: Employee | null = null;
   isNotificationView=false;
   isAdmin=false;
+  isViewDashboard = true;
+  notificationCount!: number ;
   ngOnInit() {
-    this.isAdmin = this.router.url.includes('admin')
-   this.getEmployeeData();
+    this.getEmployeeData();
+    this.isAdmin = this.router.url.includes('admin');
+    if (this.employeeData?.role.permission.userManagement && 
+      !this.employeeData?.role.permission.incidentManagement && 
+      this.router.url.includes('usermanage')) {
+    this.isViewDashboard = false;
+  }
+  if(this.employeeData)
+  {
+    this.incidentService.getNotificationCount(this.employeeData.id);
+    this.incidentService.unReadNotificationsCount$.subscribe(
+      (count: number) => {
+        this.notificationCount = count;
+      }
+    );
   }
   
+  }
+
+
   toggleSidebar() {
     
     const sidebar = document.querySelector('.sidebar');
@@ -92,9 +111,9 @@ export class SideNavbarComponentComponent implements OnInit {
 
   async switchUser()
   {
-    if(this.employeeData?.role.name!=='user')
+    if(this.employeeData?.role.permission.incidentManagement )
     {
-      if(this.router.url.includes('admin'))
+      if(this.router.url.includes('admin') )
       {
         await this.incidentService.fetchIncidentData(true)
         this.router.navigate(['/user']); 
@@ -103,6 +122,18 @@ export class SideNavbarComponentComponent implements OnInit {
         await this.incidentService.fetchIncidentData(false)
         this.router.navigate(['/admin']); 
       }
+    }
+    else if(this.employeeData?.role.permission.userManagement)
+    {
+      if(this.router.url.includes('usermanage') )
+        {
+          await this.incidentService.fetchIncidentData(true)
+          this.router.navigate(['/user']); 
+        }
+        else{
+          await this.incidentService.fetchIncidentData(false)
+          this.router.navigate(['/usermanage']); 
+        }
     }
   }
 }

@@ -115,10 +115,13 @@ export class AuthServiceService implements OnDestroy {
 
   private async handleRedirection() {
      console.log("redirect");
-    if (this.role === 'Admin-Incidents' || this.role === 'SuperAdmin' || this.role === 'Admins-User') {
+    if (this.role === 'Admin-Incidents' || this.role === 'SuperAdmin' ) {
       this.router.navigate(['/admin']);
     } else if (this.role === 'user') {
       this.router.navigate(['/user']);
+    }
+    else if (this.role === 'Admins-User') {
+      this.router.navigate(['/usermanage']);
     }
   }
 

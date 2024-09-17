@@ -84,6 +84,24 @@ export class IncidentServiceService {
       .pipe(catchError(this.handleError));
   }
 
+  public clearNotification(employeeId: number): Observable<{employeeId: number}> {
+    return this.http.put<{employeeId: number}>(`http://localhost:7209/api/Notification/${employeeId}`,{})
+      .pipe(catchError(this.handleError));
+  }
+
+  public readNotification(employeeId: number, notificatioId: number): Observable<{employeeId: number, notificatioId: number}> {
+    return this.http.put<{employeeId: number, notificatioId: number}>(`http://localhost:7209/api/Notification/${employeeId}/${notificatioId}`, {})
+      .pipe(catchError(this.handleError));
+  }
+
+  public unreadNotificationCount(employeeId: number): Observable<number> {
+    return this.http.get<number>(`http://localhost:7209/api/Notification/unread/count/${employeeId}`)
+      .pipe(
+        catchError(this.handleError)  
+      );
+  }
+
+
   // Error handling
   private handleError(error: HttpErrorResponse) {
     console.error('An error occurred:', error.message);

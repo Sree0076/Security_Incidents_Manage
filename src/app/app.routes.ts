@@ -13,7 +13,7 @@ import { roleGuard } from './role.guard';
 
 export const appRoutes: Routes = [
     { path: '', component: LoginPageComponent },
-    { path: 'admin', component: AdminDasboardComponent, canActivate: [MsalGuard, roleGuard], data: { expectedRoles: ['Admin-Incidents','Admins-User', 'SuperAdmin'] } },
+    { path: 'admin', component: AdminDasboardComponent, canActivate: [MsalGuard, roleGuard], data: { expectedRoles: ['Admin-Incidents', 'SuperAdmin'] } },
     { path: 'user', component: UserDasboardComponent, canActivate: [MsalGuard, roleGuard], data: { expectedRoles: ['user', 'Admin-Incidents','Admins-User', 'SuperAdmin'] } },
     { path: 'create-incident', component: IncidentCreateFormComponentComponent, canActivate: [MsalGuard, roleGuard], data: { expectedRoles: ['user', 'Admin-Incidents','Admins-User', 'SuperAdmin'] } },
     { path: 'view-incident', component: ViewIncidentDataComponent, canActivate: [MsalGuard, roleGuard], data: { expectedRoles: ['user', 'Admin-Incidents','Admins-User', 'SuperAdmin'] } },
