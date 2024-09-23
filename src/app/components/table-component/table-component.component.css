@@ -147,3 +147,7 @@ ul
 {
     color: red;
 }
+::ng-deep .p-dialog-footer {
+    align-items: center;
+    justify-content: center;
+}
