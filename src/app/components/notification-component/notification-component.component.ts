@@ -13,7 +13,8 @@ export interface notifications{
   message: any,
   Priority: any,
   timeAgo: string,
-  isRead:boolean
+  isRead:boolean,
+  createdAt: string,
 }
 @Component({
   selector: 'app-notification-component',
@@ -29,9 +30,7 @@ export class NotificationComponentComponent implements OnInit {
   {}
   @Input() notificationVisible = false;
   employeeId !: number;
-
   allNotifications: notifications[] = [];
-
   isClearingAll = false;
 
   get unreadNotifications() {
@@ -60,8 +59,8 @@ export class NotificationComponentComponent implements OnInit {
   }
 
   markAsRead(notification: notifications) {
+    this.onAnimationEnd(notification,1);
     this.notificationService.readNotification(this.employeeId,notification.id).subscribe((response)=>{
-    console.log(notification.id);
     this.incidentService.getNotificationCount(this.employeeId);
     this.fetchNotifications();
     });
@@ -97,5 +96,29 @@ export class NotificationComponentComponent implements OnInit {
     link.integrity = 'sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T';
     link.crossOrigin = 'anonymous';
     document.head.appendChild(link);
+  }
+
+  getTimeDifference(time : string): string {
+    const now = new Date();
+    const past = new Date(time);
+    const timeDiff = now.getTime() - past.getTime();
+    const seconds = Math.floor((timeDiff / 1000) % 60);
+    const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
+    const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  
+    let timeDiffString = '';
+  
+    if (days > 0) {
+      timeDiffString = `${days} day${days > 1 ? 's' : ''} ago`;
+    } else if (hours > 0) {
+      timeDiffString = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    } else if (minutes > 0) {
+      timeDiffString = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    } else if (seconds > 0) {
+      timeDiffString = `${seconds} second${seconds > 1 ? 's' : ''} ago`;
+    }    
+  
+    return timeDiffString || "just now";
   }
 }

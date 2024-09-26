@@ -107,8 +107,11 @@ export class IncidentCreateFormComponentComponent implements OnInit {
     private employeeDataService: EmployeeSharedService,
     private confirmationService: ConfirmationService,
     private sidebarService : VariablesSharedService,
-    private incidentService: IncidentSharedService
-  ) {}
+    private incidentService: IncidentSharedService,
+
+  ) {
+    
+  }
 
   openDialog() {
     this.confirmationService.confirm({
@@ -130,10 +133,11 @@ export class IncidentCreateFormComponentComponent implements OnInit {
         detail: `${message}`,
       });
       setTimeout(() => {
-        console.log('user')
         this.sidebarService.hideSidebar();
-        this.incidentService.fetchIncidentData(false);
-        this.router.navigate(['/user']);
+        if(this.router.url.includes('initial-page'))
+        {
+          this.router.navigate(['/']);
+        }
       }, 2000);
     }, 100);
   }
@@ -165,7 +169,6 @@ export class IncidentCreateFormComponentComponent implements OnInit {
   viewform!: FormGroup;
 
   ngOnInit() {
-
     this.incidentService.selectedIncidentId$.subscribe((incidentId) => {
       if(incidentId)
       {

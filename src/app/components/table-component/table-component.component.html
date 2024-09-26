@@ -89,7 +89,16 @@
                     </p-columnFilter>
                 </th>
                 <th>
-                    <p-columnFilter type="boolean" field="verified" />
+                    <p-columnFilter type="custom" field="dateField" [showMenu]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-calendar
+                                [(ngModel)]="rangeDates"
+                                selectionMode="range"
+                                [readonlyInput]="true"
+                                (onSelect)="onDateRangeSelect()">
+                            </p-calendar>
+                        </ng-template>
+                    </p-columnFilter>
                 </th>
                 <th>
                     <p-columnFilter field="incident.priority" matchMode="equals" [showMenu]="false">
@@ -160,7 +169,6 @@
                         [severity]="getSeverity(incident.incidentStatus)" />
                     }
                     }
-
                     }
                 </td>
                 <td *ngIf="isColumnVisible('Actions')">@if(isLoading) {<p-skeleton />}@else{
@@ -205,6 +213,9 @@
         </ng-template>
     </p-table>
 </div>
-<p-toast />
-<app-forward-form-component [visibility]="displayForwardingModal"
-    (dialogClosed)="onDialogClosed()"></app-forward-form-component>
+<p-toast/>
+@if(displayForwardingModal)
+{
+    <app-forward-form-component [visibility]="displayForwardingModal" (dialogClosed)="onDialogClosed()"></app-forward-form-component>
+}
+
