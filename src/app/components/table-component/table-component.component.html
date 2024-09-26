@@ -119,14 +119,19 @@
             @if(!incident.isDraft || !isadmin)
             {
             <tr>
-                <td [pSelectableRow]="incident">@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentNo }}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentTitle| titlecase| tableTruncate:10 }}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentType ?
+                <td *ngIf="isColumnVisible('id')" [pSelectableRow]="incident">@if(isLoading) {<p-skeleton />}@else{{{
+                    incident.incidentNo }}}</td>
+                <td *ngIf="isColumnVisible('Title')">@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentTitle|
+                    titlecase| tableTruncate:10 }}}</td>
+                <td  *ngIf="isColumnVisible('Type')">@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentType ?
                     incident.incidentType.replace('Incidents', '').trim() : ''}}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{ {{ incident.category | tableTruncate:10}} }</td>
-                <td> @if(isLoading) {<p-skeleton />}@else{{{ incident.createdAt | date:'dd-MM-yy, hh:mm a' }}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{{{ incident.priority }}}</td>
-                <td>@if(isLoading) {<p-skeleton />}@else{
+                <td *ngIf="isColumnVisible('category')">@if(isLoading) {<p-skeleton />}@else{ {{ incident.category |
+                    tableTruncate:10}} }</td>
+                <td *ngIf="isColumnVisible('CreatedAt')"> @if(isLoading) {<p-skeleton />}@else{{{ incident.createdAt |
+                    date:'dd-MM-yy, hh:mm a' }}}</td>
+                <td *ngIf="isColumnVisible('priority')">@if(isLoading) {<p-skeleton />}@else{{{ incident.priority }}}
+                </td>
+                <td *ngIf="isColumnVisible('incidentStatus')">@if(isLoading) {<p-skeleton />}@else{
                     @if(getAssigned && incident.isCorrectionFilled && incident.incidentStatus!== "closed")
                     {
                     <button type="button" class="btn btn-outline-primary  reviewbtn  "
@@ -153,7 +158,7 @@
 
                     }
                 </td>
-                <td>@if(isLoading) {<p-skeleton />}@else{
+                <td *ngIf="isColumnVisible('Actions')">@if(isLoading) {<p-skeleton />}@else{
                     <div class="flex justify-content-center" *ngIf="isadmin">
                         <i class='bx bx-dots-vertical-rounded' (click)="op.toggle($event)"></i>
                         <p-overlayPanel #op>
