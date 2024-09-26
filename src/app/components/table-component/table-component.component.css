@@ -151,3 +151,32 @@ ul
     align-items: center;
     justify-content: center;
 }
+.export-button {
+    background-color:#29A0B1 ;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.export-button:hover {
+    background-color: #45a049;
+}
+.download-template-button{
+    color:#29A0B1;
+    border:1px solid #29A0B1;
+    background-color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left:1rem;
+}

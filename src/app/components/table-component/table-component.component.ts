@@ -620,4 +620,45 @@ export class TableComponentComponent implements OnInit, OnChanges {
     this.incidentDataService.setSelectedIncidentId(0);
     this.sidebarService.showSidebar();
   }
+
+  onFileChange(evt: any) {
+    console.log('File upload function initiated');
+
+    const target: DataTransfer = <DataTransfer>evt.target;
+
+    // Ensure only one file is selected
+    if (target.files.length !== 1) {
+      this.showError('Cannot use multiple files');
+      return;
+    }
+
+    // Get the selected file
+    const file = target.files[0];
+
+    // Send the file directly to the backend
+    this.uploadIncidentData(file);
+  }
+
+  uploadIncidentData(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    this.tablefetchService.bulkUpload(formData).subscribe((response) => {
+      console.log(response);
+      this.showSuccess('Incidents Imported Successfully');
+    });
+  }
+
+  triggerFileInput() {
+    // Trigger the hidden file input
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    fileInput.click();
+  }
+  downloadExcel() {
+    // Create an anchor element
+    const link = document.createElement('a');
+    link.href = 'assets/Template.xlsx'; // Path to your Excel file
+    link.download = 'template.xlsx'; // Name the downloaded file
+    link.click(); // Trigger the download
+  }
 }
