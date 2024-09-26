@@ -158,12 +158,14 @@ export class TableComponentComponent implements OnInit, OnChanges {
       this.fetchAllIncidents();
     }
     this.cols = [
-      { field: 'id', header: 'ID' },
+      { field: 'id', header: 'No' },
+      { field: 'Title', header: 'Title' },
+      { field: 'Type', header: 'Type' },
       { field: 'category', header: 'Categories' },
-      { field: 'reportedBy', header: 'Reported By' },
+      { field: 'CreatedAt', header: 'Created At' },
       { field: 'priority', header: 'Priority' },
       { field: 'incidentStatus', header: 'Status' },
-      { field: 'action', header: 'Action' },
+      { field: 'Actions', header: 'Actions' },
     ];
     this._selectedColumns = this.cols;
   }
@@ -514,7 +516,9 @@ export class TableComponentComponent implements OnInit, OnChanges {
   }
 
   isColumnVisible(columnField: string): boolean {
-    return this.selectedColumns.some((col) => col.field === columnField);
+    return this.selectedColumns.some(
+      (col) => col.field.toLowerCase() === columnField.toLowerCase()
+    );
   }
 
   getStatusLabel(statusValue: string): string {

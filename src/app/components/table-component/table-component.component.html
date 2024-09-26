@@ -42,13 +42,13 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th *ngIf="isColumnVisible('No')" pSortableColumn="No">No</th>
+                <th *ngIf="isColumnVisible('id')" pSortableColumn="No">No</th>
                 <th *ngIf="isColumnVisible('Title')" pSortableColumn="Title">Title</th>
                 <th *ngIf="isColumnVisible('Type')" pSortableColumn="Type">Type</th>
-                <th *ngIf="isColumnVisible('Categories')" pSortableColumn="Categories">Categories</th>
-                <th *ngIf="isColumnVisible('Created At')" pSortableColumn="Created At">Created At</th>
-                <th *ngIf="isColumnVisible('Priority')" style="width: 10%" pSortableColumn="Priority">Priority</th>
-                <th *ngIf="isColumnVisible('Status')" pSortableColumn="Status">Status</th>
+                <th *ngIf="isColumnVisible('category')" pSortableColumn="Categories">Categories</th>
+                <th *ngIf="isColumnVisible('CreatedAt')" pSortableColumn="Created At">Created At</th>
+                <th *ngIf="isColumnVisible('priority')" style="width: 10%" pSortableColumn="Priority">Priority</th>
+                <th *ngIf="isColumnVisible('incidentStatus')" pSortableColumn="Status">Status</th>
                 <th *ngIf="isColumnVisible('Actions')" pSortableColumn="Actions">Actions</th>
             </tr>
             <tr>

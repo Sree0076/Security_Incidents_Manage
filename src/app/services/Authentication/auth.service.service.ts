@@ -18,11 +18,11 @@ import { Router } from '@angular/router';
 import { EmployeeSharedService } from '../shared/employee/employee.shared.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthServiceService implements OnDestroy {
   private readonly _destroying$ = new Subject<void>();
-  role ="";
+  role = '';
 
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
@@ -30,8 +30,7 @@ export class AuthServiceService implements OnDestroy {
     private msalBroadcastService: MsalBroadcastService,
     private router: Router,
     private employeeService: EmployeeSharedService
-  ) 
-  {
+  ) {
     this.initialize();
   }
 
@@ -48,9 +47,10 @@ export class AuthServiceService implements OnDestroy {
 
     this.msalBroadcastService.msalSubject$
       .pipe(
-        filter((msg: EventMessage) =>
-          msg.eventType === EventType.ACCOUNT_ADDED ||
-          msg.eventType === EventType.ACCOUNT_REMOVED
+        filter(
+          (msg: EventMessage) =>
+            msg.eventType === EventType.ACCOUNT_ADDED ||
+            msg.eventType === EventType.ACCOUNT_REMOVED
         )
       )
       .subscribe(() => {
@@ -59,7 +59,7 @@ export class AuthServiceService implements OnDestroy {
 
     this.msalBroadcastService.inProgress$
       .pipe(
-        filter(status => status === InteractionStatus.None),
+        filter((status) => status === InteractionStatus.None),
         takeUntil(this._destroying$)
       )
       .subscribe(() => {
@@ -92,7 +92,10 @@ export class AuthServiceService implements OnDestroy {
   private checkAndSetActiveAccount() {
     const activeAccount = this.authService.instance.getActiveAccount();
 
-    if (!activeAccount && this.authService.instance.getAllAccounts().length > 0) {
+    if (
+      !activeAccount &&
+      this.authService.instance.getAllAccounts().length > 0
+    ) {
       const accounts = this.authService.instance.getAllAccounts();
       this.authService.instance.setActiveAccount(accounts[0]);
     }
@@ -105,7 +108,7 @@ export class AuthServiceService implements OnDestroy {
       try {
         await this.employeeService.fetchEmployeeData(account.idToken);
         await this.getRoles();
-        console.log("redirect1");
+        console.log('redirect1');
         await this.handleRedirection();
       } catch (error) {
         console.error('Error during role redirection:', error);
@@ -114,20 +117,21 @@ export class AuthServiceService implements OnDestroy {
   }
 
   private async handleRedirection() {
-     console.log("redirect");
-    if (this.role === 'Admin-Incidents' || this.role === 'SuperAdmin' ) {
+    console.log('redirect');
+    if (this.role === 'Admin-Incidents' || this.role === 'SuperAdmin') {
       this.router.navigate(['/admin']);
     } else if (this.role === 'user') {
       this.router.navigate(['/user']);
-    }
-    else if (this.role === 'Admins-User') {
+    } else if (this.role === 'Admins-User') {
       this.router.navigate(['/usermanage']);
     }
   }
 
   loginPopup() {
     const loginObservable = this.msalGuardConfig.authRequest
-      ? this.authService.loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest)
+      ? this.authService.loginPopup({
+          ...this.msalGuardConfig.authRequest,
+        } as PopupRequest)
       : this.authService.loginPopup();
 
     loginObservable.subscribe({
@@ -137,7 +141,7 @@ export class AuthServiceService implements OnDestroy {
       },
       error: (error) => {
         console.error('Login failed:', error);
-      }
+      },
     });
   }
 
@@ -145,24 +149,23 @@ export class AuthServiceService implements OnDestroy {
     this.authService.logoutPopup({
       mainWindowRedirectUri: '/',
     });
+    localStorage.removeItem('accessToken');
   }
 
   // Role Management
-   async getRoles(): Promise<void> {
+  async getRoles(): Promise<void> {
     await lastValueFrom(
-       this.employeeService.employeeData.pipe(
-         tap(data => {
-           if (data) {
-             console.log(data);
-             this.role = data.role.name;
-
-           }
-         }),
-         take(1)
-       )
-       // eslint-disable-next-line @typescript-eslint/no-empty-function
-     );
-
+      this.employeeService.employeeData.pipe(
+        tap((data) => {
+          if (data) {
+            console.log(data);
+            this.role = data.role.name;
+          }
+        }),
+        take(1)
+      )
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+    );
   }
 
   // Cleanup
