@@ -98,14 +98,13 @@ export class AuthServiceService implements OnDestroy {
     }
   }
 
-  private async redirectBasedOnRole() {
+  async redirectBasedOnRole() {
     const account = this.authService.instance.getActiveAccount();
 
     if (account?.idToken) {
       try {
         await this.employeeService.fetchEmployeeData(account.idToken);
         await this.getRoles();
-        console.log("redirect1");
         await this.handleRedirection();
       } catch (error) {
         console.error('Error during role redirection:', error);
@@ -115,13 +114,16 @@ export class AuthServiceService implements OnDestroy {
 
   private async handleRedirection() {
      console.log("redirect");
-    if (this.role === 'Admin-Incidents' || this.role === 'SuperAdmin' ) {
-      this.router.navigate(['/admin']);
-    } else if (this.role === 'user') {
-      this.router.navigate(['/user']);
-    }
-    else if (this.role === 'Admins-User') {
-      this.router.navigate(['/usermanage']);
+    if(!this.router.url.includes('usermanage'))
+    {
+      if (this.role === 'Admin-Incidents' || this.role === 'SuperAdmin' ) {
+        this.router.navigate(['/admin']);
+      } else if (this.role === 'user') {
+        this.router.navigate(['/user']);
+      }
+      else if (this.role === 'Admins-User') {
+        this.router.navigate(['/usermanage']);
+      }
     }
   }
 

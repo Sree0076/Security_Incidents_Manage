@@ -101,7 +101,6 @@ export class IncidentServiceService {
       );
   }
 
-
   // Error handling
   private handleError(error: HttpErrorResponse) {
     console.error('An error occurred:', error.message);

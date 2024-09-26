@@ -46,7 +46,7 @@
               </div>
               <h6 class="noti-message">{{ notification.message.IncidentTitle }}</h6>
               <div class="noti-footer">
-                <p class="timeAgo">{{ notification.timeAgo }}</p>
+                <p class="timeAgo">{{getTimeDifference( notification.createdAt)}}</p>
                 <h6 class="mark-read" (click)="markAsRead(notification)">Mark As Read</h6>
               </div>
             </div>   
@@ -86,7 +86,7 @@
               }
             </div>
             <h6 class="noti-message">{{ notification.message.IncidentTitle }}</h6>
-            <p class="timeAgo">{{ notification.timeAgo }}</p>
+            <p class="timeAgo">{{getTimeDifference( notification.createdAt)}}</p>
           </div>
         </div>
       </div>

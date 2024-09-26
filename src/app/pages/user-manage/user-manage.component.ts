@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { AddAdminComponentComponent } from 'src/app/components/add-admin-component/add-admin-component.component';
 import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/variables.shared.service';
 import { SideNavbarComponentComponent } from "../../components/side-navbar-component/side-navbar-component.component";
+import { IncidentSharedService } from 'src/app/services/shared/incident/incident.shared.service';
 @Component({
   selector: 'app-user-manage',
   standalone: true,
@@ -33,6 +34,7 @@ export class UserManageComponent implements OnInit {
   }
   constructor(
     private userManagementService: EmployeeServiceService,
+    private SignalRService : IncidentSharedService,
     private employeeDataService: EmployeeSharedService,
     private confirmationService: ConfirmationService,
      private messageService: MessageService,
@@ -49,7 +51,6 @@ export class UserManageComponent implements OnInit {
       if (employee) {
         this.userManagementService.getUsers(employee.id).subscribe((users) => {
           this.users = users;
-          console.log(users);
           this.filteredUsers = users;
         });
       }
@@ -80,6 +81,7 @@ export class UserManageComponent implements OnInit {
       isUserMangenet: user.isUserMangenet,
       status: user.status,
     };
+
     this.userManagementService.updateUser(user.adminId, adminData).subscribe(
       (updatedUser) => {
           this.showSuccess("Admin data updated Succesfully");

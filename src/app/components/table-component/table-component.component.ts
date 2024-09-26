@@ -1,3 +1,4 @@
+import { IncidentData } from './../../models/incident-interface';
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
@@ -8,12 +9,11 @@ import {
   OnInit,
   OnChanges,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { ConfirmationService, MessageService, MenuItem } from 'primeng/api';
-import { IncidentData } from 'src/app/models/incident-interface';
 import { IncidentServiceService } from 'src/app/services/incident/incident.service.service';
 import { TagModule } from 'primeng/tag';
 import jsPDF from 'jspdf';
@@ -40,6 +40,8 @@ import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/
 import { TableTruncatePipe } from 'src/app/pipes/table/table-truncate.pipe';
 import { ForwardFormComponentComponent } from '../forward-form-component/forward-form-component.component';
 import { ButtonLoadingDirective } from 'src/app/shared/ui/button-loading.directive';
+import { CalendarModule } from 'primeng/calendar';
+import { Incidents } from '../../models/incident-interface';
 
 interface PriorityOrder {
   High: number;
@@ -50,7 +52,7 @@ interface PriorityOrder {
 @Component({
   selector: 'app-table-component',
   standalone: true,
-  providers: [HttpClient, ConfirmationService, MessageService],
+  providers: [HttpClient, ConfirmationService, MessageService, DatePipe],
   imports: [
     ForwardFormComponentComponent,
     SkeletonModule,
@@ -75,6 +77,7 @@ interface PriorityOrder {
     ToastModule,
     TableTruncatePipe,
     ButtonLoadingDirective,
+    CalendarModule,
   ],
   templateUrl: './table-component.component.html',
   styleUrl: './table-component.component.css',
@@ -146,8 +149,9 @@ export class TableComponentComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private employeeDataService: EmployeeSharedService,
-    private sidebarService: VariablesSharedService
-  ) { }
+    private sidebarService: VariablesSharedService,
+    private datePipe: DatePipe
+  ) {}
 
   ngOnInit() {
     this.sidebarService.hideSidebar();
@@ -196,7 +200,6 @@ export class TableComponentComponent implements OnInit, OnChanges {
       if (data) {
         this.incidents = data.incidents;
         this.sortByPriority();
-        console.log(data);
         this.stopLoadingWithDelay();
       }
     });
@@ -207,7 +210,6 @@ export class TableComponentComponent implements OnInit, OnChanges {
       if (data) {
         this.incidents = data.assignedIncidents;
         this.sortByPriority();
-        console.log(data);
         this.stopLoadingWithDelay();
       }
     });
@@ -316,7 +318,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
             this.showSuccess('Draft Incident Deleted Successfully');
           });
       },
-      reject: () => { },
+      reject: () => {},
     });
   }
 
@@ -330,7 +332,6 @@ export class TableComponentComponent implements OnInit, OnChanges {
 
   sortByPriority() {
     if (this.incidents) {
-      const priorityOrder = { High: 1, Medium: 2, Low: 3 };
       const statusOrder: Record<string, number> = { pending: 1, progress: 2 };
 
       const activeIncidents = this.incidents.filter(
@@ -341,16 +342,11 @@ export class TableComponentComponent implements OnInit, OnChanges {
       );
 
       activeIncidents.sort((a, b) => {
-        // Prioritize incidents that are submitted for review
-        console.log(a.incidentNo, a.incidentStatus);
-        console.log(b.incidentNo, b.isSubmittedForReview);
         if (a.isSubmittedForReview && !b.isSubmittedForReview) {
           return -1;
         } else if (!a.isSubmittedForReview && b.isSubmittedForReview) {
           return 1;
         }
-
-        // If neither or both are submitted for review, sort by incident status
         return statusOrder[a.incidentStatus] - statusOrder[b.incidentStatus];
       });
 
@@ -542,7 +538,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
             this.showSuccess('Corrective measures aproved sucessfully');
           });
       },
-      reject: () => { },
+      reject: () => {},
     });
   }
   onReject(incident: IncidentData) {
@@ -561,29 +557,27 @@ export class TableComponentComponent implements OnInit, OnChanges {
             this.showError('Incident returned');
           });
       },
-      reject: () => { },
+      reject: () => {},
     });
   }
 
   showSuccess(message: string) {
-    console.log(this.getAssigned);
     setTimeout(() => {
       this.messageService.add({
         severity: 'success',
         summary: 'Success',
         detail: `${message}`,
       });
-      setTimeout(() => {
-        this.incidentDataService.fetchIncidentData(this.getAssigned);
-      }, 2000);
     }, 100);
   }
 
   showError(message: string) {
-    setTimeout(() => {this.messageService.add({severity: 'error', summary: 'Error', detail: `${message}`, });
-      setTimeout(() => {
-        this.incidentDataService.fetchIncidentData(this.getAssigned);
-      }, 2000);
+    setTimeout(() => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: `${message}`,
+      });
     }, 50);
   }
 
@@ -603,5 +597,16 @@ export class TableComponentComponent implements OnInit, OnChanges {
   openSidebar() {
     this.incidentDataService.setSelectedIncidentId(0);
     this.sidebarService.showSidebar();
+  }
+  rangeDates: Date[] = [];
+  onDateRangeSelect() {
+    const [startDate, endDate] = this.rangeDates;
+
+    if (startDate && endDate) {
+      this.incidents = this.incidents.filter((item) => {
+        const itemDate = new Date(item.createdAt);
+        return itemDate >= startDate && itemDate <= endDate;
+      });
+    }
   }
 }
