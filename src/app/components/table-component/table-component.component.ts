@@ -626,6 +626,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
       });
     }
 
+  }
 
   onFileChange(evt: any) {
     console.log('File upload function initiated');
@@ -637,11 +638,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
       this.showError('Cannot use multiple files');
       return;
     }
-
-    // Get the selected file
     const file = target.files[0];
-
-    // Send the file directly to the backend
     this.uploadIncidentData(file);
   }
 
@@ -660,6 +657,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     fileInput.click();
   }
+  
   downloadExcel() {
     // Create an anchor element
     const link = document.createElement('a');
