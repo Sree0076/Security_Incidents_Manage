@@ -29,28 +29,21 @@
         <i class='bx bx-bell' (click)="openNotification()"></i>
         @if(notificationCount>0)
         {
-          <span class="badge">{{notificationCount}}</span>
+        <span class="badge">{{notificationCount}}</span>
         }
         <span class="links_name">Notifications</span>
       </a>
       <span class="tooltip">Notifications</span>
     </li>
-    <li>
-      <a href="#">
-        <i class='bx bx-cog'></i>
-        <span class="links_name">Setting</span>
-      </a>
-      <span class="tooltip">Setting</span>
-    </li>
     @if(employeeData?.role?.name!=='user')
     {
-      <li>
-        <a (click)="switchUser()">
-          <i class='bx bxs-user-account'></i>
-          <span class="links_name">Switch</span>
-        </a>
-        <span class="tooltip">Switch</span>
-      </li>
+    <li>
+      <a (click)="switchUser()">
+        <i class='bx bxs-user-account'></i>
+        <span class="links_name">Switch</span>
+      </a>
+      <span class="tooltip">Switch</span>
+    </li>
     }
     <li class="profile">
       <div class="logout_icon">

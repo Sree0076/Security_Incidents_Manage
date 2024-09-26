@@ -7,7 +7,7 @@
         selectionMode="single" [(selection)]="selectedIncident">
         <ng-template pTemplate="caption">
             <div style="display: flex; align-items: center;justify-content: space-between;flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; flex-grow: 1;">
+                <div style="display: flex; align-items: center;">
                     <p-iconField iconPosition="left" class="ml-auto">
                         <p-inputIcon>
                             <i class="pi pi-search"></i>
@@ -23,22 +23,20 @@
                     selectedItemsLabel="{0} columns selected" [style]="{'min-width': '200px'}"
                     placeholder="Choose Columns">
                 </p-multiSelect>
-                <div style="margin-left: 1rem; align-items: end;">
-                    @if(!isadmin){<p-button class="addButton" label="Report Incident" icon="pi pi-plus"
-                        (click)="openSidebar()" [outlined]="true" />}
+                <div *ngIf="!isadmin" style=" align-items: end;">
+                    <p-button label="Report Incident" icon="pi pi-plus" (click)="openSidebar()" [outlined]="true" />
                 </div>
-                <div style="align-items: end;">
-                    <button *ngIf="isadmin" type="button" class="export-button" [hidden]="!isadmin"
-                        (click)="exportExcel(dt2)" style="margin-right: 1rem;"><i
-                            class="bi bi-file-earmark-arrow-up-fill" style="margin-right: 0.5rem; font-size: larger;">
+                <div style="align-items: end;" *ngIf="isadmin">
+                    <button type="button" class="export-button" [hidden]="!isadmin" (click)="exportExcel(dt2)"
+                        style="margin-right: 1rem;"><i class="bi bi-file-earmark-arrow-up-fill"
+                            style="margin-right: 0.5rem; font-size: larger;">
                         </i>Export</button>
                     <input type="file" id="fileInput" style="display: none;" (change)="onFileChange($event)"
                         accept=".xls,.xlsx" />
-                    <button *ngIf="isadmin" type="button" class="export-button" [hidden]="!isadmin"
-                        (click)="triggerFileInput()"><i class="bi bi-file-earmark-arrow-down-fill"
-                            style="margin-right: 0.5rem; font-size: larger;">
+                    <button type="button" class="export-button" [hidden]="!isadmin" (click)="triggerFileInput()"><i
+                            class="bi bi-file-earmark-arrow-down-fill" style="margin-right: 0.5rem; font-size: larger;">
                         </i>Import</button>
-                    <button *ngIf="isadmin" type="button" class="download-template-button" [hidden]="!isadmin"
+                    <button type="button" class="download-template-button" [hidden]="!isadmin"
                         (click)="downloadExcel()"><i class="bi bi-file-earmark-arrow-down-fill"
                             style="margin-right: 0.5rem; font-size: larger;">
                         </i>Download Template</button>

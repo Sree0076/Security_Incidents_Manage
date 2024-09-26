@@ -68,15 +68,7 @@ th{
 ::ng-deep .p-dropdown .p-dropdown-clear-icon:not(:visible) + .p-dropdown-trigger {
     display: block; 
 }
-.addButton
-{
-    /* display: flex; */
-    position: absolute;
-    right: 1rem;
-    justify-content: center;
-    height: 1rem;
-    align-items: center;
-}
+
 ::ng-deep .p-button.approvalbtn
 {
     width: 1rem;
