@@ -53,8 +53,8 @@ export class EditIncidentFormComponent {
   incident!: IncidentData;
   editAction = false;
   documentUrls: { name: string; url: string }[] = [];
-  @Input() isSidebarExpanded = false
-  isButtonLoading =false;
+  @Input() isSidebarExpanded = false;
+  isButtonLoading = false;
 
   incidentTypes = [
     { label: 'Security Incident', value: 'SecurityIncident' },
@@ -65,7 +65,21 @@ export class EditIncidentFormComponent {
   categories = [
     { label: 'Denial of Service', value: 'denialOfService' },
     { label: 'Loss', value: 'loss' },
-    // ... other categories
+    { label: 'Theft', value: 'theft' },
+    { label: 'Malware', value: 'malware' },
+    { label: 'Ransomware', value: 'ransomware' },
+    { label: 'Unauthorized Use', value: 'unauthorizedUse' },
+    { label: 'Disclosure', value: 'disclosure' },
+    { label: 'Unauthorized Access', value: 'unauthorizedAccess' },
+    { label: 'Phishing', value: 'phishing' },
+    { label: 'Unplanned Downtime', value: 'unplannedDowntime' },
+    { label: 'Insecure Site', value: 'insecureSite' },
+    { label: 'Insecure Coding', value: 'insecureCoding' },
+    { label: 'Physical Security', value: 'physicalSecurity' },
+    { label: 'Spoofing', value: 'spoofing' },
+    { label: 'Botnet Attack', value: 'botnetAttack' },
+    { label: 'Exposed APIs', value: 'exposedAPIs' },
+    { label: 'Disclosing IP Data', value: 'disclosingIPData' },
   ];
 
   priorities = [
@@ -91,8 +105,8 @@ export class EditIncidentFormComponent {
     private fb: FormBuilder,
     private apiService: IncidentServiceService,
     private incidentService: IncidentSharedService,
-    private messageService : MessageService,
-    private router : Router,
+    private messageService: MessageService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -170,7 +184,7 @@ export class EditIncidentFormComponent {
       this.apiService
         .updateIncident(this.editIncidentId, this.editform.value)
         .subscribe((response) => {
-         this.showSuccess('Incident Updated Successfully');
+          this.showSuccess('Incident Updated Successfully');
           this.isButtonLoading = false;
         });
     }
@@ -184,7 +198,7 @@ export class EditIncidentFormComponent {
         detail: `${message}`,
       });
       setTimeout(() => {
-       this.router.navigate(['/'])
+        this.router.navigate(['/']);
       }, 2000);
     }, 100);
   }

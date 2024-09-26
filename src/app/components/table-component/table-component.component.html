@@ -6,38 +6,45 @@
         [globalFilterFields]="['incidentTitle', 'incidentNo', 'category']" paginatorPosition="top"
         selectionMode="single" [(selection)]="selectedIncident">
         <ng-template pTemplate="caption">
-            <div style="display: flex; align-items: center;justify-content: space-between;">
-                <p-iconField iconPosition="left" class="ml-auto">
-                    <p-inputIcon>
-                        <i class="pi pi-search"></i>
-                    </p-inputIcon>
-                    <input pInputText type="text" [(ngModel)]="searchValue" (input)="filterGlobal($event)"
-                        placeholder="Search keyword" />
-                </p-iconField>
-                <div class="filter-chips">
+            <div style="display: flex; align-items: center;justify-content: space-between;flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; flex-grow: 1;">
+                    <p-iconField iconPosition="left" class="ml-auto">
+                        <p-inputIcon>
+                            <i class="pi pi-search"></i>
+                        </p-inputIcon>
+                        <input pInputText type="text" [(ngModel)]="searchValue" (input)="filterGlobal($event)"
+                            placeholder="Search keyword" />
+                    </p-iconField>
+                    <div class="filter-chips">
+                    </div>
                 </div>
+
                 <p-multiSelect display="chip" [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
                     selectedItemsLabel="{0} columns selected" [style]="{'min-width': '200px'}"
                     placeholder="Choose Columns">
                 </p-multiSelect>
+                <div style="margin-left: 1rem; align-items: end;">
+                    @if(!isadmin){<p-button class="addButton" label="Report Incident" icon="pi pi-plus"
+                        (click)="openSidebar()" [outlined]="true" />}
+                </div>
                 <div style="align-items: end;">
-                    <button type="button" class="export-button" [hidden]="!isadmin" (click)="exportExcel(dt2)"
-                        style="margin-right: 1rem;"><i class="bi bi-file-earmark-arrow-up-fill"
-                            style="margin-right: 0.5rem; font-size: larger;">
+                    <button *ngIf="isadmin" type="button" class="export-button" [hidden]="!isadmin"
+                        (click)="exportExcel(dt2)" style="margin-right: 1rem;"><i
+                            class="bi bi-file-earmark-arrow-up-fill" style="margin-right: 0.5rem; font-size: larger;">
                         </i>Export</button>
                     <input type="file" id="fileInput" style="display: none;" (change)="onFileChange($event)"
                         accept=".xls,.xlsx" />
-                    <button type="button" class="export-button" [hidden]="!isadmin" (click)="triggerFileInput()"><i
-                            class="bi bi-file-earmark-arrow-down-fill" style="margin-right: 0.5rem; font-size: larger;">
+                    <button *ngIf="isadmin" type="button" class="export-button" [hidden]="!isadmin"
+                        (click)="triggerFileInput()"><i class="bi bi-file-earmark-arrow-down-fill"
+                            style="margin-right: 0.5rem; font-size: larger;">
                         </i>Import</button>
-                    <button type="button" class="download-template-button" [hidden]="!isadmin"
+                    <button *ngIf="isadmin" type="button" class="download-template-button" [hidden]="!isadmin"
                         (click)="downloadExcel()"><i class="bi bi-file-earmark-arrow-down-fill"
                             style="margin-right: 0.5rem; font-size: larger;">
                         </i>Download Template</button>
                 </div>
 
-                @if(!isadmin){<p-button class="addButton" label="Report Incident" icon="pi pi-plus"
-                    (click)="openSidebar()" [outlined]="true" />}
+
             </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -123,7 +130,7 @@
                     incident.incidentNo }}}</td>
                 <td *ngIf="isColumnVisible('Title')">@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentTitle|
                     titlecase| tableTruncate:10 }}}</td>
-                <td  *ngIf="isColumnVisible('Type')">@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentType ?
+                <td *ngIf="isColumnVisible('Type')">@if(isLoading) {<p-skeleton />}@else{{{ incident.incidentType ?
                     incident.incidentType.replace('Incidents', '').trim() : ''}}}</td>
                 <td *ngIf="isColumnVisible('category')">@if(isLoading) {<p-skeleton />}@else{ {{ incident.category |
                     tableTruncate:10}} }</td>
