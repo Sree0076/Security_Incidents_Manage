@@ -12,8 +12,8 @@ import { IncidentData, Incidents } from '../../models/incident-interface';
   providedIn: 'root',
 })
 export class IncidentServiceService {
-  private baseApiUrl = 'http://localhost:7209/api/Incident';
-  private assignedIncidentApiUrl = 'http://localhost:7209/api/AssignedIncident';
+  private baseApiUrl = 'http://172.16.4.89:9000/api/Incident';
+  private assignedIncidentApiUrl = 'http://172.16.4.89:9000/api/AssignedIncident';
 
   constructor(private http: HttpClient) {}
 
@@ -93,7 +93,7 @@ export class IncidentServiceService {
   ): Observable<IncidentData> {
     return this.http
       .put<IncidentData>(
-        `http://localhost:7209/api/updateIncidentByReview/${incidentId}`,
+        `http://172.16.4.89:9000/api/updateIncidentByReview/${incidentId}`,
         incident
       )
       .pipe(catchError(this.handleError));
@@ -103,7 +103,7 @@ export class IncidentServiceService {
   public incidentApproval(incidentId: number): Observable<IncidentData> {
     return this.http
       .get<IncidentData>(
-        `http://localhost:7209/api/incidentApproval/${incidentId}`
+        `http://172.16.4.89:9000/api/incidentApproval/${incidentId}`
       )
       .pipe(catchError(this.handleError));
   }
@@ -115,7 +115,7 @@ export class IncidentServiceService {
   ): Observable<IncidentData> {
     return this.http
       .put<IncidentData>(
-        `http://localhost:7209/api/acceptIncidents/${incidentId}`,
+        `http://172.16.4.89:9000/api/acceptIncidents/${incidentId}`,
         employeeId
       )
       .pipe(catchError(this.handleError));
@@ -132,7 +132,7 @@ export class IncidentServiceService {
 
   public getNotifications(employeeId: number): Observable<any> {
     return this.http
-      .get<any>(`http://localhost:7209/api/Notification/${employeeId}`)
+      .get<any>(`http://172.16.4.89:9000/api/Notification/${employeeId}`)
       .pipe(catchError(this.handleError));
   }
 
@@ -141,7 +141,7 @@ export class IncidentServiceService {
   ): Observable<{ employeeId: number }> {
     return this.http
       .put<{ employeeId: number }>(
-        `http://localhost:7209/api/Notification/${employeeId}`,
+        `http://172.16.4.89:9000/api/Notification/${employeeId}`,
         {}
       )
       .pipe(catchError(this.handleError));
@@ -153,7 +153,7 @@ export class IncidentServiceService {
   ): Observable<{ employeeId: number; notificatioId: number }> {
     return this.http
       .put<{ employeeId: number; notificatioId: number }>(
-        `http://localhost:7209/api/Notification/${employeeId}/${notificatioId}`,
+        `http://172.16.4.89:9000/api/Notification/${employeeId}/${notificatioId}`,
         {}
       )
       .pipe(catchError(this.handleError));
@@ -162,7 +162,7 @@ export class IncidentServiceService {
   public unreadNotificationCount(employeeId: number): Observable<number> {
     return this.http
       .get<number>(
-        `http://localhost:7209/api/Notification/unread/count/${employeeId}`
+        `http://172.16.4.89:9000/api/Notification/unread/count/${employeeId}`
       )
       .pipe(catchError(this.handleError));
   }

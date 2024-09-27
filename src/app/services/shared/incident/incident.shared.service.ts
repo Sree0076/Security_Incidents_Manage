@@ -4,7 +4,7 @@ import { Incidents } from '../../../models/incident-interface';
 import { IncidentServiceService } from '../../incident/incident.service.service';
 import { EmployeeSharedService } from '../employee/employee.shared.service';
 import { Router } from '@angular/router';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr'; // Import SignalR
+import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr'; // Import SignalR
 import { AuthServiceService } from '../../Authentication/auth.service.service';
 
 @Injectable({
@@ -34,11 +34,17 @@ export class IncidentSharedService {
   
   private unReadNotificationsCount = new BehaviorSubject<number>(0);
   unReadNotificationsCount$ = this.unReadNotificationsCount.asObservable();
-
   private createConnection() {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl('http://localhost:7209/incidentHub') 
-      .build();
+    .withUrl('http://172.16.4.89:9000/incidentHub', {
+      accessTokenFactory: () => {
+        const token = localStorage.getItem('accessToken');
+        return token ? token : "";  // Fix: Removed the comma here
+      },
+      transport: HttpTransportType.LongPolling // Fix: Moved transport here
+    })
+    .build();
+  
     this.hubConnection.on('ReceiveIncidentUpdate', () => {  
       console.log("fetching");
       this.fetchIncidentData(this.router.url.includes('user'));
