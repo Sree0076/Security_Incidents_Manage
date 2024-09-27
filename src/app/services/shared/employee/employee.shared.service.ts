@@ -21,7 +21,7 @@ export class EmployeeSharedService {
     localStorage.setItem('accessToken', accessToken as string);
     this.employeeSubject.next(data);
   }
-  private apiUrl = 'http://localhost:7209/api/Employee/GetEmployeeByToken/getUserRole';
+  private apiUrl = 'http://172.16.4.89:9000/api/Employee/GetEmployeeByToken/getUserRole';
   getEmployeeData(token:string){
     const headers = new HttpHeaders().set('Authorization', `${token}`);
     return this.http.get(this.apiUrl, { headers, observe: 'response' });
