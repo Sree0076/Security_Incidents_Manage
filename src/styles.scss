@@ -1,4 +1,6 @@
 @use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 
 
 $preventyon-theme: mat.define-theme((color: (theme-type: light,
@@ -15,8 +17,8 @@ $preventyon-theme: mat.define-theme((color: (theme-type: light,
 html,
 body {
   height: 100%;
-  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif !important;
-  font-stretch:ultra-expanded;
+  font-family: "Inter", sans-serif;
+  font-stretch: ultra-expanded;
 }
 
 body {
@@ -28,28 +30,25 @@ body {
   height: 100%;
 }
 
-body {
-  margin: 0;
-}
-
 :root {
   --privacy-color: linear-gradient(to right, rgb(215, 122, 122), rgb(201, 67, 67));
   --security-color: linear-gradient(to right, #d47725, #fd8822);
   --quality-color: linear-gradient(90deg, rgba(101, 163, 246, 1) 0%, rgba(16, 107, 230, 1) 100%);
 
   .privacy-card {
-    --card-color: linear-gradient(193.19deg, #00b5f9 17.86%, #026fee 91.45%);;
+    --card-color: 	#FF6F61;
+    ;
 
   }
 
   .security-card {
-    --card-color:linear-gradient(6.04deg, #761df5 -31.48%, #3e76ed 96.37%);
+    --card-color: #188eb3;
 
   }
 
   .quality-card {
-    --card-color: linear-gradient(345.41deg, #0bead4 -16.16%, #668cfc 106.49%);  
-    
+    --card-color: #4DB6AC;
+
   }
 
 
@@ -57,7 +56,7 @@ body {
 
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0.3rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -66,7 +65,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d2d0d0;
+  background: #828181;
   /* color of the scrollbar thumb */
   border-radius: 10px;
   /* rounded corners for the scrollbar thumb */
@@ -76,24 +75,45 @@ body {
   background: #9c9a9a;
   /* color of the scrollbar thumb on hover */
 }
-.spinner{
+
+.spinner {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
-.table
-{
-    margin-top: 1rem;
+
+.table {
+  margin-top: 1rem;
 }
-.table
-{
+
+.table {
   margin-left: 90px;
   padding-bottom: 3rem;
-  transition: all 0.5s ease; 
+  transition: all 0.5s ease;
 }
-.side-navbar
-{
+
+.side-navbar {
   display: flex;
   flex-direction: row;
+}
+.pi 
+{
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.p-dialog-footer
+{
+  display: inline-flex;
+    padding-right: 0px;
+    align-items: end;
+    justify-content: flex-end;
+}
+.p-toast-top-right {
+  top: 10%;
+  right: 20px;
 }

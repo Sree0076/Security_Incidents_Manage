@@ -1,0 +1,109 @@
+<div class="body">
+    <p-toast></p-toast>
+    <div class="container" >
+        <form class="form shadow p-5 rounded" [ngClass]="{'expanded': isSidebarExpanded}" [formGroup]="editform" (ngSubmit)="onSubmit()">
+            <div class="header-section">
+                <div class="vendor-name">
+                    <h2 class="title">Incident {{data.incidentTitle}}, {{data.incidentNo}}
+                        <span [ngClass]="getStatus(data.incidentStatus)"
+                            class="status-badge">{{data.incidentStatus}}</span>
+                    </h2>
+                    <span class="created-info">Reported by {{data.reportedBy}},{{data.roleOfReporter}}
+                        {{data.incidentOccuredDate | date: 'dd-MM-yyyy, hh:mm a'}} </span>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Incident Description</mat-label>
+                    <textarea matInput formControlName="incidentDescription" rows="4"></textarea>
+                </mat-form-field>
+            </div>
+
+            <!-- Incident Type, Category, and Priority Fields -->
+            <div class="form-row">
+                <div class="form-field">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Incident Type</mat-label>
+                        <input matInput formControlName="incidentType">
+                    </mat-form-field>
+                </div>
+                <div class="form-field">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Category</mat-label>
+                        <input matInput formControlName="category">
+                    </mat-form-field>
+                </div>
+                <div class="form-field">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Priority</mat-label>
+                        <input matInput formControlName="priority">
+                    </mat-form-field>
+                </div>
+                <div class="form-field">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Correction Completion Target Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="correctionCompletionTargetDate"
+                            placeholder="Choose a date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="form-field" *ngIf="documentUrls.length > 0">
+                <h4>Uploaded Files:</h4>
+                <div class="uploaded-files">
+                    <div *ngFor="let file of documentUrls" class="file-item">
+                        <img [src]="file.url" [alt]="file.name" class="file-image" />
+                        <div class="file-actions">
+                            <a [href]="file.url" target="_blank" class="file-link"><i class="bi bi-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Investigation Details Field -->
+            <div class="form-field">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Investigation Details</mat-label>
+                    <textarea matInput formControlName="investigationDetails" rows="4"></textarea>
+                </mat-form-field>
+            </div>
+
+            <!-- Associated Impacts, Collection of Evidence, Correction, and Corrective Action Fields -->
+            <div class="form-field">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Associated Impacts</mat-label>
+                    <textarea matInput formControlName="associatedImpacts" rows="4"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="form-field">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Collection of Evidence</mat-label>
+                    <textarea matInput formControlName="collectionOfEvidence" rows="4"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="form-field">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Correction</mat-label>
+                    <textarea matInput formControlName="correction" rows="4"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="form-field">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Corrective Action</mat-label>
+                    <textarea matInput formControlName="correctiveAction" rows="4"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="form-field">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Preventive Action</mat-label>
+                    <textarea matInput formControlName="preventiveAction" rows="4"></textarea>
+                </mat-form-field>
+            </div>
+
+            <button class="submit-button  button" type="submit" [appButtonLoading]="isButtonLoading" [disabled]="isButtonLoading">Submit</button>
+        </form>
+    </div>
+</div>

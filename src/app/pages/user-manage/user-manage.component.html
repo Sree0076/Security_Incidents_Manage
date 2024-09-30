@@ -1,0 +1,106 @@
+<p-toast></p-toast>
+<p-confirmDialog #cd>
+  <ng-template pTemplate="headless" let-message>
+    <div class="flex flex-column align-items-center p-5 surface-overlay border-round enhanced-dialog">
+      <div class="inline-flex justify-content-center align-items-center h-4rem w-4rem">
+        <i class="bi bi-question-circle text-3xl text-primary"></i>
+      </div>
+      <span class="font-bold text-2xl block mb-2 mt-4 enhanced-header">
+        {{ message.header }}
+      </span>
+      <p class="mb-0 enhanced-message">{{ message.message }}</p>
+      <div class="flex align-items-center gap-4 mt-4">
+        <button class="btn btn-outline-danger w-9rem cancelconfirm" (click)="cd.reject()">
+          Cancel
+        </button>
+        <button class="btn btn-outline-primary w-9rem cancelconfirm" (click)="cd.accept()">
+          Approve
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</p-confirmDialog>
+<div class="side-navbar" [ngClass]="{'expanded': isSidebarExpanded}">
+  <app-side-navbar-component (sidebarToggle)="handleSidebarToggle($event)"></app-side-navbar-component>
+</div>
+<div class="addadminscreen">
+  <div class="control-panel">
+    <div class="search-input">
+      <i class="bi bi-search"></i>
+      <input type="text" [(ngModel)]="nameFilter" (ngModelChange)="filterUsers()" placeholder="Search by name...">
+    </div>
+    <div class="filter-group">
+      <div class="status-filter">
+        <i class="bi bi-funnel"></i>
+        <select [(ngModel)]="statusFilter" (ngModelChange)="filterUsers()">
+          <option value="all">All Status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <p-button type="button" (click)="showDialog()">
+        <i class="bi bi-plus-lg"></i> Add Admins
+      </p-button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th class="col-name">Name</th>
+          <th class="col-created-by">Created At</th>
+          <th class="col-permissions">Permissions</th>
+          <th class="col-status">Status</th>
+          <th class="col-action">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+          <td class="col-name">{{ user.employeeName }}</td>
+          <td class="col-created-by">{{ user.assignedOn | date:'dd-MM-yyyy, hh:mm a' }}</td>
+          <td class="col-permissions">
+            <div class="permissions-group">
+              <label>
+                <input type="checkbox" [(ngModel)]="user.isIncidentMangenet" [disabled]="!user.isEditing"> Incident
+                Management
+              </label>
+              <label>
+                <input type="checkbox" [(ngModel)]="user.isUserMangenet" [disabled]="!user.isEditing"> User Management
+              </label>
+            </div>
+          </td>
+          <td class="col-status">
+            <div *ngIf="user.isEditing" class="status-edit">
+              <label class="switch">
+                <input type="checkbox" [(ngModel)]="user.status">
+                <span class="slider round"></span>
+              </label>
+            </div>
+            <div *ngIf="!user.isEditing" class="status-display">
+              <span [ngClass]="{'status-active': user.status, 'status-inactive': !user.status}">
+                {{ user.status ? 'Active' : 'Inactive' }}
+              </span>
+            </div>
+          </td>
+          <td class="col-action">
+            <button *ngIf="!user.isEditing" (click)="editUser(user)" class="btn">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            @if(user.isEditing)
+            {
+            <button type="button" class="tick-button btn-outline-primary  approvebtn"
+              (click)="onApproval(user)"><i class="bi bi-check"></i></button>
+            <button type="button" class="cross-button btn-outline-danger rejectbtn" (click)="cancelEdit(user)"><i
+                class="bi bi-x"></i></button>
+            }
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  @if(isViewAddAdminModal)
+  {
+  <app-add-admin-component></app-add-admin-component>
+  }
+</div>

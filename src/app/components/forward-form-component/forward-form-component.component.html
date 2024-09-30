@@ -31,14 +31,12 @@
             type="text"
             pInputText
             placeholder="Enter the name, email"
-            (ngModel)="searchTerm"
+            [(ngModel)]="searchTerm"
             class="dialog-search-input"
-          />
+          />  
         </div>
       </div>
-
       </ng-template>
-
       <div class="forward-names">
 
         @for(items of user_details | forwardPipe: searchTerm: getSelectedUserIds():isForwardform; track items.id){
@@ -61,7 +59,7 @@
         <div class="text-message">
           <textarea placeholder="Type a message" class="dialog-textarea" (ngModel)="message" (input)="autoResize($event)"></textarea>
           <div class="d-flex align-items-center">
-            <button type="submit" class="d-flex align-items-center forwardbtn"(click)="forward()">Forward <i class="bi bi-send"></i></button>
+            <p-button label="Forward"  icon="pi pi-send"  (onClick)="forward()" />
           </div>
         </div>
       </ng-template>

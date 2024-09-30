@@ -1,0 +1,125 @@
+<div class="card">
+    <p-stepper [linear]="true">
+        <p-stepperPanel header="Introduction">
+            <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
+                <div class="flex flex-column h-12rem stepper-panel-content">
+                    <div class="flex justify-content-end pt-2 pr-2">
+                        <button class="skip-button" (click)="goToReportPage()">Skip Walkthrough</button>
+                    </div>
+                    <div
+                        class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium content stepper-panel-text">
+                        <h4>Welcome to the Incidents Management App</h4>
+                        <h5>Your Trusted Tool for Reporting and Managing Incidents</h5>
+
+                        <p>
+                            At <strong>Experion</strong>, your safety, security, and well-being are our top priorities.
+                            We
+                            understand that incidents can happen anytime, and it's crucial to address them promptly and
+                            efficiently. That's why we've created the Incidents Management App – a user-friendly
+                            platform
+                            where you can report incidents quickly, track their progress, and ensure they are resolved
+                            in a
+                            timely manner.
+                        </p>
+
+                        <h4>Why Use Our App?</h4>
+                        <ul>
+                            <li><strong>Ease of Reporting:</strong> Whether it's a security breach, a quality issue, or
+                                a privacy concern, you
+                                can report incidents directly from your device, no matter where you are.</li>
+                            <li><strong>Real-Time Tracking:</strong> Stay informed about the status of your reported
+                                incidents. Know when your
+                                issue is being reviewed, addressed, and resolved.</li>
+                            <li><strong>Transparency:</strong> Keep track of how incidents are handled. Get notified
+                                about the steps taken by the
+                                administration to resolve your concerns.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex pt-4 justify-content-end">
+                    <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" (onClick)="nextCallback.emit()" />
+                </div>
+            </ng-template>
+        </p-stepperPanel>
+        <p-stepperPanel header="Walkthrough">
+            <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+                let-index="index">
+                <div class="flex flex-column h-12rem stepper-panel-content">
+                    <div class="flex justify-content-end pt-2 pr-2">
+                        <button class="skip-button" (click)="goToReportPage()">Skip Walkthrough</button>
+                    </div>
+                    <div
+                        class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium content stepper-panel-text">
+                        <h4>Getting Started: App Walkthrough</h4>
+
+                        <h5>Step 1: Awareness Page</h5>
+                        <p>When you first log in to the app, you'll land on this page. Here, you can learn about the
+                            importance of
+                            reporting incidents and how you can contribute to creating a safer and more secure
+                            workplace.</p>
+
+                        <h5>Step 2: Dashboard Screen</h5>
+                        <p><strong>Report an Incident:</strong> This is the primary feature of our app. Click on the
+                            'Report Incident'
+                            button to start reporting any security, quality, or privacy-related incident. The form is
+                            simple and
+                            intuitive.</p>
+                        <p><strong>Track Progress:</strong> Once you report an incident, you can track its status in
+                            real-time. See when
+                            it’s assigned, in progress, or resolved.</p>
+
+                        <h5>Step 3: Incident Reporting</h5>
+                        <p><strong>Choose the Incident Type:</strong> Select the type of incident you are reporting –
+                            Security, Quality,
+                            or Privacy.</p>
+                        <p><strong>Provide Details:</strong> Fill in the required details such as date, time, and
+                            description. Attach any
+                            relevant documents or images to support your report.</p>
+                        <p><strong>Submit:</strong> After reviewing the information, hit submit. Your report will be
+                            instantly logged,
+                            and the relevant team will be notified.</p>
+
+                        <h5>Step 4: Notifications</h5>
+                        <p><strong>Stay Updated:</strong> Get real-time notifications about the status of your incident
+                            report. You’ll be
+                            notified when your report is reviewed, when any action is taken, and when the incident is
+                            resolved.</p>
+                    </div>
+                </div>
+                <div class="flex pt-4 justify-content-between side-arrow">
+                    <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                    <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" (onClick)="nextCallback.emit()" />
+                </div>
+            </ng-template>
+        </p-stepperPanel>
+        <p-stepperPanel header="Getting Started">
+            <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
+                <div class="flex flex-column h-12rem final-page-container">
+                    <div
+                        class="border-2 border-dashed surface-border border-round surface-ground flex-auto flex justify-content-center align-items-center font-medium content final-page-content">
+                        <h4>You're Ready to Get Started!</h4>
+                        <p>Thank you for taking the time to learn about our Incidents Management App. You're now
+                            equipped to report incidents efficiently and help maintain a safe, secure, and high-quality
+                            environment at Experion.</p>
+                        <p>Whenever you encounter a security breach, quality issue, or privacy concern, remember that
+                            our app is here to help. Reporting an incident is quick and easy, and you can track its
+                            progress every step of the way.</p>
+                        <p>Your role in this process is crucial. By reporting incidents, you're contributing to a safer
+                            and more effective workplace for everyone. Let's work together to ensure that all concerns
+                            are addressed promptly and appropriately.</p>
+                        <p>If you’re ready to report an incident, simply click the button below:</p>
+                        <div class="button-container">
+                            <button class="report-incident-button" (click)="goToReportPage()" >Report an Incident</button>
+                        </div>
+                        <p class="reminder">Remember, reporting incidents helps protect everyone. Don't hesitate to use
+                            this tool whenever needed.</p>
+                    </div>
+                </div>
+                <div class="flex pt-4 justify-content-start">
+                    <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                </div>
+            </ng-template>
+        </p-stepperPanel>
+    </p-stepper>
+</div>
+<app-incident-create-form-component ></app-incident-create-form-component>

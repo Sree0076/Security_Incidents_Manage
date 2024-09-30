@@ -17,9 +17,9 @@
     padding-left: 9%;
   }
 .dashboard-section.loading
-{
-  display: none;
-}
-  .table.expanded  {
+  {
+    display: none;
+  }
+ .table.expanded  {
     margin-left: 230px;
   }

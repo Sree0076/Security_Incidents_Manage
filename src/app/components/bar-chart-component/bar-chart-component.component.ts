@@ -6,6 +6,7 @@ import { ChartServiceService } from '../../services/chart/chart.service.service'
 import { isPlatformBrowser } from '@angular/common';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart, registerables } from 'chart.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bar-chart-component',
@@ -15,7 +16,6 @@ import { Chart, registerables } from 'chart.js';
   styleUrls: ['./bar-chart-component.component.css'],
 })
 export class BarChartComponentComponent implements OnInit {
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,14 +23,18 @@ export class BarChartComponentComponent implements OnInit {
 
   constructor(
     private chartDataService: ChartServiceService,
-    @Inject(PLATFORM_ID) private platformId: object,
+    private router : Router,
+    @Inject(PLATFORM_ID) private platformId: object
   ) {
     // Register the plugin and other chart.js modules
     Chart.register(...registerables, ChartDataLabels);
   }
 
   ngOnInit() {
-    this.loadChartData();
+    if(this.router.url.includes('admin'))
+    {
+      this.loadChartData();
+    }
   }
 
   // Load chart data from the service
@@ -42,7 +46,7 @@ export class BarChartComponentComponent implements OnInit {
       }
     });
   }
-  
+
   private transformChartData(chartData: any) {
     return {
       labels: chartData.labels,
@@ -57,7 +61,9 @@ export class BarChartComponentComponent implements OnInit {
   private setupChartOptions() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const textColorSecondary = documentStyle.getPropertyValue(
+      '--text-color-secondary'
+    );
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
     this.options = {
@@ -111,22 +117,22 @@ export class BarChartComponentComponent implements OnInit {
         },
         datalabels: {
           anchor: 'end',
-          align: 'end', 
-          color: textColorSecondary, 
+          align: 'end',
+          color: textColorSecondary,
           font: {
             weight: 'bold',
             size: 16,
           },
           formatter: (value: number) => {
-            return value === 0 ? null : value; 
-          }
-        }
+            return value === 0 ? null : value;
+          },
+        },
       },
       scales: {
         x: {
           title: {
             display: true,
-            text: 'X Axis ( years )', 
+            text: ' Years ',
             color: textColorSecondary,
             font: {
               size: 14,
@@ -147,7 +153,7 @@ export class BarChartComponentComponent implements OnInit {
         y: {
           title: {
             display: true,
-            text: 'Y Axis ( count )',
+            text: ' No: of Incidents ',
             color: textColorSecondary,
             font: {
               size: 14,
@@ -172,20 +178,25 @@ export class BarChartComponentComponent implements OnInit {
     if (!chartArea) {
       return null;
     }
-    const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+    const gradient = ctx.createLinearGradient(
+      0,
+      chartArea.bottom,
+      0,
+      chartArea.top
+    );
 
     switch (index) {
       case 0:
-        gradient.addColorStop(0, '#00b5f9');
-        gradient.addColorStop(1, '#026fee');
+        gradient.addColorStop(0, '#FF6F61');
+        gradient.addColorStop(1, '#FF6F61');
         break;
       case 1:
-        gradient.addColorStop(0, ' #3e76ed');
-        gradient.addColorStop(1, ' #761df5');
+        gradient.addColorStop(0, ' #188eb3');
+        gradient.addColorStop(1, ' #188eb3');
         break;
       case 2:
-        gradient.addColorStop(0, '#0bead4');
-        gradient.addColorStop(1, '#668cfc');
+        gradient.addColorStop(0, '#4DB6AC');
+        gradient.addColorStop(1, '#4DB6AC');
         break;
     }
 

@@ -1,0 +1,134 @@
+.view-incident {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.created-info {
+  display: block;
+}
+
+h2{
+  color: #29A0B1;
+}
+
+
+.vendor-name h2 {
+  font-size: 24px;
+}
+
+.status-badge {
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  vertical-align: 5px;
+}
+
+.created-info {
+  font-size: 18px;
+  color: #6c757d;
+  padding-bottom: 1rem;
+}
+
+
+.separator {
+  margin: 0 8px;
+}
+
+
+.detailed-info-section {
+  margin-bottom: 20px;
+}
+
+.detailed-info-section h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.profile-info {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 10px;
+}
+
+.info-item {
+  padding: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.description,
+.uploaded-files,
+.investigation-details,
+.associated-impacts,
+.collection-evidence,
+.correction,
+.corrective-action,
+.remarks {
+  grid-column: span 3;
+}
+
+.action-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+.status-pending {
+  background-color: red;
+}
+
+.status-in-progress {
+  background-color: #256fab;
+}
+
+.status-closed {
+  background-color: green;
+}
+
+.status-pending,
+.status-in-progress,
+.status-closed {
+  color: white;
+}
+
+.no-content {
+  margin-left: 1rem;
+  font-weight: bolder;
+}
+
+.back-button {
+  position: absolute; 
+    left:50%;
+    transform: translate(-50%,-50%);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #29A0B1;
+    color: white;
+    border-radius: 0.2rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 62.5rem;
+  margin-top:2rem;
+}
+strong
+{
+  color: #6c757d;
+  font-size: 13px;
+}

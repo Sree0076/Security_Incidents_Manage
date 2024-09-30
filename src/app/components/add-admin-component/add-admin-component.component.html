@@ -1,0 +1,76 @@
+<div *ngIf="visibility" class="custom-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" >
+  <div class="custom-modal-dialog centered-modal large-modal">
+    <div class="custom-modal-content">
+      <div class="custom-modal-header">
+        <h1 class="custom-modal-title" id="exampleModalLabel">Add Admin</h1>
+        <i class="pi pi-times" type="button" (click)="closeModal()"></i>
+      </div>
+      <div class="custom-modal-body">
+        @if(!selectedUser){
+        <p class="search-label">Search User</p>
+        <p class="subtext1">Search for users to assign admin permissions</p>
+        <input type="text" placeholder="Search..." [(ngModel)]="searchTerm">
+        <div class="search-names">
+          @for(items of user_details | filter: searchTerm; track items.id){
+          <div class="person-details search-padding" type="button" (click)="addUser(items)">
+            <div class="image-icon">
+              <img src="icons/user-icon-men.jpg" alt="">
+            </div>
+            <div class="name-details">
+              <p>{{items.name}}</p>
+              <p class="designation">{{items.designation}}</p>
+            </div>
+          </div>
+          }
+        </div>
+        }
+        @else{
+        <div class="search-names">
+          <div class="person-details flex-space-between">
+            <div class="flex">
+              <div class="image-icon">
+                <img src="icons/user-icon-men.jpg" alt="">
+              </div>
+              <div class="name-details padding-left">
+                <p>{{selectedUser.name}}</p>
+                <p class="designation">{{selectedUser.designation}}</p>
+              </div>
+            </div>
+            <div>
+              <i class="pi pi-times" (click)="removeUser()" type="button"></i>
+            </div>
+          </div>
+        </div>
+        <div class="line"></div>
+        }
+        <div class="permissions">
+          <br>
+          <hr>
+          <h5 class="permissions-title">Permissions</h5>
+          <div class="flex incidentcheck">
+            <div class="checkbox-container">
+              <input type="checkbox" [(ngModel)]="checkboxes['incidentManagement']">
+            </div>
+            <div>
+              <label>Incident Management</label>
+              <p class="subtext">Can edit and forward the incidents</p>
+            </div>
+          </div>
+          <div class="flex">
+            <div class="checkbox-container">
+              <input type="checkbox" [(ngModel)]="checkboxes['adminManagement']">
+            </div>
+            <div>
+              <label>Admin Management</label>
+              <p class="subtext">Can add users as admins</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="custom-modal-footer">
+        <button type="button" class="btn btn-close" (click)="closeModal()">Close</button>
+        <button type="button" class="btn add-btn" (click)="add()" [disabled]="isAddButtonDisabled()" >Add</button>
+      </div>
+    </div>
+  </div>
+</div>

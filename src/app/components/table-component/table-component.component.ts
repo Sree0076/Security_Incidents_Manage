@@ -1,12 +1,19 @@
+import { IncidentData } from './../../models/incident-interface';
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, Input, SimpleChanges, ViewChild, OnInit, OnChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  SimpleChanges,
+  ViewChild,
+  OnInit,
+  OnChanges,
+} from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet } from '@angular/router';
 import { ConfirmationService, MessageService, MenuItem } from 'primeng/api';
-import { IncidentData } from 'src/app/models/incident-interface';
 import { IncidentServiceService } from 'src/app/services/incident/incident.service.service';
 import { TagModule } from 'primeng/tag';
 import jsPDF from 'jspdf';
@@ -32,6 +39,9 @@ import { EmployeeSharedService } from 'src/app/services/shared/employee/employee
 import { VariablesSharedService } from 'src/app/services/shared/sharedVariables/variables.shared.service';
 import { TableTruncatePipe } from 'src/app/pipes/table/table-truncate.pipe';
 import { ForwardFormComponentComponent } from '../forward-form-component/forward-form-component.component';
+import { ButtonLoadingDirective } from 'src/app/shared/ui/button-loading.directive';
+import { CalendarModule } from 'primeng/calendar';
+import { Incidents } from '../../models/incident-interface';
 
 interface PriorityOrder {
   High: number;
@@ -42,7 +52,7 @@ interface PriorityOrder {
 @Component({
   selector: 'app-table-component',
   standalone: true,
-  providers: [HttpClient, ConfirmationService, MessageService],
+  providers: [HttpClient, ConfirmationService, MessageService, DatePipe],
   imports: [
     ForwardFormComponentComponent,
     SkeletonModule,
@@ -66,6 +76,8 @@ interface PriorityOrder {
     ConfirmDialogModule,
     ToastModule,
     TableTruncatePipe,
+    ButtonLoadingDirective,
+    CalendarModule,
   ],
   templateUrl: './table-component.component.html',
   styleUrl: './table-component.component.css',
@@ -75,13 +87,12 @@ export class TableComponentComponent implements OnInit, OnChanges {
   _selectedColumns: any[] = [];
 
   @Input() isadmin = false;
-  @Input() getDraft = false;
   @Input() getAssigned = false;
-  @Input() filterCategory = "";
+  @Input() filterCategory = '';
 
   @ViewChild('dt2') dt2: Table | undefined;
   incidents: IncidentData[] = [];
-  isLoading=true;
+  isLoading = true;
   priorities: any[] = [
     { label: 'High', value: 'High' },
     { label: 'Medium', value: 'Medium' },
@@ -98,7 +109,6 @@ export class TableComponentComponent implements OnInit, OnChanges {
     { label: 'Privacy', value: 'Privacy Incidents' },
     { label: 'Security', value: 'Security Incidents' },
     { label: 'Quality', value: 'Quality Incidnets' },
-
   ];
   categories = [
     { label: 'Denial of Service', value: 'denialOfService' },
@@ -127,7 +137,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
   selectedIncident!: IncidentData;
   first = 0;
   rows = 10;
-
+  isButtonLoading = false;
   priorityValue: any;
   incidentTypeValue: any;
   selectedIncidents: IncidentData[] = [];
@@ -139,26 +149,27 @@ export class TableComponentComponent implements OnInit, OnChanges {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private employeeDataService: EmployeeSharedService,
-    private sidebarService : VariablesSharedService,
+    private sidebarService: VariablesSharedService,
+    private datePipe: DatePipe
   ) {}
 
-
   ngOnInit() {
+    this.sidebarService.hideSidebar();
     this.isLoading = true;
-    if (this.getDraft) {
-      this.fetchDraftIncidents();
-    } else if (this.getAssigned) {
+    if (this.getAssigned) {
       this.fetchAssignedIncidents();
     } else {
       this.fetchAllIncidents();
     }
     this.cols = [
-      { field: 'id', header: 'ID' },
+      { field: 'id', header: 'No' },
+      { field: 'Title', header: 'Title' },
+      { field: 'Type', header: 'Type' },
       { field: 'category', header: 'Categories' },
-      { field: 'reportedBy', header: 'Reported By' },
+      { field: 'CreatedAt', header: 'Created At' },
       { field: 'priority', header: 'Priority' },
       { field: 'incidentStatus', header: 'Status' },
-      { field: 'action', header: 'Action' },
+      { field: 'Actions', header: 'Actions' },
     ];
     this._selectedColumns = this.cols;
   }
@@ -179,30 +190,19 @@ export class TableComponentComponent implements OnInit, OnChanges {
       this.applyCategoryFilter();
     }
   }
+
   private stopLoadingWithDelay(delay = 2000) {
     setTimeout(() => {
       this.isLoading = false;
     }, delay);
   }
-  
+
   fetchAllIncidents() {
     this.incidentDataService.incidentData.subscribe((data) => {
       if (data) {
         this.incidents = data.incidents;
         this.sortByPriority();
-        console.log(data);
         this.stopLoadingWithDelay();
-      }
-    });
-  }
-
-  fetchDraftIncidents() {
-    this.incidentDataService.incidentData.subscribe((data) => {
-      if (data) {
-        this.incidents = data.incidents;
-        this.sortByPriority();
-        this.incidents = this.incidents.filter((incident) => incident.isDraft);
-        console.log('Draft Incidents:', this.incidents);
       }
     });
   }
@@ -212,7 +212,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
       if (data) {
         this.incidents = data.assignedIncidents;
         this.sortByPriority();
-        console.log(data);
+        this.stopLoadingWithDelay();
       }
     });
   }
@@ -299,11 +299,10 @@ export class TableComponentComponent implements OnInit, OnChanges {
     console.log(incident.id);
     if (incident.incidentStatus !== 'closed') {
       this.incidentDataService.setSelectedIncidentId(incidentId);
-      if (!this.getAssigned && !this.isadmin) {
-        console.log(this.isadmin);
+      if (this.getAssigned || this.isadmin) {
         this.router.navigate(['/edit-incident']);
       } else {
-        this.router.navigate(['/resolve-incident']);
+        this.sidebarService.showSidebar();
       }
     } else {
       this.showError(' Sorry, The Incident is already Closed !');
@@ -318,8 +317,6 @@ export class TableComponentComponent implements OnInit, OnChanges {
         this.tablefetchService
           .deleteDraftIncidentById(incidentId)
           .subscribe((response) => {
-            console.log(response);
-
             this.showSuccess('Draft Incident Deleted Successfully');
           });
       },
@@ -336,27 +333,27 @@ export class TableComponentComponent implements OnInit, OnChanges {
   }
 
   sortByPriority() {
-    const priorityOrder: PriorityOrder = { High: 1, Medium: 2, Low: 3 };
+    if (this.incidents) {
+      const statusOrder: Record<string, number> = { pending: 1, progress: 2 };
 
-    const activeIncidents = this.incidents.filter(
-      (incident) => incident.incidentStatus !== 'closed'
-    );
-    const closedIncidents = this.incidents.filter(
-      (incident) => incident.incidentStatus === 'closed'
-    );
-
-    activeIncidents.sort((a, b) => {
-      if (a.isSubmittedForReview && !b.isSubmittedForReview) {
-        return -1;
-      } else if (!a.isSubmittedForReview && b.isSubmittedForReview) {
-        return 1;
-      }
-      return (
-        priorityOrder[a.priority as keyof PriorityOrder] -
-        priorityOrder[b.priority as keyof PriorityOrder]
+      const activeIncidents = this.incidents.filter(
+        (incident) => incident.incidentStatus !== 'closed'
       );
-    });
-    this.incidents = [...activeIncidents, ...closedIncidents];
+      const closedIncidents = this.incidents.filter(
+        (incident) => incident.incidentStatus === 'closed'
+      );
+
+      activeIncidents.sort((a, b) => {
+        if (a.isSubmittedForReview && !b.isSubmittedForReview) {
+          return -1;
+        } else if (!a.isSubmittedForReview && b.isSubmittedForReview) {
+          return 1;
+        }
+        return statusOrder[a.incidentStatus] - statusOrder[b.incidentStatus];
+      });
+
+      this.incidents = [...activeIncidents, ...closedIncidents];
+    }
   }
 
   getSeverity(status: string) {
@@ -402,6 +399,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
     }
     return '';
   }
+
   onIconClick(incident: any): void {
     if (incident.incidentStatus !== 'closed') {
       this.openForwardingModal(incident.id);
@@ -427,83 +425,96 @@ export class TableComponentComponent implements OnInit, OnChanges {
         const doc = new jsPDF();
 
         doc.setFontSize(18);
-        doc.text('Incident Report', 14, 20);
-        doc.setFontSize(12);
-        doc.text(`Title: ${incident.incidentTitle}`, 14, 40);
-        doc.text(`Description: ${incident.incidentDescription}`, 14, 50);
-        doc.text(`Reported By: ${incident.reportedBy}`, 14, 60);
-        doc.text(`Role of Reporter: ${incident.roleOfReporter}`, 14, 70);
-        doc.text(
-          `Incident Occurred Date: ${new Date(
-            incident.incidentOccuredDate
-          ).toLocaleDateString()}`,
-          14,
-          80
-        );
-        doc.text(`Month/Year: ${incident.monthYear}`, 14, 90);
-        doc.text(`Incident Type: ${incident.incidentType}`, 14, 100);
-        doc.text(`Category: ${incident.category}`, 14, 110);
-        doc.text(`Priority: ${incident.priority}`, 14, 120);
-        doc.text(`Action Assigned To: ${incident.actionAssignedTo}`, 14, 130);
-        doc.text(`Dept of Assignee: ${incident.deptOfAssignee}`, 14, 140);
-        doc.text(
-          `Investigation Details: ${incident.investigationDetails}`,
-          14,
-          150
-        );
-        doc.text(`Associated Impacts: ${incident.associatedImpacts}`, 14, 160);
-        doc.text(
-          `Collection of Evidence: ${incident.collectionOfEvidence}`,
-          14,
-          170
-        );
-        doc.text(`Correction: ${incident.correction}`, 14, 180);
-        doc.text(`Corrective Action: ${incident.correctiveAction}`, 14, 190);
-        doc.text(
-          `Correction Completion Target Date: ${new Date(
-            incident.correctionCompletionTargetDate
-          ).toLocaleDateString()}`,
-          14,
-          200
-        );
-        doc.text(
-          `Correction Actual Completion Date: ${new Date(
-            incident.correctionActualCompletionDate
-          ).toLocaleDateString()}`,
-          14,
-          210
-        );
-        doc.text(
-          `Corrective Actual Completion Date: ${new Date(
-            incident.correctiveActualCompletionDate
-          ).toLocaleDateString()}`,
-          14,
-          220
-        );
-        doc.text(`Incident Status: ${incident.incidentStatus}`, 14, 230);
-        doc.text(
-          `Correction Details Time Taken To Close Incident: ${incident.correctionDetailsTimeTakenToCloseIncident} hours`,
-          14,
-          240
-        );
-        doc.text(
-          `Corrective Details Time Taken To Close Incident: ${incident.correctiveDetailsTimeTakenToCloseIncident} hours`,
-          14,
-          250
-        );
-        doc.text(
-          `Created At: ${new Date(incident.createdAt).toLocaleDateString()}`,
-          14,
-          280
-        );
+        const titleText = `Incident Report of ${incident.incidentTitle}, ${incident.incidentNo}`;
+        doc.text(titleText, 14, 20);
+
+        // Define table column headers
+        const columns = [
+          { title: 'Title', dataKey: 'field', width: 30 },
+          { title: 'Description', dataKey: 'value', width: 120 },
+        ];
+
+        // Define table data
+        const rows = [
+          { field: 'Incident No', value: incident.incidentNo },
+          {
+            field: 'Incident Occurred Date',
+            value: new Date(incident.incidentOccuredDate).toLocaleDateString(),
+          },
+          { field: 'Title', value: incident.incidentTitle },
+          { field: 'Description', value: incident.incidentDescription },
+          { field: 'Reported By', value: incident.reportedBy },
+          { field: 'Role of Reporter', value: incident.roleOfReporter },
+          { field: 'Month/Year', value: incident.monthYear },
+          { field: 'Incident Type', value: incident.incidentType },
+          { field: 'Category', value: incident.category },
+          { field: 'Priority', value: incident.priority },
+          { field: 'Action Assigned To', value: incident.actionAssignedTo },
+          { field: 'Dept of Assignee', value: incident.deptOfAssignee },
+          {
+            field: 'Investigation Details',
+            value: incident.investigationDetails,
+          },
+          { field: 'Associated Impacts', value: incident.associatedImpacts },
+          {
+            field: 'Collection of Evidence',
+            value: incident.collectionOfEvidence,
+          },
+          { field: 'Correction', value: incident.correction },
+          { field: 'Corrective Action', value: incident.correctiveAction },
+          {
+            field: 'Correction Completion Target Date',
+            value: new Date(
+              incident.correctionCompletionTargetDate
+            ).toLocaleDateString(),
+          },
+          {
+            field: 'Correction Actual Completion Date',
+            value: new Date(
+              incident.correctionActualCompletionDate
+            ).toLocaleDateString(),
+          },
+          {
+            field: 'Corrective Actual Completion Date',
+            value: new Date(
+              incident.correctiveActualCompletionDate
+            ).toLocaleDateString(),
+          },
+          { field: 'Incident Status', value: incident.incidentStatus },
+          {
+            field: 'Correction Details Time Taken To Close Incident',
+            value: `${incident.correctionDetailsTimeTakenToCloseIncident} hours`,
+          },
+          {
+            field: 'Corrective Details Time Taken To Close Incident',
+            value: `${incident.correctiveDetailsTimeTakenToCloseIncident} hours`,
+          },
+          {
+            field: 'Created At',
+            value: new Date(incident.createdAt).toLocaleDateString(),
+          },
+        ];
+
+        // Generate the table
+        (doc as any).autoTable({
+          columns,
+          body: rows,
+          startY: 30, // Starting Y position
+          theme: 'striped',
+          margin: { left: 14, right: 14 },
+        });
 
         // Save the PDF
-        doc.save(`incident_${incident.incidentTitle}.pdf`);
+        doc.save(
+          `incident_${incident.incidentTitle}_${incident.incidentNo}.pdf`
+        );
       });
   }
 
   isColumnVisible(columnField: string): boolean {
-    return this.selectedColumns.some((col) => col.field === columnField);
+    return this.selectedColumns.some(
+      (col) => col.field.toLowerCase() === columnField.toLowerCase()
+    );
   }
 
   getStatusLabel(statusValue: string): string {
@@ -542,9 +553,7 @@ export class TableComponentComponent implements OnInit, OnChanges {
             this.showSuccess('Corrective measures aproved sucessfully');
           });
       },
-      reject: () => {
-
-      },
+      reject: () => {},
     });
   }
   onReject(incident: IncidentData) {
@@ -557,29 +566,23 @@ export class TableComponentComponent implements OnInit, OnChanges {
           isSubmittedForReview: false,
         };
         this.tablefetchService
-        .submitForUser(incident.id,submitData)
-        .subscribe((response) => {
-          console.log(response);
-          this.showError('Incident returned');
-        });
+          .submitForUser(incident.id, submitData)
+          .subscribe((response) => {
+            console.log(response);
+            this.showError('Incident returned');
+          });
       },
-      reject: () => {
-
-      },
+      reject: () => {},
     });
   }
 
   showSuccess(message: string) {
-    console.log(message);
     setTimeout(() => {
       this.messageService.add({
         severity: 'success',
         summary: 'Success',
         detail: `${message}`,
       });
-      setTimeout(() => {
-        this.incidentDataService.fetchIncidentData(this.getAssigned);
-      }, 2000);
     }, 100);
   }
 
@@ -590,26 +593,76 @@ export class TableComponentComponent implements OnInit, OnChanges {
         summary: 'Error',
         detail: `${message}`,
       });
-      setTimeout(() => {
-
-        this.incidentDataService.fetchIncidentData(this.getAssigned);
-      }, 2000);
     }, 50);
   }
 
   onIncidentAccept(incident: IncidentData) {
+    this.isButtonLoading = true;
     this.employeeDataService.employeeData.subscribe((data) => {
       if (data) {
         this.tablefetchService
           .incidentAccept(incident.id, data.id)
           .subscribe((response) => {
-            console.log(response);
+            this.isButtonLoading = false;
             this.showSuccess('Incident Aceepted for Resolving');
           });
       }
     });
   }
+
   openSidebar() {
+    this.incidentDataService.setSelectedIncidentId(0);
     this.sidebarService.showSidebar();
+  }
+
+  rangeDates: Date[] = [];
+  onDateRangeSelect() {
+    const [startDate, endDate] = this.rangeDates;
+
+    if (startDate && endDate) {
+      this.incidents = this.incidents.filter((item) => {
+        const itemDate = new Date(item.createdAt);
+        return itemDate >= startDate && itemDate <= endDate;
+      });
+    }
+
+  }
+
+  onFileChange(evt: any) {
+    console.log('File upload function initiated');
+
+    const target: DataTransfer = <DataTransfer>evt.target;
+
+    // Ensure only one file is selected
+    if (target.files.length !== 1) {
+      this.showError('Cannot use multiple files');
+      return;
+    }
+    const file = target.files[0];
+    this.uploadIncidentData(file);
+  }
+
+  uploadIncidentData(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    this.tablefetchService.bulkUpload(formData).subscribe((response) => {
+      console.log(response);
+      this.showSuccess('Incidents Imported Successfully');
+    });
+  }
+
+  triggerFileInput() {
+    // Trigger the hidden file input
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    fileInput.click();
+  }
+  
+  downloadExcel() {
+    // Create an anchor element
+    const link = document.createElement('a');
+    link.href = 'assets/Template.xlsx'; // Path to your Excel file
+    link.download = 'template.xlsx'; // Name the downloaded file
+    link.click(); 
   }
 }

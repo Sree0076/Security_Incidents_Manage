@@ -1,0 +1,182 @@
+<div class="container">
+    <div class="view-incident">
+        <div class="header-section">
+            <div class="vendor-name">
+                <h2 class="title">Incident {{data.incidentTitle}}, {{data.incidentNo}}
+                    <span [ngClass]="getStatus(data.incidentStatus)" class="status-badge">{{data.incidentStatus}}</span>
+                </h2>
+                <span class="created-info">Created by {{data.reportedBy}},{{data.roleOfReporter}}
+                    {{data.incidentOccuredDate| date:'dd-MM-yyyy, hh:mm a'}} </span>
+            </div>
+        </div>
+
+        <div class="detailed-info-section">
+            <h3 class="text-primary">Detailed Info</h3>
+            <div class="profile-info">
+                <div class="info-item description">
+                    <strong>Description</strong>
+                    <p>{{data.incidentDescription}}</p>
+                </div>
+                <div *ngIf="documentUrls.length > 0" class="info-item uploaded-files">
+                    <strong style="padding-bottom: 1rem; display: block;">Uploaded Files</strong>
+                    <div style="display: flex; flex-wrap: wrap;">
+                        <div *ngFor="let file of documentUrls" style="margin-right: 1rem;">
+                            <img [src]="file.url" [alt]="file.name"
+                                style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #a27ad7;" />
+                            <div style="text-align: center; margin-top: 0.5rem; margin-bottom: 0.5rem;">
+
+                                <a [href]="file.url" target="_blank"
+                                    style="text-decoration: none; color:rgba(16, 107, 230, 1);"><i
+                                        class="bi bi-eye"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="info-item">
+                    <strong>Incident Occured Date and Time</strong>
+                    <p>{{data.incidentOccuredDate| date:'dd-MM-yyyy, hh:mm a'}}</p>
+                </div>
+
+                <div class="info-item">
+                    <strong>Type</strong>
+                    <p>{{data.incidentType}}</p>
+                </div>
+                <div class="info-item">
+                    <strong>Category</strong>
+                    <p>{{data.category}}</p>
+                </div>
+                <div class="info-item">
+                    <strong>Priority</strong>
+                    <p>{{data.priority}}</p>
+                </div>
+
+                <div class="info-item">
+                    <strong>Correction Completion Target Date</strong>
+                    @if(data.correctionCompletionTargetDate){
+                    <p>{{data.correctionCompletionTargetDate | date:'dd-MM-yyyy, hh:mm a'}}</p>
+                    }
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+
+                <div class="info-item">
+                    <strong>Correction Actual Completion Date</strong>
+                    @if (data.correctionActualCompletionDate) {
+                    <p>{{data.correctionActualCompletionDate | date:'dd-MM-yyyy, hh:mm a'}}</p>
+                    }
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+
+                <div class="info-item">
+
+                    <strong>Corrective Actual Completion Date</strong>
+                    @if(data.correctiveActualCompletionDate){
+                    <p>{{data.correctiveActualCompletionDate | date:'dd-MM-yyyy, hh:mm a'}}</p>
+                    }
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+
+                <div class="info-item">
+                    <strong>Correction Details Time Taken to Close the Incident</strong>
+                    @if (data.correctionDetailsTimeTakenToCloseIncident) {
+                    <p>{{data.correctionDetailsTimeTakenToCloseIncident}} days</p>
+                    }
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+
+                <div class="info-item">
+                    <strong>Corrective Details Time Taken to Close the Incident</strong>
+                    @if (data.correctiveDetailsTimeTakenToCloseIncident) {
+                    <p>{{data.correctiveDetailsTimeTakenToCloseIncident}} days</p>
+                    }
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+                <div class="info-item investigation-details">
+                    <strong>Investigation Details</strong>
+                    @if (data.investigationDetails) {
+                    <p>{{data.investigationDetails}}</p>
+                    }
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+                <div class="info-item associated-impacts">
+                    <strong>Associated Impacts</strong>
+                    @if (data.associatedImpacts) {
+                    <p>{{data.associatedImpacts}}</p>
+                    }
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+
+
+                <div class="info-item collection-evidence">
+                    <strong>Collection of Evidence</strong>
+                    @if (data.collectionOfEvidence) {
+                    <p>{{data.collectionOfEvidence}}</p>
+                    }
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+
+                <div class="info-item correction">
+                    <strong>Correction</strong>
+                    @if (data.correction) {
+                    <p>{{data.correction}}</p>
+                    }
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+
+                <div class="info-item corrective-action">
+                    <strong>Corrective Action</strong>
+                    @if (data.correctiveAction) {
+                    <p>{{data.correctiveAction}}</p>
+
+                    }
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+
+                <div class="info-item corrective-action">
+                    <strong>Preventive Action</strong>
+                    @if (data.preventiveAction) {
+                    <p>{{data.preventiveAction}}</p>
+
+                    }
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+
+                <div class="info-item remarks">
+                    <strong>Remarks</strong>
+                    @if (data.remarks) {
+                    <p>{{data.remarks}}</p>
+
+                    }
+
+                    @else {
+                    <p class="no-content">-</p>
+                    }
+                </div>
+
+            </div>
+            <button class="back-button" (click)="redirectToDashboard()">Back</button>
+        </div>
+    </div>
+</div>

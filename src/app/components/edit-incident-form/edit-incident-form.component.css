@@ -1,0 +1,205 @@
+.container {
+    max-width: 1200px;
+  }
+  
+  ::ng-deep mat-form-field {
+    width: 100%;
+    font-size: 15px;
+    stroke: #a27ad7;
+  }
+  
+  .form {
+    background-color: #ffffff;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  p {
+    margin: 0;
+  }
+  
+  .editbutton {
+    border: 1px solid white;
+    width: 6rem;
+    height: 2rem;
+    background: var(--quality-color);
+    color: white;
+    border-radius: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  
+  .mat-datepicker-content.year-picker .mat-calendar {
+    width: 300px;
+    /* Adjust width as needed */
+  }
+  
+  .mat-datepicker-content.year-picker .mat-calendar-period-button {
+    display: none;
+  }
+  
+  .mat-datepicker-content.year-picker .mat-calendar-body-cell {
+    line-height: 2.5em;
+    /* Adjust line height as needed */
+  }
+  
+  mat-label {
+    color: rgba(16, 107, 230, 1);
+  }
+  
+  ::ng-deep mat-form-field input[readonly] {
+    color: gray !important;
+  }
+  
+  .header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .created-info {
+    display: block;
+  }
+  
+  
+  .vendor-name h2 {
+    font-size: 24px;
+  }
+  
+  .status-badge {
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    vertical-align: 5px;
+  }
+  
+  .created-info {
+    font-size: 18px;
+    color: #6c757d;
+    padding-bottom: 1rem;
+  }
+  
+  .status-pending {
+    background-color: red;
+  }
+  
+  .status-in-progress {
+    background-color: #256fab;
+  }
+  
+  .status-closed {
+    background-color: green;
+  }
+  
+  .status-pending,
+  .status-in-progress,
+  .status-closed {
+    color: white;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.form {
+  width: 71rem;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.form.expanded {
+  width: 105% !important;
+}
+
+.header-section {
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 0.875rem;
+}
+
+.created-info {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-field {
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.uploaded-files {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.file-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid #a27ad7;
+}
+
+.file-actions {
+    margin-top: 8px;
+}
+
+.file-link {
+    text-decoration: none;
+    color: rgba(16, 107, 230, 1);
+}
+
+.submit-button {
+    background-color:#29A0B1 ;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
