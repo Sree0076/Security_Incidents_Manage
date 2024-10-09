@@ -21,4 +21,4 @@ export const appRoutes: Routes = [
     { path: 'usermanage', component: UserManageComponent, canActivate: [MsalGuard, roleGuard], data: { expectedRoles: ['Admins-User', 'SuperAdmin'] } },
     { path: 'initial-page', component: FirstLoginContentComponent },
     { path: 'noti', component: NotificationComponentComponent },
-  ];
+];
