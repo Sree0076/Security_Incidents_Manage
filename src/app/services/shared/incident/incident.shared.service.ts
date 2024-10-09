@@ -37,12 +37,9 @@ export class IncidentSharedService {
   private createConnection() {
     this.hubConnection = new HubConnectionBuilder()
     .withUrl('http://172.16.4.89:9000/incidentHub', {
-      accessTokenFactory: () => {
-        const token = localStorage.getItem('accessToken');
-        return token ? token : "";  // Fix: Removed the comma here
-      },
-      transport: HttpTransportType.LongPolling // Fix: Moved transport here
+      transport: HttpTransportType.LongPolling
     })
+    .withAutomaticReconnect([0, 2000, 10000, 30000])  
     .build();
   
     this.hubConnection.on('ReceiveIncidentUpdate', () => {  
